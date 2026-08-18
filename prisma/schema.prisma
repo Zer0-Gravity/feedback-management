@@ -11,3 +11,93 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
+enum StatusPost {
+  Backlog
+  In_Progress
+  In_Review
+  Completed
+}
+
+enum UserRole {
+  Owner
+  Admin
+  Member
+}
+
+model User {
+  id    String   @id @default(cuid())
+  name  String
+  email String   @unique
+  role  UserRole
+
+  posts       Post[]
+  comments    Comment[]
+  upVotes     UpVote[]
+  memberships Membership[]
+}
+
+model Company {
+  id         String   @id @default(nanoid())
+  name       String
+  email      String   @unique
+  address    String
+  created_at DateTime @default(now())
+
+  memberships Membership[]
+}
+
+model Membership {
+  id         String @id @default(cuid())
+  user_id    String
+  company_id String
+
+  user    User    @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  company Company @relation(fields: [company_id], references: [id], onDelete: Cascade)
+
+  @@unique([user_id, company_id])
+  @@index([user_id])
+  @@index([company_id])
+}
+
+model Post {
+  id         String     @id @default(nanoid())
+  author_id  String
+  title      String
+  content    String
+  created_at DateTime   @default(now())
+  status     StatusPost @default(Backlog)
+
+  user     User      @relation(fields: [author_id], references: [id], onDelete: Cascade)
+  comments Comment[]
+  upVotes  UpVote[]
+
+  @@index([author_id])
+}
+
+model Comment {
+  id         String   @id @default(nanoid())
+  author_id  String
+  post_id    String
+  parent_id  String
+  content    String
+  created_at DateTime @default(now())
+
+  user User @relation(fields: [author_id], references: [id], onDelete: Cascade)
+  post Post @relation(fields: [post_id], references: [id], onDelete: Cascade)
+
+  @@index([author_id])
+  @@index([post_id])
+}
+
+model UpVote {
+  id      String @id @default(cuid())
+  user_id String
+  post_id String
+
+  user User @relation(fields: [user_id], references: [id])
+  post Post @relation(fields: [post_id], references: [id])
+
+  @@unique([user_id, post_id])
+  @@index([post_id])
+}
