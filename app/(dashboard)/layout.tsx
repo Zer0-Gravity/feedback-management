@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 
-export default function DashboardLayout({ children }: { children: ReactNode }) {
+export default function Dashboard({ children }: { children: ReactNode }) {
     return (
         <main>
             <h1>Dashboard Overview</h1>
