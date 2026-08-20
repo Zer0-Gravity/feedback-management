@@ -26,10 +26,9 @@ enum UserRole {
 }
 
 model User {
-  id    String   @id @default(cuid())
+  id    String @id @default(cuid())
   name  String
-  email String   @unique
-  role  UserRole
+  email String @unique
 
   posts       Post[]
   comments    Comment[]
@@ -57,9 +56,10 @@ model Company {
 }
 
 model Membership {
-  id         String @id @default(cuid())
+  id         String   @id @default(cuid())
   user_id    String
   company_id String
+  user_role  UserRole
 
   user    User    @relation(fields: [user_id], references: [id], onDelete: Cascade)
   company Company @relation(fields: [company_id], references: [id], onDelete: Cascade)

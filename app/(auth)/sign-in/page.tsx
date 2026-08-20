@@ -152,7 +152,7 @@ function SignIn() {
                         {isLoading ? (
                             <Loader2 size={18} className="animate-spin" />
                         ) : (
-                            <span className="text-[14px]">Sign-up</span>
+                            <span className="text-[14px]">Sign-In</span>
                         )}
                     </button>
 

@@ -36,3 +36,15 @@ body {
     color: var(--foreground);
     font-family: "Inter", sans-serif;
 }
+
+.auth-wrapper {
+    @apply w-full h-full flex justify-center flex-col md:h-175 md:w-112.5 p-8 md:p-17.5 md:border md:border-r-0 rounded-l-lg;
+}
+
+.input-field {
+    @apply h-10 w-full rounded-[5px] text-[14px] p-2 border-2 border-border-clr;
+}
+
+.error-message {
+    @apply text-[10px] text-red-500 font-medium;
+}
