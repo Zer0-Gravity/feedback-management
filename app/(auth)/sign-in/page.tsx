@@ -59,17 +59,17 @@ function SignIn() {
 
     return (
         <div className="flex items-center justify-center h-full">
-            <section className="w-full h-full flex justify-center flex-col md:h-175 md:w-112.5 p-10 md:p-20 md:border md:border-r-0 rounded-l-lg">
+            <section className="w-full h-full flex justify-center flex-col md:h-175 md:w-112.5 p-8 md:p-17.5 md:border md:border-r-0 rounded-l-lg">
                 {/* | Mini Logo | */}
-                <div className="flex gap-2 items-center my-5">
-                    <div className="h-2.5 w-2.5 bg-button-clr" />
-                    <h1 className="font-semibold text-[16px] text-button-clr">
+                <div className="flex gap-2 items-center select-none">
+                    <div className="h-3.75 w-3.75 bg-button-clr" />
+                    <h1 className="font-semibold text-[20px] text-button-clr">
                         Votify.io
                     </h1>
                 </div>
 
                 {/* | Greeting | */}
-                <div className="my-5">
+                <div className="my-5 select-none">
                     <h1 className="text-[40px] font-bold">Hi,</h1>
                     <h1 className="text-[40px] font-bold">Welcome back</h1>
                 </div>
@@ -83,7 +83,7 @@ function SignIn() {
                         <input
                             {...register("email")}
                             type="text"
-                            className={`h-10 w-full rounded-md text-[14px] p-2 border-2 border-border-clr ${errors.email && "border-red-500 text-red-500 outline-red-500"}`}
+                            className={`h-10 w-full rounded-[5px] text-[14px] p-2 border-2 border-border-clr ${errors.email && "border-red-500 text-red-500 outline-red-500"}`}
                             placeholder="e-mail"
                         />
                         {errors.email && (
@@ -99,7 +99,7 @@ function SignIn() {
                             <input
                                 {...register("password")}
                                 type={passToggle ? "text" : "password"}
-                                className={`h-10 w-full rounded-md text-[14px] p-2 border-2 border-border-clr ${errors.password && "border-red-500 text-red-500 outline-red-500"}`}
+                                className={`h-10 w-full rounded-[5px] text-[14px] p-2 border-2 border-border-clr ${errors.password && "border-red-500 text-red-500 outline-red-500"}`}
                                 placeholder="type a password"
                             />
 
@@ -133,11 +133,11 @@ function SignIn() {
                                     checked={field.value ?? false}
                                     onCheckedChange={field.onChange}
                                     id="remember"
-                                    className="border-button-clr rounded-full data-checked:bg-button-clr data-checked:border-0 size-3"
+                                    className="border-button-clr rounded-[3px] data-checked:bg-button-clr data-checked:border-0 size-3"
                                 />
                                 <label
                                     htmlFor="remember"
-                                    className="text-[12px]"
+                                    className="text-[12px] select-none"
                                 >
                                     Remember me
                                 </label>
@@ -152,10 +152,22 @@ function SignIn() {
                         {isLoading ? (
                             <Loader2 size={18} className="animate-spin" />
                         ) : (
-                            "Sign-up"
+                            <span className="text-[14px]">Sign-up</span>
                         )}
                     </button>
+
+                    <div className="flex gap-2 items-center">
+                        <div className="h-0.5 w-full bg-border-clr" />
+                        <h1 className="text-[12px] font-medium">OR</h1>
+                        <div className="h-0.5 w-full bg-border-clr" />
+                    </div>
+
+                    <button className="h-10 bg-button-clr text-white w-full rounded-md flex justify-center items-center">
+                        <span className="text-[14px]">Google</span>
+                    </button>
                 </form>
+
+                {/* Divider */}
 
                 <p className="text-[12px]">
                     Don&apos;t have account?{" "}
