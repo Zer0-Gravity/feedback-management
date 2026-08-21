@@ -9,6 +9,8 @@ import {
 import Link from "next/link";
 import { ReactNode } from "react";
 import AccountBar from "./AccountBar";
+import CompanySwitcher from "./CompanySwitcher";
+import prisma from "@/lib/prisma";
 
 async function AppLayout({ children }: { children: ReactNode }) {
     const navList = [
@@ -19,10 +21,15 @@ async function AppLayout({ children }: { children: ReactNode }) {
         { link: "audit-post", name: "Audit Post", icon: TableProperties },
     ];
 
+    //Get the company database
+    const companyDb = await prisma.company.findMany();
+
     return (
         <main className="flex md:flex-row flex-col h-screen">
             {/* | Desktop Sidebar | */}
             <aside className="w-75 p-5 hidden md:flex flex-col">
+                <CompanySwitcher companyDb={companyDb} />
+
                 <nav className="space-y-2 flex-1">
                     {navList.map((list, index) => (
                         <Link
@@ -31,11 +38,11 @@ async function AppLayout({ children }: { children: ReactNode }) {
                             className="flex gap-2 items-center p-1.5 w-full relative"
                         >
                             <list.icon
-                                size={14}
+                                size={20}
                                 className="text-primary-text"
                             />
 
-                            <span className="text-primary-text">
+                            <span className="text-primary-text text-[14px]">
                                 {list.name}
                             </span>
                         </Link>
@@ -57,7 +64,7 @@ async function AppLayout({ children }: { children: ReactNode }) {
                         className="flex gap-2 flex-col items-center"
                     >
                         <list.icon size={20} className="text-primary-text" />
-                        <span className="text-[14px] text-primary-text">
+                        <span className="text-[12px] text-primary-text">
                             {list.name}
                         </span>
                     </Link>
@@ -65,7 +72,7 @@ async function AppLayout({ children }: { children: ReactNode }) {
 
                 <button className="flex gap-2 flex-col items-center">
                     <User size={20} className="text-primary-text" />
-                    <span className="text-[14px] text-primary-text">
+                    <span className="text-[12px] text-primary-text">
                         Account
                     </span>
                 </button>
