@@ -1,3 +1,5 @@
+"use server";
+
 import { auth } from "@/lib/auth";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import {
@@ -47,12 +49,6 @@ export default async function AccountBar() {
                             <Settings size={20} className="text-primary-text" />
                             <span className="text-[14px]! text-primary-text">
                                 Settings
-                            </span>
-                        </DropdownMenuItem>
-                        <DropdownMenuItem className="p-2 group hover:bg-secondary-text">
-                            <Moon size={20} className="text-primary-text" />
-                            <span className="text-[14px]! text-primary-text">
-                                Dark Mode
                             </span>
                         </DropdownMenuItem>
                         <DropdownMenuItem className="p-2 group hover:bg-red-500 bg-red-200 transition-all">

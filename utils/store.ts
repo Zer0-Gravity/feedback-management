@@ -6,6 +6,12 @@ interface CompanyType {
     setCompany: (id: string) => void;
 }
 
+interface ThemeType {
+    isDark: boolean;
+    isChecked: boolean;
+    toggleTheme: () => void;
+}
+
 export const useCompany = create<CompanyType>()(
     persist(
         (set) => ({
@@ -13,5 +19,22 @@ export const useCompany = create<CompanyType>()(
             setCompany: (id) => set({ companyId: id }),
         }),
         { name: "company-select" },
+    ),
+);
+
+export const useTheme = create<ThemeType>()(
+    persist(
+        (set) => ({
+            isDark: false,
+            isChecked: false,
+            toggleTheme: () =>
+                set((state) => ({
+                    isDark: !state.isDark,
+                    isChecked: !state.isChecked,
+                })),
+        }),
+        {
+            name: "theme-app",
+        },
     ),
 );

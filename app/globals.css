@@ -3,6 +3,7 @@
 
 @theme {
     --color-background: var(--background);
+    --color-background-secondary: var(--background-secondary);
     --color-primary-text: var(--primary-text);
     --color-secondary-text: var(--secondary-text);
     --color-button-clr: var(--button-clr);
@@ -13,22 +14,24 @@
 
 :root {
     --background: #ffffff;
-    --primary-text: #171717;
-    --secondary-text: #6b7280;
+    --background-secondary: #e4e5e6;
+    --primary-text: #0f172a;
+    --secondary-text: #64748b;
     --button-clr: #ff6b1a;
-    --card-clr: #f9fafb;
-    --border-clr: #313131;
-    --text-field: #f3f4f6;
+    --card-clr: #ffffff;
+    --border-clr: #e2e8f0;
+    --text-field: #f1f5f9;
 }
 
 .dark {
-    --background: #121212;
-    --primary-text: #f5f5f5;
-    --secondary-text: #9ca3af;
-    --button-clr: #ff7c33;
-    --card-clr: #1e1e1e;
-    --border-clr: #dfdfdf;
-    --text-field: #2a2a2a;
+    --background: #0f0f11;
+    --background-secondary: #18181b;
+    --primary-text: #f4f4f5;
+    --secondary-text: #a1a1aa;
+    --button-clr: #ff6b1a;
+    --card-clr: #18181b;
+    --border-clr: #27272a;
+    --text-field: #27272a;
 }
 
 body {

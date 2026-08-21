@@ -9,8 +9,6 @@ import {
 import Link from "next/link";
 import { ReactNode } from "react";
 import AccountBar from "./AccountBar";
-import CompanySwitcher from "./CompanySwitcher";
-import prisma from "@/lib/prisma";
 
 async function AppLayout({ children }: { children: ReactNode }) {
     const navList = [
@@ -21,15 +19,10 @@ async function AppLayout({ children }: { children: ReactNode }) {
         { link: "audit-post", name: "Audit Post", icon: TableProperties },
     ];
 
-    //Get the company database
-    const companyDb = await prisma.company.findMany();
-
     return (
         <main className="flex md:flex-row flex-col h-screen">
             {/* | Desktop Sidebar | */}
-            <aside className="w-75 p-5 hidden md:flex flex-col">
-                <CompanySwitcher companyDb={companyDb} />
-
+            <aside className="w-65 p-5 hidden md:flex flex-col">
                 <nav className="space-y-2 flex-1">
                     {navList.map((list, index) => (
                         <Link
@@ -53,30 +46,37 @@ async function AppLayout({ children }: { children: ReactNode }) {
             </aside>
 
             {/* | Main Content | */}
-            <section className="flex-1 bg-amber-50">{children}</section>
+            <section className="flex-1 h-full bg-background-secondary">
+                {children}
+            </section>
 
             {/* | Mobile bottom bar | */}
-            <nav className="flex justify-around p-2 md:hidden">
-                {navList.map((list, index) => (
-                    <Link
-                        key={index}
-                        href={`/${list.name}`}
-                        className="flex gap-2 flex-col items-center"
-                    >
-                        <list.icon size={20} className="text-primary-text" />
-                        <span className="text-[12px] text-primary-text">
-                            {list.name}
-                        </span>
-                    </Link>
-                ))}
+            <div className="md:hidden">
+                <nav className="flex justify-around p-2 ">
+                    {navList.map((list, index) => (
+                        <Link
+                            key={index}
+                            href={`/${list.link}`}
+                            className="flex gap-2 flex-col items-center"
+                        >
+                            <list.icon
+                                size={20}
+                                className="text-primary-text"
+                            />
+                            <span className="text-[12px] text-primary-text">
+                                {list.name}
+                            </span>
+                        </Link>
+                    ))}
 
-                <button className="flex gap-2 flex-col items-center">
-                    <User size={20} className="text-primary-text" />
-                    <span className="text-[12px] text-primary-text">
-                        Account
-                    </span>
-                </button>
-            </nav>
+                    <button className="flex gap-2 flex-col items-center">
+                        <User size={20} className="text-primary-text" />
+                        <span className="text-[12px] text-primary-text">
+                            Account
+                        </span>
+                    </button>
+                </nav>
+            </div>
         </main>
     );
 }
