@@ -44,7 +44,7 @@ function SignIn() {
             email: data.email,
             password: data.password,
             rememberMe: data.rememberMe,
-            callbackURL: "/Feed",
+            callbackURL: "/feed",
         });
 
         setIsLoading(false);
