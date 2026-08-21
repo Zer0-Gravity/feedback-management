@@ -25,7 +25,7 @@ function CompanySwitcher({ companyDb }: { companyDb: Company[] }) {
                 value={companyId}
                 onValueChange={(val) => setCompany(val as string)}
             >
-                <SelectTrigger className="border bg-background-secondary border-border-clr p-2 h-10! md:w-50">
+                <SelectTrigger className="border bg-background-secondary border-border-clr p-2 h-10! md:w-60">
                     {selectedCompany ? (
                         <CompanyList
                             db={selectedCompany}
