@@ -11,6 +11,7 @@ import {
 import { useCompany } from "@/utils/store";
 import { Company } from "@/app/generated/prisma/client";
 import { Plus } from "lucide-react";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
 function CompanySwitcher({ companyDb }: { companyDb: Company[] }) {
     const { companyId, setCompany } = useCompany();
@@ -26,7 +27,10 @@ function CompanySwitcher({ companyDb }: { companyDb: Company[] }) {
             >
                 <SelectTrigger className="border bg-background-secondary border-border-clr p-2 h-10! md:w-50">
                     {selectedCompany ? (
-                        <CompanyList db={selectedCompany} />
+                        <CompanyList
+                            db={selectedCompany}
+                            css="hidden md:flex flex-col text-left"
+                        />
                     ) : (
                         <SelectValue placeholder="Choose company..." />
                     )}
@@ -35,7 +39,7 @@ function CompanySwitcher({ companyDb }: { companyDb: Company[] }) {
                 <SelectContent
                     align="start"
                     sideOffset={20}
-                    className="bg-background ring-0 border-border-clr rounded-md"
+                    className="bg-background ring-0 border-border-clr rounded-md w-full"
                 >
                     <SelectGroup>
                         <div className="space-y-2">
@@ -45,7 +49,10 @@ function CompanySwitcher({ companyDb }: { companyDb: Company[] }) {
                                     value={db.id}
                                     className="hover:bg-background-secondary"
                                 >
-                                    <CompanyList db={db} />
+                                    <CompanyList
+                                        db={db}
+                                        css="flex flex-col text-left"
+                                    />
                                 </SelectItem>
                             ))}
                             <button className="flex hover:bg-background-secondary gap-2 items-center p-3 justify-center w-full rounded-md">
@@ -62,19 +69,24 @@ function CompanySwitcher({ companyDb }: { companyDb: Company[] }) {
     );
 }
 
-function CompanyList({ db }: { db: Company }) {
+function CompanyList({ db, css }: { db: Company; css: string }) {
     return (
-        <div className="flex gap-2 items-center bg-transparent">
-            <div className="h-7 w-7 bg-button-clr text-white flex items-center justify-center rounded-lg">
-                <span className="text-[14px] font-bold">
-                    {db.name.slice(0, 2).toUpperCase()}
-                </span>
-            </div>
-            <div className="flex flex-col text-left">
-                <h1 className="text-[14px] font-bold text-primary-text">
+        <div className="flex gap-2 items-center">
+            <Avatar>
+                <AvatarImage />
+                <AvatarFallback className="bg-button-clr">
+                    <span className="font-semibold text-white">
+                        {db.name.slice(0, 2)}
+                    </span>
+                </AvatarFallback>
+            </Avatar>
+
+            {/* | Company Description | */}
+            <div className={css}>
+                <h1 className="text-primary-text font-semibold text-[14px]">
                     {db.name}
                 </h1>
-                <p className="text-[10px] text-secondary-text">{db.email}</p>
+                <p className="text-secondary-text text-[10px]">{db.email}</p>
             </div>
         </div>
     );

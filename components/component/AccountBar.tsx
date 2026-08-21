@@ -10,7 +10,7 @@ import {
     DropdownMenuLabel,
     DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
-import { ChevronUp, LogOut, Moon, Settings } from "lucide-react";
+import { ChevronUp, LogOut, Settings } from "lucide-react";
 import { headers } from "next/headers";
 
 export default async function AccountBar() {
