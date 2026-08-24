@@ -3,6 +3,7 @@
 import { Category } from "@/app/generated/prisma/enums";
 import SearchControl from "@/components/component/FeedComponent/SearchControl";
 import prisma from "@/lib/prisma";
+import { CATEGORY_CONFIG, STATUS_CONFIG } from "@/utils/func";
 import {
     Blocks,
     Bug,
@@ -33,6 +34,7 @@ async function Feed({ searchParams }: PageProps) {
         //prettier-ignore
         where: {
             AND: [
+                //Find a data that match the query based on user input for bot title and content
                 ...(query
                     ? [{
                         OR: [
@@ -67,9 +69,7 @@ async function Feed({ searchParams }: PageProps) {
                                 <span className="text-primary-text">
                                     {post.title}
                                 </span>
-                                <span className="text-primary-text text-[10px] p-1">
-                                    {post.status.replace("_", " ")}
-                                </span>
+                                <StatusBadge status={post.status} />
                             </h1>
 
                             <p className="text-secondary-text text-[12px] truncate">
@@ -106,23 +106,30 @@ async function Feed({ searchParams }: PageProps) {
 }
 
 function CategoryBadge({ category }: { category: string }) {
+    const currentCategory = CATEGORY_CONFIG[category.toLowerCase()];
+
     return (
         <div
-            className={`px-2 py-1 rounded-full flex gap-2 items-center ${category === "Feature_Request" && "text-button-clr"} ${category === "Integration" && "text-[#6A00FF]"} ${category === "Bug_Report" && "text-[#FB00FF]"}`}
+            style={{ color: `${currentCategory.color}` }}
+            className="px-2 py-1 rounded-full flex gap-2 items-center"
         >
-            {category === "Feature_Request" && (
-                <WandSparkles size={12} className="text-button-clr" />
-            )}
+            <currentCategory.icon size={12} />
+            <p className="text-[12px]">{currentCategory.label}</p>
+        </div>
+    );
+}
 
-            {category === "Integration" && (
-                <Blocks size={12} className="text-[#6A00FF]" />
-            )}
+function StatusBadge({ status }: { status: string }) {
+    const currentStatus = STATUS_CONFIG[status.toLowerCase()];
 
-            {category === "Bug_Report" && (
-                <Bug size={12} className="text-[#FB00FF]]" />
-            )}
-
-            <p className="text-[12px]">{category.replace("_", " ")}</p>
+    return (
+        <div
+            style={{
+                backgroundColor: `${currentStatus.color}`,
+            }}
+            className="text-[10px] p-0.5 rounded-full px-2 py-0.5"
+        >
+            <p className="text-white">{currentStatus.label}</p>
         </div>
     );
 }
