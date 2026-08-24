@@ -15,6 +15,7 @@
         "@prisma/client": "^7.9.1",
         "@radix-ui/react-one-time-password-field": "^0.1.16",
         "@radix-ui/react-password-toggle-field": "^0.1.11",
+        "@tanstack/react-table": "^8.21.3",
         "better-auth": "^1.7.1",
         "class-variance-authority": "^0.7.1",
         "clsx": "^2.1.1",

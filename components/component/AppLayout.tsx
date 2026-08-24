@@ -46,7 +46,7 @@ async function AppLayout({ children }: { children: ReactNode }) {
             </aside>
 
             {/* | Main Content | */}
-            <section className="flex-1 h-full bg-background-secondary">
+            <section className="flex-1 max-h-full overflow-hidden bg-background-secondary">
                 {children}
             </section>
 

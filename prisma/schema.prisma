@@ -14,9 +14,17 @@ datasource db {
 
 enum StatusPost {
   Backlog
+  Accepted
+  Rejected
   In_Progress
-  In_Review
+  Review
   Completed
+}
+
+enum Category {
+  Feature_Request
+  Integration
+  Bug_Report
 }
 
 enum UserRole {
@@ -76,6 +84,7 @@ model Post {
   content    String
   created_at DateTime   @default(now())
   status     StatusPost @default(Backlog)
+  category   Category   @default(Feature_Request)
 
   user     User      @relation(fields: [author_id], references: [id], onDelete: Cascade)
   comments Comment[]

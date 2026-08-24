@@ -14,7 +14,7 @@
 
 :root {
     --background: #ffffff;
-    --background-secondary: #e4e5e6;
+    --background-secondary: #eff0f1;
     --primary-text: #0f172a;
     --secondary-text: #64748b;
     --button-clr: #ff6b1a;
@@ -29,7 +29,7 @@
     --primary-text: #f4f4f5;
     --secondary-text: #a1a1aa;
     --button-clr: #ff6b1a;
-    --card-clr: #18181b;
+    --card-clr: #0f0f11;
     --border-clr: #27272a;
     --text-field: #27272a;
 }
@@ -50,4 +50,8 @@ body {
 
 .error-message {
     @apply text-[10px] text-red-500 font-medium;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+    display: none;
 }
