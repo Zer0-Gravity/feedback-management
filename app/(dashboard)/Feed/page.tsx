@@ -7,6 +7,7 @@ import prisma from "@/lib/prisma";
 import { CATEGORY_CONFIG, STATUS_CONFIG } from "@/utils/func";
 import { MessageCircle, Triangle } from "lucide-react";
 import CategoryControl from "@/components/component/FilterComponent/CategoryControl";
+import SortControl from "@/components/component/FilterComponent/SortControl";
 
 type PageProps = {
     searchParams: Promise<{
@@ -20,10 +21,21 @@ type PageProps = {
 async function Feed({ searchParams }: PageProps) {
     const {
         query = "",
-        sort = "newest",
+        sort = "",
         status = "",
         category = "",
     } = await searchParams;
+
+    //Map orderBy into a index selector
+    const sortMap: Record<string, any> = {
+        newest: { created_at: "desc" },
+        oldest: { created_at: "asc" },
+        title: { title: "asc" },
+        popular: { upVotes: { _count: "desc" } },
+    };
+
+    //Set the index into the variable
+    const orderByList = sortMap[sort.toLowerCase()];
 
     const postDb = await prisma.post.findMany({
         //prettier-ignore
@@ -41,6 +53,7 @@ async function Feed({ searchParams }: PageProps) {
                 ...(status ? [{status}] : [])
             ],
         },
+        orderBy: orderByList,
         include: { _count: { select: { upVotes: true, comments: true } } }, //Include bot upvote and comment count
     });
 
@@ -56,6 +69,7 @@ async function Feed({ searchParams }: PageProps) {
                     <div className="flex gap-2">
                         <StatusControl status={status} />
                         <CategoryControl category={category} />
+                        <SortControl sort={sort} />
                     </div>
                 </div>
 
@@ -66,12 +80,14 @@ async function Feed({ searchParams }: PageProps) {
                             key={post.id}
                             className="w-full h-27 bg-card-clr p-3 rounded-lg flex flex-col justify-between gap-2"
                         >
-                            <h1 className="text-[14px] font-medium flex gap-3 items-center">
-                                <span className="text-primary-text">
-                                    {post.title}
-                                </span>
-                                <StatusBadge status={post.status} />
-                            </h1>
+                            <div>
+                                <div className="text-[14px] font-medium flex gap-3 items-center">
+                                    <h1 className="text-primary-text">
+                                        {post.title}
+                                    </h1>
+                                    <StatusBadge status={post.status} />
+                                </div>
+                            </div>
 
                             <p className="text-secondary-text text-[12px] truncate">
                                 {post.content}

@@ -43,7 +43,7 @@ function CategoryControl({ category }: { category: string }) {
             <SelectContent align="end" className="bg-background ring-0">
                 <SelectGroup>
                     <SelectLabel className="text-primary-text text-[12px]">
-                        Status
+                        Category
                     </SelectLabel>
                     <SelectItem value="All" className={itemStyle}>
                         All
