@@ -35,7 +35,7 @@ async function Feed({ searchParams }: PageProps) {
     };
 
     //Set the index into the variable
-    const orderByList = sortMap[sort.toLowerCase()];
+    const orderByList = sortMap[sort.toLowerCase()] || { created_at: "desc" };
 
     const postDb = await prisma.post.findMany({
         //prettier-ignore
@@ -64,7 +64,7 @@ async function Feed({ searchParams }: PageProps) {
                     Feed
                 </h1>
 
-                <div className="flex flex-col md:flex-row md:justify-between items-center">
+                <div className="flex flex-col gap-2 md:flex-row md:justify-between items-center w-full">
                     <SearchControl defVal={query} />
                     <div className="flex gap-2">
                         <StatusControl status={status} />

@@ -12,12 +12,20 @@ import { useCompany } from "@/utils/store";
 import { Company } from "@/app/generated/prisma/client";
 import { Plus } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { useEffect } from "react";
 
 function CompanySwitcher({ companyDb }: { companyDb: Company[] }) {
-    const { companyId, setCompany } = useCompany();
+    const { companyId, setCompany, setDefault } = useCompany();
 
     //Grab the selected company data
     const selectedCompany = companyDb.find((db) => db.id === companyId);
+
+    //If the company database empty set the company id back to null
+    useEffect(() => {
+        if (companyDb.length === 0) {
+            setDefault();
+        }
+    }, [companyDb, setDefault]);
 
     return (
         <div>

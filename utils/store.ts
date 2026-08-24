@@ -4,6 +4,7 @@ import { persist } from "zustand/middleware";
 interface CompanyType {
     companyId: string | null;
     setCompany: (id: string) => void;
+    setDefault: () => void;
 }
 
 interface ThemeType {
@@ -17,6 +18,7 @@ export const useCompany = create<CompanyType>()(
         (set) => ({
             companyId: null,
             setCompany: (id) => set({ companyId: id }),
+            setDefault: () => set({ companyId: null }),
         }),
         { name: "company-select" },
     ),
