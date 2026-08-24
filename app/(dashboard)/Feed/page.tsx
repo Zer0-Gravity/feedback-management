@@ -1,11 +1,12 @@
 "use server";
 
 import { Category, StatusPost } from "@/app/generated/prisma/enums";
-import StatusControl from "@/components/component/FeedComponent/StatusControl";
-import SearchControl from "@/components/component/FeedComponent/SearchControl";
+import StatusControl from "@/components/component/FilterComponent/StatusControl";
+import SearchControl from "@/components/component/FilterComponent/SearchControl";
 import prisma from "@/lib/prisma";
 import { CATEGORY_CONFIG, STATUS_CONFIG } from "@/utils/func";
 import { MessageCircle, Triangle } from "lucide-react";
+import CategoryControl from "@/components/component/FilterComponent/CategoryControl";
 
 type PageProps = {
     searchParams: Promise<{
@@ -52,8 +53,9 @@ async function Feed({ searchParams }: PageProps) {
 
                 <div className="flex flex-col md:flex-row md:justify-between items-center">
                     <SearchControl defVal={query} />
-                    <div>
+                    <div className="flex gap-2">
                         <StatusControl status={status} />
+                        <CategoryControl category={category} />
                     </div>
                 </div>
 
