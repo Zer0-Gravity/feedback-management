@@ -1,22 +1,16 @@
 "use server";
 
-import { Category } from "@/app/generated/prisma/enums";
+import { Category, StatusPost } from "@/app/generated/prisma/enums";
+import StatusControl from "@/components/component/FeedComponent/StatusControl";
 import SearchControl from "@/components/component/FeedComponent/SearchControl";
 import prisma from "@/lib/prisma";
 import { CATEGORY_CONFIG, STATUS_CONFIG } from "@/utils/func";
-import {
-    Blocks,
-    Bug,
-    Dot,
-    MessageCircle,
-    Triangle,
-    WandSparkles,
-} from "lucide-react";
+import { MessageCircle, Triangle } from "lucide-react";
 
 type PageProps = {
     searchParams: Promise<{
         query?: string;
-        status?: string;
+        status?: StatusPost;
         category?: Category;
         sort?: string;
     }>;
@@ -26,8 +20,8 @@ async function Feed({ searchParams }: PageProps) {
     const {
         query = "",
         sort = "newest",
-        status,
-        category,
+        status = "",
+        category = "",
     } = await searchParams;
 
     const postDb = await prisma.post.findMany({
@@ -43,9 +37,10 @@ async function Feed({ searchParams }: PageProps) {
                             ],
                         }] : []),
                 ...(category ? [{ category }] : []),
+                ...(status ? [{status}] : [])
             ],
         },
-        include: { _count: { select: { upVotes: true, comments: true } } },
+        include: { _count: { select: { upVotes: true, comments: true } } }, //Include bot upvote and comment count
     });
 
     return (
@@ -55,10 +50,14 @@ async function Feed({ searchParams }: PageProps) {
                     Feed
                 </h1>
 
-                <div>
+                <div className="flex flex-col md:flex-row md:justify-between items-center">
                     <SearchControl defVal={query} />
+                    <div>
+                        <StatusControl status={status} />
+                    </div>
                 </div>
 
+                {/* Post card sections */}
                 <div className="flex-1 flex overflow-y-auto flex-col gap-2 hide-scrollbar">
                     {postDb.map((post) => (
                         <div
