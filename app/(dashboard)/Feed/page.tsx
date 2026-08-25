@@ -8,6 +8,7 @@ import { CATEGORY_CONFIG, STATUS_CONFIG } from "@/utils/func";
 import { MessageCircle, Triangle } from "lucide-react";
 import CategoryControl from "@/components/component/FilterComponent/CategoryControl";
 import SortControl from "@/components/component/FilterComponent/SortControl";
+import { formatDistanceToNow } from "date-fns";
 
 type PageProps = {
     searchParams: Promise<{
@@ -64,9 +65,9 @@ async function Feed({ searchParams }: PageProps) {
                     Feed
                 </h1>
 
-                <div className="flex flex-col gap-2 md:flex-row md:justify-between items-center w-full">
+                <div className="flex flex-col gap-2 lg:flex-row md:justify-between md:items-center">
                     <SearchControl defVal={query} />
-                    <div className="flex gap-2">
+                    <div className="flex gap-2 justify-end">
                         <StatusControl status={status} />
                         <CategoryControl category={category} />
                         <SortControl sort={sort} />
@@ -93,26 +94,40 @@ async function Feed({ searchParams }: PageProps) {
                                 {post.content}
                             </p>
 
-                            <div className="flex items-center gap-5">
-                                <p className="flex gap-2 items-center">
-                                    <MessageCircle
-                                        size={12}
-                                        className="text-primary-text"
-                                    />
-                                    <span className="text-primary-text text-[12px]">
-                                        {post._count.comments} Comments
-                                    </span>
+                            <div className="flex items-center justify-between">
+                                <div className="flex items-center gap-5">
+                                    <div className="flex gap-2 items-center">
+                                        <MessageCircle
+                                            size={12}
+                                            className="text-primary-text"
+                                        />
+                                        <div className="text-primary-text text-[12px] flex gap-2 items-center">
+                                            <p>{post._count.comments}</p>{" "}
+                                            <p className="hidden sm:flex">
+                                                Comment
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <button className="flex gap-2 items-center">
+                                        <Triangle
+                                            size={12}
+                                            className="text-primary-text"
+                                        />
+                                        <div className="text-primary-text text-[12px] flex items-center gap-2">
+                                            <p>{post._count.upVotes}</p>{" "}
+                                            <p className="hidden sm:flex">
+                                                Upvote
+                                            </p>
+                                        </div>
+                                    </button>
+                                    <CategoryBadge category={post.category} />
+                                </div>
+
+                                <p className="text-primary-text text-[12px]">
+                                    {formatDistanceToNow(post.created_at, {
+                                        addSuffix: true,
+                                    })}
                                 </p>
-                                <button className="flex gap-2 items-center">
-                                    <Triangle
-                                        size={12}
-                                        className="text-primary-text"
-                                    />
-                                    <span className="text-primary-text text-[12px]">
-                                        {post._count.upVotes} Upvote
-                                    </span>
-                                </button>
-                                <CategoryBadge category={post.category} />
                             </div>
                         </div>
                     ))}

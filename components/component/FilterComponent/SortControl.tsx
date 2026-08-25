@@ -37,7 +37,7 @@ function SortControl({ sort }: { sort: string }) {
             value={sort}
             onValueChange={(val) => handleStatus(val as string)}
         >
-            <SelectTrigger className="flex gap-2 items-center bg-button-clr text-white p-2 rounded-lg">
+            <SelectTrigger className="flex gap-2 items-center bg-button-clr text-white p-2 rounded-lg border-0">
                 <SelectValue placeholder="Sort By" />
             </SelectTrigger>
 

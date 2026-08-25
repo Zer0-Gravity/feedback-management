@@ -40,7 +40,10 @@ function CompanySwitcher({ companyDb }: { companyDb: Company[] }) {
                             css="hidden md:flex flex-col text-left"
                         />
                     ) : (
-                        <SelectValue placeholder="Choose company..." />
+                        <SelectValue
+                            placeholder="Organization"
+                            className="text-primary-text"
+                        />
                     )}
                 </SelectTrigger>
 
