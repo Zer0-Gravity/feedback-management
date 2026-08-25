@@ -21,7 +21,7 @@ function SearchControl({ defVal }: { defVal: string | undefined }) {
                 type="text"
                 value={defVal}
                 onChange={(e) => handleSearch(e.target.value)}
-                className="h-12 w-full bg-background sm:w-75 border border-border-clr rounded-md p-3 text-primary-text text-[14px]"
+                className="h-10 w-full bg-background sm:w-75 border border-border-clr rounded-md p-3 text-primary-text text-[14px]"
                 placeholder="Search post.."
             />
         </div>

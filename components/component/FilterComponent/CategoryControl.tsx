@@ -37,7 +37,7 @@ function CategoryControl({ category }: { category: string }) {
             onValueChange={(val) => handleStatus(val as string)}
         >
             <SelectTrigger className="flex gap-2 items-center bg-button-clr text-white p-2 rounded-lg border-0">
-                <SelectValue placeholder="Category" />
+                <SelectValue placeholder="Category" className="text-[12px]" />
             </SelectTrigger>
 
             <SelectContent align="end" className="bg-background ring-0">
