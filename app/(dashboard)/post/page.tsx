@@ -20,6 +20,7 @@ async function Post() {
 
     //Map the data based on the column order
     const mappedPostDb: UserPost[] = userPostDb.map((post) => ({
+        id: post.id,
         title: post.title,
         dateSubmitted: format(post.created_at, "PPPP"),
         comment: post._count.comments,
@@ -32,7 +33,7 @@ async function Post() {
 
     return (
         <PageWrapper>
-            <h1 className="text-[30px] font-bold text-primary-text">
+            <h1 className="text-[20px] md:text-[30px] font-bold text-primary-text">
                 Your post
             </h1>
 

@@ -7,6 +7,7 @@ import { createColumnHelper } from "@tanstack/react-table";
 import { MessageCircle, Triangle } from "lucide-react";
 
 export interface UserPost {
+    id: string;
     title: string;
     dateSubmitted: string;
     comment: number;
