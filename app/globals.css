@@ -55,3 +55,12 @@ body {
 .hide-scrollbar::-webkit-scrollbar {
     display: none;
 }
+
+.custom-scrollbar::-webkit-scrollbar {
+    height: 5px;
+    background-color: var(--background);
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: var(--button-clr);
+}

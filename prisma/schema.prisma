@@ -61,6 +61,7 @@ model Company {
   created_at DateTime @default(now())
 
   memberships Membership[]
+  posts       Post[]
 }
 
 model Membership {
@@ -80,6 +81,7 @@ model Membership {
 model Post {
   id         String     @id @default(nanoid())
   author_id  String
+  company_id String
   title      String
   content    String
   created_at DateTime   @default(now())
@@ -87,10 +89,12 @@ model Post {
   category   Category   @default(Feature_Request)
 
   user     User      @relation(fields: [author_id], references: [id], onDelete: Cascade)
+  company  Company   @relation(fields: [company_id], references: [id], onDelete: Cascade)
   comments Comment[]
   upVotes  UpVote[]
 
   @@index([author_id])
+  @@index([company_id])
 }
 
 model Comment {
