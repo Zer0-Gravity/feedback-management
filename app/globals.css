@@ -64,3 +64,18 @@ body {
 .custom-scrollbar::-webkit-scrollbar-thumb {
     background-color: var(--button-clr);
 }
+
+/* Tip tap class style */
+
+.tiptap h1 {
+    font-size: 24px;
+    font-weight: 700;
+}
+.tiptap h2 {
+    font-size: 20px;
+    font-weight: 700;
+}
+.tiptap h3 {
+    font-size: 18px;
+    font-weight: 700;
+}

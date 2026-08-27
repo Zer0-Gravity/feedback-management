@@ -23,8 +23,9 @@ import {
     TableRow,
 } from "@/components/ui/table";
 import { useState } from "react";
-import { PackageOpen } from "lucide-react";
+import { PackageOpen, Plus } from "lucide-react";
 import { DeletePost } from "./actions";
+import Link from "next/link";
 
 function TableData({
     columns,
@@ -76,23 +77,35 @@ function TableData({
                 {/* | Display total selected row  | 
                     | Bulk delete button |
                 */}
-                <div>
-                    {selectedRows.rows.length !== 0 && (
-                        <div className="flex gap-2 items-center">
-                            <p className="text-primary-text text-[12px]">{`${selectedRows.rows.length} out off ${table.getPreSelectedRowModel().rows.length} selected`}</p>
+                <div className="flex items-center gap-2">
+                    <div>
+                        {selectedRows.rows.length !== 0 && (
+                            <div className="flex gap-2 items-center">
+                                <p className="text-primary-text text-[12px]">{`${selectedRows.rows.length} out off ${table.getPreSelectedRowModel().rows.length} selected`}</p>
 
-                            <button
-                                onClick={() =>
-                                    DeletePost(
-                                        selectedRows.rows.flatMap((r) => r.id), // Get each selected row id
-                                    )
-                                }
-                                className="bg-red-500 px-2 py-1 rounded-lg text-[12px] text-white"
-                            >
-                                Delete {selectedRows.rows.length}
-                            </button>
-                        </div>
-                    )}
+                                <button
+                                    onClick={() =>
+                                        DeletePost(
+                                            selectedRows.rows.flatMap(
+                                                (r) => r.id,
+                                            ), // Get each selected row id
+                                        )
+                                    }
+                                    className="bg-red-500 px-2 py-1 rounded-md text-[14px] text-white"
+                                >
+                                    Delete {selectedRows.rows.length}
+                                </button>
+                            </div>
+                        )}
+                    </div>
+
+                    <Link
+                        href={"/post/new"}
+                        className="bg-button-clr px-2 py-1 rounded-md text-[14px] text-primary-text flex items-center gap-2"
+                    >
+                        <Plus size={14} />
+                        <span>Post</span>
+                    </Link>
                 </div>
             </div>
 
