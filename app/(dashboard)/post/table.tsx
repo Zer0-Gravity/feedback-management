@@ -7,7 +7,10 @@ import {
     getCoreRowModel,
     getFilteredRowModel,
     getPaginationRowModel,
+    getSortedRowModel,
+    GlobalFilterTableState,
     RowSelectionState,
+    SortingState,
     useReactTable,
 } from "@tanstack/react-table";
 import { UserPost } from "./column";
@@ -21,7 +24,6 @@ import {
 } from "@/components/ui/table";
 import { useState } from "react";
 import { PackageOpen } from "lucide-react";
-import prisma from "@/lib/prisma";
 import { DeletePost } from "./actions";
 
 function TableData({
@@ -31,16 +33,19 @@ function TableData({
     columns: ColumnDef<UserPost, any>[];
     data: any;
 }) {
-    const [columnFilters, setColumnsFilter] = useState<ColumnFiltersState>([]);
+    const [globalFilter, setGlobalFilter] = useState<any>([]);
     const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
+    const [sorting, setSorting] = useState<SortingState>([]);
     const table = useReactTable({
         data,
         columns,
         getCoreRowModel: getCoreRowModel(),
         getPaginationRowModel: getPaginationRowModel(),
         getFilteredRowModel: getFilteredRowModel(),
-        onColumnFiltersChange: setColumnsFilter,
+        onGlobalFilterChange: setGlobalFilter,
         onRowSelectionChange: setRowSelection,
+        getSortedRowModel: getSortedRowModel(),
+        onSortingChange: setSorting,
         getRowId: (row) => row.id,
         initialState: {
             pagination: {
@@ -49,8 +54,9 @@ function TableData({
             },
         },
         state: {
-            columnFilters,
+            globalFilter,
             rowSelection,
+            sorting,
         },
     });
 
@@ -63,15 +69,13 @@ function TableData({
                     type="text"
                     className="border border-border-clr rounded-lg bg-background h-10 w-full md:w-60 text-primary-text text-[12px] p-2"
                     placeholder="Search post.."
-                    value={
-                        (table
-                            .getColumn("title")
-                            ?.getFilterValue() as string) ?? ""
-                    }
-                    onChange={(e) =>
-                        table.getColumn("title")?.setFilterValue(e.target.value)
-                    }
+                    value={globalFilter}
+                    onChange={(e) => table.setGlobalFilter(e.target.value)}
                 />
+
+                {/* | Display total selected row  | 
+                    | Bulk delete button |
+                */}
                 <div>
                     {selectedRows.rows.length !== 0 && (
                         <div className="flex gap-2 items-center">
@@ -80,7 +84,7 @@ function TableData({
                             <button
                                 onClick={() =>
                                     DeletePost(
-                                        selectedRows.rows.flatMap((r) => r.id),
+                                        selectedRows.rows.flatMap((r) => r.id), // Get each selected row id
                                     )
                                 }
                                 className="bg-red-500 px-2 py-1 rounded-lg text-[12px] text-white"

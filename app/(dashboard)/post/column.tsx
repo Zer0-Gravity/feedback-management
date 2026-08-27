@@ -4,7 +4,7 @@ import { Category, StatusPost } from "@/app/generated/prisma/client";
 import { Checkbox } from "@/components/ui/checkbox";
 import { CATEGORY_CONFIG, STATUS_CONFIG } from "@/utils/func";
 import { createColumnHelper } from "@tanstack/react-table";
-import { MessageCircle, Triangle } from "lucide-react";
+import { ArrowUpDown, MessageCircle, Triangle } from "lucide-react";
 
 export interface UserPost {
     id: string;
@@ -46,9 +46,29 @@ export const columns = [
             />
         ),
     }),
-    columnHelper.accessor("title", { header: () => <span>Title</span> }),
+    columnHelper.accessor("title", {
+        header: ({ column }) => (
+            <button
+                className="flex gap-2 items-center w-full h-full"
+                onClick={column.getToggleSortingHandler()}
+            >
+                <span>Title</span>
+                <ArrowUpDown size={12} />
+            </button>
+        ),
+        sortingFn: "alphanumericCaseSensitive",
+    }),
     columnHelper.accessor("dateSubmitted", {
-        header: () => <span>Date Submitted</span>,
+        header: ({ column }) => (
+            <button
+                className="flex gap-2 items-center w-full h-full"
+                onClick={column.getToggleSortingHandler()}
+            >
+                <span>Date Submitted</span>
+                <ArrowUpDown size={12} />
+            </button>
+        ),
+        sortingFn: "datetime",
     }),
     columnHelper.accessor("comment", {
         header: () => (
