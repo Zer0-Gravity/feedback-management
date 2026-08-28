@@ -21,6 +21,7 @@
     --card-clr: #ffffff;
     --border-clr: #e2e8f0;
     --text-field: #f1f5f9;
+    --code-bg: #e1e1e1;
 }
 
 .dark {
@@ -32,6 +33,7 @@
     --card-clr: #0f0f11;
     --border-clr: #27272a;
     --text-field: #27272a;
+    --code-bg: #2e2e2e;
 }
 
 body {
@@ -67,15 +69,42 @@ body {
 
 /* Tip tap class style */
 
-.tiptap h1 {
-    font-size: 24px;
-    font-weight: 700;
-}
-.tiptap h2 {
-    font-size: 20px;
-    font-weight: 700;
-}
-.tiptap h3 {
-    font-size: 18px;
-    font-weight: 700;
+.tiptap {
+    h1 {
+        font-size: 24px;
+        font-weight: 700;
+    }
+
+    h2 {
+        font-size: 20px;
+        font-weight: 700;
+    }
+
+    h3 {
+        font-size: 18px;
+        font-weight: 700;
+    }
+
+    pre {
+        background-color: var(--code-bg);
+        color: var(--text-primary-text);
+        padding: 5px;
+        border-radius: 5px;
+
+        pre code {
+            background-color: none;
+        }
+    }
+
+    ul,
+    ol {
+        list-style-type: circle;
+        padding: 0 1rem;
+        margin: 1.25rem 1rem 1.25rem 0.4rem;
+
+        li p {
+            margin-top: 0.25em;
+            margin-bottom: 0.25em;
+        }
+    }
 }
