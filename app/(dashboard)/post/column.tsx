@@ -4,7 +4,13 @@ import { Category, StatusPost } from "@/app/generated/prisma/client";
 import { Checkbox } from "@/components/ui/checkbox";
 import { CATEGORY_CONFIG, STATUS_CONFIG } from "@/utils/func";
 import { createColumnHelper } from "@tanstack/react-table";
-import { ArrowUpDown, MessageCircle, Triangle } from "lucide-react";
+import {
+    ArrowUpDown,
+    ExternalLink,
+    MessageCircle,
+    Triangle,
+} from "lucide-react";
+import Link from "next/link";
 
 export interface UserPost {
     id: string;
@@ -130,5 +136,14 @@ export const columns = [
     }),
     columnHelper.accessor("companyEmail", {
         header: () => <span>email</span>,
+    }),
+    columnHelper.display({
+        id: "viewLink",
+        header: () => <span>View</span>,
+        cell: ({ row }) => (
+            <Link href={`post/${row.original.id}`}>
+                <ExternalLink size={12} />
+            </Link>
+        ),
     }),
 ];

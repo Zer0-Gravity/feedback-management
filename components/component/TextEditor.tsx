@@ -139,7 +139,10 @@ function TextEditor() {
             <EditorButton editor={editor} editorState={editorState} />
             <EditorContent editor={editor} className="min-h-[600px]" />
             <div className="flex gap-2 items-center justify-end">
-                <button className="border border-button-clr text-button-clr p-2 rounded-lg text-[14px]">
+                <button
+                    type="button"
+                    className="border border-button-clr text-button-clr p-2 rounded-lg text-[14px]"
+                >
                     Cancel
                 </button>
                 <button
