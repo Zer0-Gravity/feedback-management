@@ -54,6 +54,10 @@ body {
     @apply text-[10px] text-red-500 font-medium;
 }
 
+.select-item-style {
+    @apply text-primary-text text-[14px] data-highlighted:bg-button-clr data-highlighted:text-white;
+}
+
 .hide-scrollbar::-webkit-scrollbar {
     display: none;
 }
