@@ -17,7 +17,6 @@ async function PostDetail({ params }: PostDetail) {
         where: { id },
         include: {
             user: true,
-            comments: { include: { user: true } },
             _count: { select: { comments: true, upVotes: true } },
         },
     });
@@ -82,7 +81,7 @@ async function PostDetail({ params }: PostDetail) {
 
                 {/* | Comment Section | */}
 
-                <CommentSection comments={postDetailDb.comments} />
+                <CommentSection postId={postDetailDb.id} />
             </div>
         </PageWrapper>
     );

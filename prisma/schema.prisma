@@ -108,8 +108,12 @@ model Comment {
   user User @relation(fields: [author_id], references: [id], onDelete: Cascade)
   post Post @relation(fields: [post_id], references: [id], onDelete: Cascade)
 
+  parent  Comment?  @relation("CommentToReplies", fields: [parent_id], references: [id], onDelete: Cascade)
+  replies Comment[] @relation("CommentToReplies")
+
   @@index([author_id])
   @@index([post_id])
+  @@index([parent_id])
 }
 
 model UpVote {
