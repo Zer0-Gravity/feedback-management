@@ -1,5 +1,5 @@
 import PageWrapper from "@/components/component/PageWrapper";
-import TextEditor from "@/components/component/TextEditor";
+import TextEditor from "@/components/component/TextEditor/TextEditor";
 
 async function NewPost() {
     return (

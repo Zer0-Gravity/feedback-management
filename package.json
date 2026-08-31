@@ -16,6 +16,7 @@
         "@radix-ui/react-one-time-password-field": "^0.1.16",
         "@radix-ui/react-password-toggle-field": "^0.1.11",
         "@tanstack/react-table": "^8.21.3",
+        "@tiptap/extension-placeholder": "^3.30.5",
         "@tiptap/pm": "^3.30.4",
         "@tiptap/react": "^3.30.4",
         "@tiptap/starter-kit": "^3.30.4",

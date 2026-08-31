@@ -1,3 +1,4 @@
+import CommentSection from "@/components/component/Comment/CommentSection";
 import PageWrapper from "@/components/component/PageWrapper";
 import prisma from "@/lib/prisma";
 import { STATUS_CONFIG } from "@/utils/func";
@@ -34,6 +35,7 @@ async function PostDetail({ params }: PostDetail) {
                     <ArrowLeft size={14} /> <span>Back</span>
                 </button>
 
+                {/* | TItle and info | */}
                 <div>
                     <h1 className="text-primary-text text-[22px] font-bold">
                         {postDetailDb.title}
@@ -54,11 +56,15 @@ async function PostDetail({ params }: PostDetail) {
                         </div>
                     </div>
                 </div>
+
+                {/* | Content | */}
                 <div>
                     <p className="text-primary-text text-[14px]">
                         {postDetailDb.content}
                     </p>
                 </div>
+
+                {/* | Comment and Upvote render | */}
                 <div className="flex items-center gap-5">
                     <div className="flex gap-2 items-center text-secondary-text">
                         <MessageCircle size={12} />
@@ -75,6 +81,10 @@ async function PostDetail({ params }: PostDetail) {
                         </p>
                     </div>
                 </div>
+
+                {/* | Comment Section | */}
+
+                <CommentSection />
             </div>
         </PageWrapper>
     );

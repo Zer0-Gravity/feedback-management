@@ -14,7 +14,7 @@ import {
     SelectLabel,
     SelectTrigger,
     SelectValue,
-} from "../ui/select";
+} from "../../ui/select";
 
 const schema = yup.object({
     title: yup.string().required("Title can't be empty"),
@@ -37,21 +37,6 @@ function TextEditor() {
                 class: "bg-background p-5 border border-border-clr text-primary-text text-[16px] min-h-full outline-none rounded-lg",
             },
         },
-    });
-
-    // Editor button state
-    const editorState = useEditorState({
-        editor,
-        selector: (ctx) => ({
-            isHeading1: ctx.editor?.isActive("heading", { level: 1 }) ?? false,
-            isHeading2: ctx.editor?.isActive("heading", { level: 2 }) ?? false,
-            isHeading3: ctx.editor?.isActive("heading", { level: 3 }) ?? false,
-            isBulletList: ctx.editor?.isActive("bulletList") ?? false,
-            isBold: ctx.editor?.isActive("bold") ?? false,
-            isUnderline: ctx.editor?.isActive("underline") ?? false,
-            isItalic: ctx.editor?.isActive("italic") ?? false,
-            isCodeBlock: ctx.editor?.isActive("codeBlock") ?? false,
-        }),
     });
 
     if (!editor) {
@@ -136,7 +121,7 @@ function TextEditor() {
                     )}
                 />
             </div>
-            <EditorButton editor={editor} editorState={editorState} />
+            <EditorButton editor={editor} />
             <EditorContent editor={editor} className="min-h-[600px]" />
             <div className="flex gap-2 items-center justify-end">
                 <button

@@ -1,3 +1,4 @@
+import { useEditorState } from "@tiptap/react";
 import {
     Bold,
     Code,
@@ -10,13 +11,21 @@ import {
 } from "lucide-react";
 import React from "react";
 
-function EditorButton({
-    editor,
-    editorState,
-}: {
-    editor: any;
-    editorState: any;
-}) {
+function EditorButton({ editor }: { editor: any }) {
+    // Editor button state
+    const editorState = useEditorState({
+        editor,
+        selector: (ctx) => ({
+            isHeading1: ctx.editor?.isActive("heading", { level: 1 }) ?? false,
+            isHeading2: ctx.editor?.isActive("heading", { level: 2 }) ?? false,
+            isHeading3: ctx.editor?.isActive("heading", { level: 3 }) ?? false,
+            isBulletList: ctx.editor?.isActive("bulletList") ?? false,
+            isBold: ctx.editor?.isActive("bold") ?? false,
+            isUnderline: ctx.editor?.isActive("underline") ?? false,
+            isItalic: ctx.editor?.isActive("italic") ?? false,
+            isCodeBlock: ctx.editor?.isActive("codeBlock") ?? false,
+        }),
+    });
     return (
         <div className="flex gap-2 items-center">
             <button
