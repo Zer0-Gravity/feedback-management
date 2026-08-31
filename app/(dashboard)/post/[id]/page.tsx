@@ -17,6 +17,7 @@ async function PostDetail({ params }: PostDetail) {
         where: { id },
         include: {
             user: true,
+            comments: { include: { user: true } },
             _count: { select: { comments: true, upVotes: true } },
         },
     });
@@ -30,22 +31,19 @@ async function PostDetail({ params }: PostDetail) {
 
     return (
         <PageWrapper>
-            <div className="flex flex-col gap-3">
+            <div className="flex-1 flex flex-col gap-3 min-h-0 overflow-y-auto hide-scrollbar">
                 <button className="flex gap-2 items-center text-primary-text">
                     <ArrowLeft size={14} /> <span>Back</span>
                 </button>
 
                 {/* | TItle and info | */}
                 <div>
-                    <h1 className="text-primary-text text-[22px] font-bold">
+                    <h1 className="text-primary-text text-[20px] md:text-[22px] font-bold">
                         {postDetailDb.title}
                     </h1>
                     <div className="flex justify-between">
                         <p className="text-secondary-text text-[12px]">{`Submitted ${formatDistanceToNow(postDetailDb.created_at, { addSuffix: true })} by ${postDetailDb.user.name}`}</p>
                         <div className="flex gap-2 items-center">
-                            <p className="text-[12px] font-bold text-secondary-text">
-                                Status :
-                            </p>
                             <div
                                 style={{ backgroundColor: `${status.color}` }}
                                 className="h-2 w-2 rounded-full"
@@ -58,7 +56,7 @@ async function PostDetail({ params }: PostDetail) {
                 </div>
 
                 {/* | Content | */}
-                <div>
+                <div className="mb-5">
                     <p className="text-primary-text text-[14px]">
                         {postDetailDb.content}
                     </p>
@@ -84,7 +82,7 @@ async function PostDetail({ params }: PostDetail) {
 
                 {/* | Comment Section | */}
 
-                <CommentSection />
+                <CommentSection comments={postDetailDb.comments} />
             </div>
         </PageWrapper>
     );

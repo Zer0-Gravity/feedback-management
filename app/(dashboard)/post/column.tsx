@@ -1,4 +1,4 @@
-"use cliagent";
+"use client";
 
 import { Category, StatusPost } from "@/app/generated/prisma/client";
 import { Checkbox } from "@/components/ui/checkbox";

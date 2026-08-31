@@ -83,7 +83,7 @@ model Post {
   author_id  String
   company_id String
   title      String
-  content    String
+  content    String?
   created_at DateTime   @default(now())
   status     StatusPost @default(Backlog)
   category   Category   @default(Feature_Request)
@@ -101,7 +101,7 @@ model Comment {
   id         String   @id @default(nanoid())
   author_id  String
   post_id    String
-  parent_id  String
+  parent_id  String?
   content    String
   created_at DateTime @default(now())
 

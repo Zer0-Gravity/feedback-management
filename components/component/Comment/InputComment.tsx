@@ -4,8 +4,9 @@ import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Placeholder from "@tiptap/extension-placeholder";
 import EditorButton from "../TextEditor/EditorButton";
+import { ReactNode } from "react";
 
-function InputComment() {
+function InputComment({ children }: { children?: ReactNode }) {
     const editor = useEditor({
         extensions: [
             StarterKit,
@@ -13,7 +14,7 @@ function InputComment() {
         ],
         editorProps: {
             attributes: {
-                class: "w-full rounded-lg border border-border-clr p-3 text-[14px] text-primary-text",
+                class: "w-full rounded-lg border border-border-clr p-3 text-[14px] text-primary-text outline-none",
             },
         },
     });
@@ -23,9 +24,12 @@ function InputComment() {
             <EditorContent editor={editor} placeholder="Write a comment" />
             <div className="flex justify-between items-center">
                 <EditorButton editor={editor} />
-                <button className="flex gap-1.5 rounded-full items-center justify-center text-white bg-button-clr px-2 py-1">
-                    <p className="text-[12px]">Send</p>
-                </button>
+                <div className="flex gap-2 items-center">
+                    {children}
+                    <button className="text-[12px] rounded-full text-white bg-button-clr px-2 py-1">
+                        Send
+                    </button>
+                </div>
             </div>
         </div>
     );
