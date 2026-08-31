@@ -65,17 +65,11 @@ async function PostDetail({ params }: PostDetail) {
                 <div className="flex items-center gap-5">
                     <div className="flex gap-2 items-center text-secondary-text">
                         <MessageCircle size={12} />
-                        <p className="hidden md:flex text-[12px]">Comments</p>
-                        <p className="text-[12px]">
-                            {postDetailDb._count.comments}
-                        </p>
+                        <p className="text-[12px]">{`${postDetailDb._count.comments} Comments`}</p>
                     </div>
                     <div className="flex gap-2 items-center text-secondary-text">
                         <Triangle size={12} />
-                        <p className="hidden md:flex text-[12px]">Up votes</p>
-                        <p className="text-[12px]">
-                            {postDetailDb._count.upVotes}
-                        </p>
+                        <p className="text-[12px]">{`${postDetailDb._count.upVotes} Votes`}</p>
                     </div>
                 </div>
 

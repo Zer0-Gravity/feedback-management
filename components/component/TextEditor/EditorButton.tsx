@@ -26,6 +26,7 @@ function EditorButton({ editor }: { editor: any }) {
             isCodeBlock: ctx.editor?.isActive("codeBlock") ?? false,
         }),
     });
+
     return (
         <div className="flex gap-2 items-center">
             <button
@@ -33,7 +34,7 @@ function EditorButton({ editor }: { editor: any }) {
                 onClick={() =>
                     editor?.chain().focus().toggleHeading({ level: 1 }).run()
                 }
-                className={`h-6.25 w-6.25 flex items-center justify-center rounded-md ${editorState?.isHeading1 ? "text-primary-text bg-button-clr" : "text-secondary-text bg-background"}`}
+                className={`toolbar-toggle ${editorState?.isHeading1 ? "text-primary-text bg-button-clr" : "text-secondary-text bg-background"}`}
             >
                 <Heading1 size={16} />
             </button>
@@ -42,7 +43,7 @@ function EditorButton({ editor }: { editor: any }) {
                 onClick={() =>
                     editor?.chain().focus().toggleHeading({ level: 2 }).run()
                 }
-                className={`h-6.25 w-6.25 flex items-center justify-center rounded-md ${editorState?.isHeading2 ? "text-primary-text bg-button-clr" : "text-secondary-text bg-background"}`}
+                className={`toolbar-toggle ${editorState?.isHeading2 ? "text-primary-text bg-button-clr" : "text-secondary-text bg-background"}`}
             >
                 <Heading2 size={16} />
             </button>
@@ -51,42 +52,42 @@ function EditorButton({ editor }: { editor: any }) {
                 onClick={() =>
                     editor?.chain().focus().toggleHeading({ level: 3 }).run()
                 }
-                className={`h-6.25 w-6.25 flex items-center justify-center rounded-md ${editorState?.isHeading3 ? "text-primary-text bg-button-clr" : "text-secondary-text bg-background"}`}
+                className={`toolbar-toggle ${editorState?.isHeading3 ? "text-primary-text bg-button-clr" : "text-secondary-text bg-background"}`}
             >
                 <Heading3 size={16} />
             </button>
             <button
                 type="button"
                 onClick={() => editor?.chain().focus().toggleBulletList().run()}
-                className={`h-6.25 w-6.25 flex items-center justify-center rounded-md ${editorState?.isBulletList ? "text-primary-text bg-button-clr" : "text-secondary-text bg-background"}`}
+                className={`toolbar-toggle ${editorState?.isBulletList ? "text-primary-text bg-button-clr" : "text-secondary-text bg-background"}`}
             >
                 <List size={16} />
             </button>
             <button
                 type="button"
                 onClick={() => editor?.chain().focus().toggleBold().run()}
-                className={`h-6.25 w-6.25 flex items-center justify-center rounded-md ${editorState?.isBold ? "text-primary-text bg-button-clr" : "text-secondary-text bg-background"}`}
+                className={`toolbar-toggle ${editorState?.isBold ? "text-primary-text bg-button-clr" : "text-secondary-text bg-background"}`}
             >
                 <Bold size={16} />
             </button>
             <button
                 type="button"
                 onClick={() => editor?.chain().focus().toggleUnderline().run()}
-                className={`h-6.25 w-6.25 flex items-center justify-center rounded-md ${editorState?.isUnderline ? "text-primary-text bg-button-clr" : "text-secondary-text bg-background"}`}
+                className={`toolbar-toggle ${editorState?.isUnderline ? "text-primary-text bg-button-clr" : "text-secondary-text bg-background"}`}
             >
                 <Underline size={16} />
             </button>
             <button
                 type="button"
                 onClick={() => editor?.chain().focus().toggleItalic().run()}
-                className={`h-6.25 w-6.25 flex items-center justify-center rounded-md ${editorState?.isItalic ? "text-primary-text bg-button-clr" : "text-secondary-text bg-background"}`}
+                className={`toolbar-toggle ${editorState?.isItalic ? "text-primary-text bg-button-clr" : "text-secondary-text bg-background"}`}
             >
                 <Italic size={16} />
             </button>
             <button
                 type="button"
                 onClick={() => editor?.chain().focus().toggleCodeBlock().run()}
-                className={`h-6.25 w-6.25 flex items-center justify-center rounded-md ${editorState?.isCodeBlock ? "text-primary-text bg-button-clr" : "text-secondary-text bg-background"}`}
+                className={`toolbar-toggle ${editorState?.isCodeBlock ? "text-primary-text bg-button-clr" : "text-secondary-text bg-background"}`}
             >
                 <Code size={16} />
             </button>

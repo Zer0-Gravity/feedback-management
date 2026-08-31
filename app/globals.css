@@ -71,6 +71,10 @@ body {
     background-color: var(--button-clr);
 }
 
+.toolbar-toggle {
+    @apply h-6.25 w-6.25 flex items-center justify-center rounded-md;
+}
+
 /* Tip tap class style */
 
 .tiptap {

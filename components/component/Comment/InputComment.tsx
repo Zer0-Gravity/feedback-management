@@ -21,15 +21,13 @@ function InputComment({ children }: { children?: ReactNode }) {
 
     return (
         <div className="flex flex-col gap-2">
+            <EditorButton editor={editor} />
             <EditorContent editor={editor} placeholder="Write a comment" />
-            <div className="flex justify-between items-center">
-                <EditorButton editor={editor} />
-                <div className="flex gap-2 items-center">
-                    {children}
-                    <button className="text-[12px] rounded-full text-white bg-button-clr px-2 py-1">
-                        Send
-                    </button>
-                </div>
+            <div className="flex gap-2 items-center justify-end">
+                {children}
+                <button className="text-[12px] rounded-full text-white bg-button-clr px-2 py-1">
+                    Send
+                </button>
             </div>
         </div>
     );
