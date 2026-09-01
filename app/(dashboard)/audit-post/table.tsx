@@ -3,6 +3,7 @@
 import {
     ColumnDef,
     getCoreRowModel,
+    getPaginationRowModel,
     useReactTable,
 } from "@tanstack/react-table";
 import React from "react";
@@ -20,6 +21,13 @@ function AuditTable({
         data,
         columns,
         getCoreRowModel: getCoreRowModel(),
+        getPaginationRowModel: getPaginationRowModel(),
+        initialState: {
+            pagination: {
+                pageIndex: 0,
+                pageSize: 15,
+            },
+        },
     });
 
     return (

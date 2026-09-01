@@ -2,10 +2,19 @@
 
 import { Category, StatusPost } from "@/app/generated/prisma/client";
 import { Checkbox } from "@/components/ui/checkbox";
+import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectLabel,
+    SelectTrigger,
+} from "@/components/ui/select";
 import { CATEGORY_CONFIG, STATUS_CONFIG } from "@/utils/func";
 import { createColumnHelper } from "@tanstack/react-table";
 import { ExternalLink, MessageCircle, Trash, Triangle } from "lucide-react";
 import Link from "next/link";
+import { updateStatusPost } from "./actions";
 
 export interface AuditPost {
     id: string;
@@ -71,17 +80,70 @@ export const columns = [
             const status = STATUS_CONFIG[row.original.status.toLowerCase()];
 
             return (
-                <span
-                    style={{
-                        backgroundColor: `${status.color}50`,
-                        color: `${status.color}`,
-                        padding: "2px 5px 2px 5px",
-                        fontWeight: "600",
-                        borderRadius: "5px",
-                    }}
+                <Select
+                    value={row.original.status}
+                    onValueChange={(val) =>
+                        updateStatusPost(val as StatusPost, row.original.id)
+                    }
                 >
-                    {status.label}
-                </span>
+                    <SelectTrigger className="p-0 border-none">
+                        <span
+                            style={{
+                                backgroundColor: `${status.color}50`,
+                                color: `${status.color}`,
+                                padding: "2px 5px 2px 5px",
+                                fontWeight: "600",
+                                borderRadius: "5px",
+                            }}
+                        >
+                            {row.original.status}
+                        </span>
+                    </SelectTrigger>
+
+                    <SelectContent className="bg-background">
+                        <SelectGroup>
+                            <SelectLabel className="text-primary-text text-[12px]">
+                                Status
+                            </SelectLabel>
+                            <SelectItem
+                                className="text-secondary-text data-highlighted:bg-button-clr data-highlighted:text-primary-text"
+                                value="Backlog"
+                            >
+                                Backlog
+                            </SelectItem>
+                            <SelectItem
+                                className="text-secondary-text data-highlighted:bg-button-clr data-highlighted:text-primary-text"
+                                value="Accepted"
+                            >
+                                Accepted
+                            </SelectItem>
+                            <SelectItem
+                                className="text-secondary-text data-highlighted:bg-button-clr data-highlighted:text-primary-text"
+                                value="Rejected"
+                            >
+                                Rejected
+                            </SelectItem>
+                            <SelectItem
+                                className="text-secondary-text data-highlighted:bg-button-clr data-highlighted:text-primary-text"
+                                value="In_Progress"
+                            >
+                                In Progress
+                            </SelectItem>
+                            <SelectItem
+                                className="text-secondary-text data-highlighted:bg-button-clr data-highlighted:text-primary-text"
+                                value="Review"
+                            >
+                                Review
+                            </SelectItem>
+                            <SelectItem
+                                className="text-secondary-text data-highlighted:bg-button-clr data-highlighted:text-primary-text"
+                                value="Completed"
+                            >
+                                Completed
+                            </SelectItem>
+                        </SelectGroup>
+                    </SelectContent>
+                </Select>
             );
         },
     }),
