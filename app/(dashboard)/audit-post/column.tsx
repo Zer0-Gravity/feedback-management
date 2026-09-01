@@ -177,13 +177,4 @@ export const columns = [
             </Link>
         ),
     }),
-    columnHelper.display({
-        id: "delete",
-        header: () => <span>Delete</span>,
-        cell: () => (
-            <button type="button">
-                <Trash size={12} />
-            </button>
-        ),
-    }),
 ];

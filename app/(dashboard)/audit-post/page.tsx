@@ -17,7 +17,7 @@ async function Audit() {
     const mappedData: AuditPost[] = postDb.map((post) => ({
         id: post.id,
         title: post.title,
-        dateSubmitted: format(post.created_at, "PPPP"),
+        dateSubmitted: format(post.created_at, "PPP"),
         comment: post._count.comments,
         upvote: post._count.upVotes,
         author: post.user.name,
