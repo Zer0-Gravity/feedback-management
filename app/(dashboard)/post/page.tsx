@@ -32,11 +32,7 @@ async function Post() {
     }));
 
     return (
-        <PageWrapper>
-            <h1 className="text-[20px] md:text-[30px] font-bold text-primary-text">
-                Your post
-            </h1>
-
+        <PageWrapper header="Your Post">
             <div>
                 <TableData columns={columns} data={mappedPostDb} />
             </div>
