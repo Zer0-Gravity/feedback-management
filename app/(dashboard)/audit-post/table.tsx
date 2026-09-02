@@ -7,9 +7,10 @@ import {
     getPaginationRowModel,
     useReactTable,
 } from "@tanstack/react-table";
-import React, { useState } from "react";
+import { useState } from "react";
 import { AuditPost } from "./column";
 import { TableCustom } from "@/components/component/Table/TableCustom";
+import TableController from "@/components/component/Table/TableController";
 
 function AuditTable({
     columns,
@@ -27,6 +28,7 @@ function AuditTable({
         getPaginationRowModel: getPaginationRowModel(),
         getFilteredRowModel: getFilteredRowModel(),
         onGlobalFilterChange: setGlobalFilter,
+        getRowId: (row) => row.id,
         initialState: {
             pagination: {
                 pageIndex: 0,
@@ -40,13 +42,9 @@ function AuditTable({
 
     return (
         <div className="flex flex-col gap-3">
-            <input
-                type="text"
-                className="border border-border-clr rounded-lg bg-background h-10 w-full md:w-60 text-primary-text text-[12px] p-2"
-                placeholder="Search post.."
-                value={globalFilter}
-                onChange={(e) => table.setGlobalFilter(e.target.value)}
-            />
+            <div className="flex gap-2 md:justify-between items-baseline">
+                <TableController table={table} globalFilter={globalFilter} />
+            </div>
 
             <TableCustom table={table} />
         </div>

@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/select";
 import { CATEGORY_CONFIG, STATUS_CONFIG } from "@/utils/func";
 import { createColumnHelper } from "@tanstack/react-table";
-import { ExternalLink, MessageCircle, Trash, Triangle } from "lucide-react";
+import { ExternalLink, MessageCircle, Triangle } from "lucide-react";
 import Link from "next/link";
 import { updateStatusPost } from "./actions";
 
@@ -94,6 +94,7 @@ export const columns = [
                                 padding: "2px 5px 2px 5px",
                                 fontWeight: "600",
                                 borderRadius: "5px",
+                                fontSize: "12px",
                             }}
                         >
                             {row.original.status}
