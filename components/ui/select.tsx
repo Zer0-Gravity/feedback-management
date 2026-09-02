@@ -4,7 +4,7 @@ import * as React from "react";
 import { Select as SelectPrimitive } from "@base-ui/react/select";
 
 import { cn } from "@/lib/utils";
-import { ChevronDownIcon, ChevronUpIcon, ArrowUpDown, Dot } from "lucide-react";
+import { ChevronDownIcon, ChevronUpIcon, Dot, LucideIcon } from "lucide-react";
 
 const Select = SelectPrimitive.Root;
 
@@ -31,10 +31,12 @@ function SelectValue({ className, ...props }: SelectPrimitive.Value.Props) {
 function SelectTrigger({
     className,
     size = "default",
+    icon: CustomIcon,
     children,
     ...props
 }: SelectPrimitive.Trigger.Props & {
     size?: "sm" | "default";
+    icon?: LucideIcon | null;
 }) {
     return (
         <SelectPrimitive.Trigger
@@ -49,7 +51,9 @@ function SelectTrigger({
             {children}
             <SelectPrimitive.Icon
                 render={
-                    <ArrowUpDown className="pointer-events-none size-4 text-muted-foreground text-primary-text" />
+                    CustomIcon ? (
+                        <CustomIcon className="pointer-events-none size-4 text-muted-foreground text-primary-text" />
+                    ) : undefined
                 }
             />
         </SelectPrimitive.Trigger>

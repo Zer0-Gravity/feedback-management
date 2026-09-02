@@ -15,6 +15,11 @@ interface StatusType {
     };
 }
 
+export interface SelectType {
+    label: string;
+    value: string;
+}
+
 export const CATEGORY_CONFIG: CategoryType = {
     feature_request: {
         color: "#ff6b1a",
@@ -33,3 +38,12 @@ export const STATUS_CONFIG: StatusType = {
     review: { color: "#FF6200", label: "Review" },
     completed: { color: "#00FF0D", label: "Completed" },
 };
+
+export const STATUS_LIST: SelectType[] = [
+    { label: "Backlog", value: "Backlog" },
+    { label: "Accepted", value: "Accepted" },
+    { label: "Rejected", value: "Rejected" },
+    { label: "In Progress", value: "In_Progress" },
+    { label: "Review", value: "Review" },
+    { label: "Completed", value: "Completed" },
+];

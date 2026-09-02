@@ -6,10 +6,10 @@ interface TableProps<TData> {
 }
 
 function TableController<TData>({ table, globalFilter }: TableProps<TData>) {
-    const selectedRow = table.getSelectedRowModel();
+    const selectedRow = table.getSelectedRowModel(); //Get the selected row
 
     return (
-        <div className="flex flex-col gap-3">
+        <div className="w-full flex flex-col gap-3">
             <input
                 type="text"
                 className="border border-border-clr rounded-lg bg-background h-10 w-full md:w-60 text-primary-text text-[12px] p-2"
