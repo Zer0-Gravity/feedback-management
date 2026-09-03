@@ -52,44 +52,83 @@ function TableController<TData>({ table, globalFilter }: TableProps<TData>) {
                     <div>
                         {/* Status */}
                         <div className="space-y-2">
-                            <PopoverHeader className="text-secondary-text">
-                                Status
-                            </PopoverHeader>
-                            <RadioGroup
-                                value={currentStatus}
-                                onValueChange={(val) =>
-                                    table
-                                        .getColumn("status")
-                                        ?.setFilterValue(
-                                            val === "All" ? undefined : val,
-                                        )
-                                }
-                                className="flex flex-wrap "
-                            >
-                                {[
-                                    "All",
-                                    "Backlog",
-                                    "Accepted",
-                                    "Rejected",
-                                    "In_Progress",
-                                    "Review",
-                                    "Completed",
-                                ].map((status, index) => (
-                                    <label
-                                        key={index}
-                                        className="group flex items-center justify-center gap-2 has-checked:bg-button-clr p-1 rounded-md border border-border-clr"
-                                    >
-                                        <RadioGroupItem
-                                            value={status}
-                                            id={status.toLowerCase()}
-                                            className="hidden peer"
-                                        />
-                                        <span className="group-has-checked:text-primary-text text-[12px] text-secondary-text">
-                                            {status.replace("_", " ")}
-                                        </span>
-                                    </label>
-                                ))}
-                            </RadioGroup>
+                            <div>
+                                <PopoverHeader className="text-secondary-text">
+                                    Status
+                                </PopoverHeader>
+                                <RadioGroup
+                                    value={currentStatus}
+                                    onValueChange={(val) =>
+                                        table
+                                            .getColumn("status")
+                                            ?.setFilterValue(
+                                                val === "All" ? undefined : val,
+                                            )
+                                    }
+                                    className="flex flex-wrap "
+                                >
+                                    {[
+                                        "All",
+                                        "Backlog",
+                                        "Accepted",
+                                        "Rejected",
+                                        "In_Progress",
+                                        "Review",
+                                        "Completed",
+                                    ].map((status, index) => (
+                                        <label
+                                            key={index}
+                                            className="group flex items-center justify-center gap-2 has-checked:bg-button-clr p-1 rounded-md border border-border-clr"
+                                        >
+                                            <RadioGroupItem
+                                                value={status}
+                                                id={status.toLowerCase()}
+                                                className="hidden"
+                                            />
+                                            <span className="group-has-checked:text-primary-text text-[12px] text-secondary-text">
+                                                {status.replace("_", " ")}
+                                            </span>
+                                        </label>
+                                    ))}
+                                </RadioGroup>
+                            </div>
+                            <div>
+                                <PopoverHeader className="text-secondary-text">
+                                    Status
+                                </PopoverHeader>
+                                <RadioGroup
+                                    value={currentCategory}
+                                    onValueChange={(val) =>
+                                        table
+                                            .getColumn("category")
+                                            ?.setFilterValue(
+                                                val === "All" ? undefined : val,
+                                            )
+                                    }
+                                    className="flex flex-wrap "
+                                >
+                                    {[
+                                        "All",
+                                        "Feature_Request",
+                                        "Integration",
+                                        "Bug_Report",
+                                    ].map((status, index) => (
+                                        <label
+                                            key={index}
+                                            className="group flex items-center justify-center gap-2 has-checked:bg-button-clr p-1 rounded-md border border-border-clr"
+                                        >
+                                            <RadioGroupItem
+                                                value={status}
+                                                id={status.toLowerCase()}
+                                                className="hidden"
+                                            />
+                                            <span className="group-has-checked:text-primary-text text-[12px] text-secondary-text">
+                                                {status.replace("_", " ")}
+                                            </span>
+                                        </label>
+                                    ))}
+                                </RadioGroup>
+                            </div>
                         </div>
                     </div>
                 </PopoverContent>
