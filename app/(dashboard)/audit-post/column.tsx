@@ -15,11 +15,13 @@ import { createColumnHelper } from "@tanstack/react-table";
 import { ExternalLink, MessageCircle, Triangle } from "lucide-react";
 import Link from "next/link";
 import { updateStatusPost } from "./actions";
+import { STATUS_LIST } from "../../../utils/func";
 
 export interface AuditPost {
     id: string;
     title: string;
     dateSubmitted: string;
+    updated: string | null;
     comment: number;
     upvote: number;
     author: string;
@@ -58,6 +60,9 @@ export const columns = [
     columnHelper.accessor("title", { header: () => <span>Title</span> }),
     columnHelper.accessor("dateSubmitted", {
         header: () => <span>Date Submitted</span>,
+    }),
+    columnHelper.accessor("updated", {
+        header: () => <span>Updated</span>,
     }),
     columnHelper.accessor("comment", {
         header: () => (
@@ -106,42 +111,15 @@ export const columns = [
                             <SelectLabel className="text-primary-text text-[12px]">
                                 Status
                             </SelectLabel>
-                            <SelectItem
-                                className="text-secondary-text data-highlighted:bg-button-clr data-highlighted:text-primary-text"
-                                value="Backlog"
-                            >
-                                Backlog
-                            </SelectItem>
-                            <SelectItem
-                                className="text-secondary-text data-highlighted:bg-button-clr data-highlighted:text-primary-text"
-                                value="Accepted"
-                            >
-                                Accepted
-                            </SelectItem>
-                            <SelectItem
-                                className="text-secondary-text data-highlighted:bg-button-clr data-highlighted:text-primary-text"
-                                value="Rejected"
-                            >
-                                Rejected
-                            </SelectItem>
-                            <SelectItem
-                                className="text-secondary-text data-highlighted:bg-button-clr data-highlighted:text-primary-text"
-                                value="In_Progress"
-                            >
-                                In Progress
-                            </SelectItem>
-                            <SelectItem
-                                className="text-secondary-text data-highlighted:bg-button-clr data-highlighted:text-primary-text"
-                                value="Review"
-                            >
-                                Review
-                            </SelectItem>
-                            <SelectItem
-                                className="text-secondary-text data-highlighted:bg-button-clr data-highlighted:text-primary-text"
-                                value="Completed"
-                            >
-                                Completed
-                            </SelectItem>
+                            {STATUS_LIST.map((status, index) => (
+                                <SelectItem
+                                    key={index}
+                                    className="text-secondary-text data-highlighted:bg-button-clr data-highlighted:text-primary-text"
+                                    value={status.value}
+                                >
+                                    {status.label}
+                                </SelectItem>
+                            ))}
                         </SelectGroup>
                     </SelectContent>
                 </Select>

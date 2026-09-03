@@ -18,6 +18,7 @@ async function Audit() {
         id: post.id,
         title: post.title,
         dateSubmitted: format(post.created_at, "PPP"),
+        updated: post.updated_at ? format(post.updated_at, "PPP") : "No Update",
         comment: post._count.comments,
         upvote: post._count.upVotes,
         author: post.user.name,
