@@ -2,6 +2,7 @@
 
 import {
     ColumnDef,
+    ColumnFiltersState,
     getCoreRowModel,
     getFilteredRowModel,
     getPaginationRowModel,
@@ -43,7 +44,10 @@ function AuditTable({
     return (
         <div className="flex flex-col gap-3">
             <div className="flex gap-2 md:justify-between items-baseline">
-                <TableController table={table} globalFilter={globalFilter} />
+                <TableController
+                    table={table}
+                    globalFilter={globalFilter}
+                />
             </div>
 
             <TableCustom table={table} />
