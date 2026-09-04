@@ -13,6 +13,7 @@ import { Company } from "@/app/generated/prisma/client";
 import { Plus } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { useEffect } from "react";
+import Link from "next/link";
 
 function CompanySwitcher({ companyDb }: { companyDb: Company[] }) {
     const { companyId, setCompany, setDefault } = useCompany();
@@ -66,12 +67,20 @@ function CompanySwitcher({ companyDb }: { companyDb: Company[] }) {
                                     />
                                 </SelectItem>
                             ))}
-                            <button className="flex hover:bg-background-secondary gap-2 items-center p-3 justify-center w-full rounded-md">
-                                <Plus size={14} className="text-primary-text" />
-                                <span className="text-[12px] text-primary-text md:text-[14px]">
-                                    Create Organization
-                                </span>
-                            </button>
+                            <Link
+                                href={"?new-organization=true"}
+                                scroll={false}
+                            >
+                                <button className="flex hover:bg-background-secondary gap-2 items-center p-3 justify-center w-full rounded-md">
+                                    <Plus
+                                        size={14}
+                                        className="text-primary-text"
+                                    />
+                                    <span className="text-[12px] text-primary-text md:text-[14px]">
+                                        Create Organization
+                                    </span>
+                                </button>
+                            </Link>
                         </div>
                     </SelectGroup>
                 </SelectContent>

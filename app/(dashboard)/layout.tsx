@@ -1,4 +1,5 @@
 import AppLayout from "@/components/component/AppLayout";
+import NewCompany from "@/components/component/Dialog/NewCompany";
 import { ThemeProvider } from "@/components/component/ThemeProvider";
 import { ReactNode } from "react";
 
@@ -7,7 +8,10 @@ export default async function Dashboard({ children }: { children: ReactNode }) {
         <main>
             <ThemeProvider>
                 <AppLayout>
-                    <div>{children}</div>
+                    <div>
+                        <NewCompany />
+                        {children}
+                    </div>
                 </AppLayout>
             </ThemeProvider>
         </main>

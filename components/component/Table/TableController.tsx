@@ -51,9 +51,9 @@ function TableController<TData>({ table, globalFilter }: TableProps<TData>) {
                 <PopoverContent className="ring-0 bg-background min-y-[300px]!">
                     <div>
                         {/* Status */}
-                        <div className="space-y-2">
-                            <div>
-                                <PopoverHeader className="text-secondary-text">
+                        <div className="space-y-4">
+                            <div className="space-y-3">
+                                <PopoverHeader className="text-primary-text text-[14px]">
                                     Status
                                 </PopoverHeader>
                                 <RadioGroup
@@ -92,9 +92,9 @@ function TableController<TData>({ table, globalFilter }: TableProps<TData>) {
                                     ))}
                                 </RadioGroup>
                             </div>
-                            <div>
-                                <PopoverHeader className="text-secondary-text">
-                                    Status
+                            <div className="space-y-3">
+                                <PopoverHeader className="text-primary-text text-[14px] ">
+                                    Category
                                 </PopoverHeader>
                                 <RadioGroup
                                     value={currentCategory}
