@@ -5,7 +5,7 @@ import StatusControl from "@/components/component/FilterComponent/StatusControl"
 import SearchControl from "@/components/component/FilterComponent/SearchControl";
 import prisma from "@/lib/prisma";
 import { CATEGORY_CONFIG, STATUS_CONFIG } from "@/utils/func";
-import { MessageCircle, Triangle } from "lucide-react";
+import { MessageCircle, PackageOpen, Triangle } from "lucide-react";
 import CategoryControl from "@/components/component/FilterComponent/CategoryControl";
 import SortControl from "@/components/component/FilterComponent/SortControl";
 import { formatDistanceToNow } from "date-fns";
@@ -72,59 +72,73 @@ async function Feed({ searchParams }: PageProps) {
 
             {/* Post card sections */}
             <div className="flex-1 flex overflow-y-auto flex-col gap-2 hide-scrollbar">
-                {postDb.map((post) => (
-                    <div
-                        key={post.id}
-                        className="w-full h-27 bg-card-clr p-3 rounded-lg flex flex-col justify-between gap-2"
-                    >
-                        <div>
-                            <div className="text-[14px] font-medium flex gap-3 items-center">
-                                <h1 className="text-primary-text">
-                                    {post.title}
-                                </h1>
-                                <StatusBadge status={post.status} />
-                            </div>
-                        </div>
-
-                        <p className="text-secondary-text text-[12px] truncate">
-                            {post.content}
-                        </p>
-
-                        <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-5">
-                                <div className="flex gap-2 items-center">
-                                    <MessageCircle
-                                        size={12}
-                                        className="text-primary-text"
-                                    />
-                                    <div className="text-primary-text text-[12px] flex gap-2 items-center">
-                                        <p>{post._count.comments}</p>{" "}
-                                        <p className="hidden sm:flex">
-                                            Comment
-                                        </p>
-                                    </div>
+                {postDb.length !== 0 ? (
+                    postDb.map((post) => (
+                        <div
+                            key={post.id}
+                            className="w-full h-27 bg-card-clr p-3 rounded-lg flex flex-col justify-between gap-2"
+                        >
+                            <div>
+                                <div className="text-[14px] font-medium flex gap-3 items-center">
+                                    <h1 className="text-primary-text">
+                                        {post.title}
+                                    </h1>
+                                    <StatusBadge status={post.status} />
                                 </div>
-                                <button className="flex gap-2 items-center">
-                                    <Triangle
-                                        size={12}
-                                        className="text-primary-text"
-                                    />
-                                    <div className="text-primary-text text-[12px] flex items-center gap-2">
-                                        <p>{post._count.upVotes}</p>{" "}
-                                        <p className="hidden sm:flex">Upvote</p>
-                                    </div>
-                                </button>
-                                <CategoryBadge category={post.category} />
                             </div>
 
-                            <p className="text-primary-text text-[12px]">
-                                {formatDistanceToNow(post.created_at, {
-                                    addSuffix: true,
-                                })}
+                            <p className="text-secondary-text text-[12px] truncate">
+                                {post.content}
                             </p>
+
+                            <div className="flex items-center justify-between">
+                                <div className="flex items-center gap-5">
+                                    <div className="flex gap-2 items-center">
+                                        <MessageCircle
+                                            size={12}
+                                            className="text-primary-text"
+                                        />
+                                        <div className="text-primary-text text-[12px] flex gap-2 items-center">
+                                            <p>{post._count.comments}</p>{" "}
+                                            <p className="hidden sm:flex">
+                                                Comment
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <button className="flex gap-2 items-center">
+                                        <Triangle
+                                            size={12}
+                                            className="text-primary-text"
+                                        />
+                                        <div className="text-primary-text text-[12px] flex items-center gap-2">
+                                            <p>{post._count.upVotes}</p>{" "}
+                                            <p className="hidden sm:flex">
+                                                Upvote
+                                            </p>
+                                        </div>
+                                    </button>
+                                    <CategoryBadge category={post.category} />
+                                </div>
+
+                                <p className="text-primary-text text-[12px]">
+                                    {formatDistanceToNow(post.created_at, {
+                                        addSuffix: true,
+                                    })}
+                                </p>
+                            </div>
                         </div>
+                    ))
+                ) : (
+                    <div className="flex justify-center w-full p-5 mt-5 border border-border-clr rounded-md items-center gap-3">
+                        <PackageOpen
+                            size={20}
+                            className="text-secondary-text"
+                        />
+                        <h1 className="text-primary-text text-[14px] p-2">
+                            No submission yet, be the first one!
+                        </h1>
                     </div>
-                ))}
+                )}
             </div>
         </PageWrapper>
     );
