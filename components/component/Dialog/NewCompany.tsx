@@ -8,7 +8,15 @@ import {
     DialogTitle,
 } from "@/components/ui/dialog";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Building2, Loader2, Mail, MapPin, Phone } from "lucide-react";
+import {
+    Building2,
+    Image,
+    Link,
+    Loader2,
+    Mail,
+    MapPin,
+    Phone,
+} from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
@@ -16,14 +24,17 @@ import * as yup from "yup";
 const schema = yup
     .object({
         name: yup.string().required("Company name is required"),
+        slug: yup
+            .string()
+            .required("Slug is required")
+            .lowercase("Slug need to be lowercased"),
         address: yup.string().required("Company address is required"),
         email: yup
             .string()
             .email("Invalid email address")
             .required("Email is required"),
-        phone: yup
-            .number()
-            .required("Company contact is required"),
+        phone: yup.number().required("Company contact is required"),
+        logo: yup.string().optional(),
     })
     .required();
 
@@ -68,6 +79,7 @@ function NewCompany() {
                     className="text-primary-text space-y-4"
                     onSubmit={handleSubmit(handleNewOrganization)}
                 >
+                    {/* Name */}
                     <div className="space-y-3">
                         <div className="flex gap-2 items-center">
                             <Building2 size={14} /> <p>Company Name</p>
@@ -84,6 +96,26 @@ function NewCompany() {
                             </p>
                         )}
                     </div>
+
+                    {/* Slug */}
+                    <div className="space-y-3">
+                        <div className="flex gap-2 items-center">
+                            <Link size={14} /> <p>Slug</p>
+                        </div>
+                        <input
+                            {...register("slug")}
+                            type="text"
+                            className="input-field"
+                            placeholder="e.g acme-group"
+                        />
+                        {errors.slug && (
+                            <p className="error-message">
+                                {errors.slug.message}
+                            </p>
+                        )}
+                    </div>
+
+                    {/* Address */}
                     <div className="space-y-3">
                         <div className="flex gap-2 items-center">
                             <MapPin size={14} /> <p>Address</p>
@@ -100,6 +132,8 @@ function NewCompany() {
                             </p>
                         )}
                     </div>
+
+                    {/* Email */}
                     <div className="space-y-3">
                         <div className="flex gap-2 items-center">
                             <Mail size={14} /> <p>Email</p>
@@ -116,6 +150,8 @@ function NewCompany() {
                             </p>
                         )}
                     </div>
+
+                    {/* Phone */}
                     <div className="space-y-3">
                         <div className="flex gap-2 items-center">
                             <Phone size={14} /> <p>Phone</p>
@@ -133,6 +169,23 @@ function NewCompany() {
                         )}
                     </div>
 
+                    <div className="space-y-3">
+                        <div className="flex gap-2 items-center">
+                            <Image size={14} /> <p>Logo</p>
+                        </div>
+                        <input
+                            {...register("logo")}
+                            type="file"
+                            className="input-field"
+                        />
+                        {errors.logo && (
+                            <p className="error-message">
+                                {errors.logo.message}
+                            </p>
+                        )}
+                    </div>
+
+                    {/* Button */}
                     <div className="flex gap-2 items-center justify-end">
                         <button
                             onClick={handleClose}
