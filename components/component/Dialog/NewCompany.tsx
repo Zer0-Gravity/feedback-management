@@ -7,19 +7,21 @@ import {
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog";
+import { authClient } from "@/lib/auth-client";
 import { yupResolver } from "@hookform/resolvers/yup";
-import {
-    Building2,
-    Image,
-    Link,
-    Loader2,
-    Mail,
-    MapPin,
-    Phone,
-} from "lucide-react";
+import { Building2, Image, Link, Mail, MapPin, Phone } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
+
+interface FormData {
+    name: string;
+    slug: string;
+    address: string;
+    email: string;
+    phone: number;
+    logo?: string;
+}
 
 const schema = yup
     .object({
@@ -55,10 +57,18 @@ function NewCompany() {
         router.push("?", { scroll: false });
     };
 
-    const handleNewOrganization = (data: any) => {
+    const handleNewOrganization = async (data: FormData) => {
         try {
-            console.log(data);
+            await authClient.organization.create({
+                name: data.name,
+                slug: data.slug,
+                logo: data.logo,
+                address: data.address,
+                email: data.email,
+                phone: data.phone,
+            });
             handleClose();
+            console.log(data)
         } catch (error) {
             console.log(error);
         }

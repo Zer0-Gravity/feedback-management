@@ -1,8 +1,8 @@
 import "dotenv/config";
-import { betterAuth, email } from "better-auth";
+import { betterAuth } from "better-auth";
 import { prismaAdapter } from "better-auth/adapters/prisma";
 import prisma from "./prisma";
-import { organization } from "better-auth/client";
+import { organization } from "better-auth/plugins";
 
 export const auth = betterAuth({
     database: prismaAdapter(prisma, {
@@ -25,6 +25,7 @@ export const auth = betterAuth({
                     },
                     additionalFields: {
                         email: { type: "string", required: true },
+                        phone: { type: "number", required: true },
                         address: { type: "string", required: true },
                     },
                 },
@@ -35,9 +36,12 @@ export const auth = betterAuth({
                         userId: "user_id",
                         organizationId: "company_id",
                         role: "user_role",
+                        createdAt: "created_at",
                     },
                 },
             },
         }),
     ],
 });
+
+export type Auth = typeof auth;

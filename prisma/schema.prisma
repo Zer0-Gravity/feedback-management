@@ -37,6 +37,8 @@ model User {
   upVotes     UpVote[]
   memberships Membership[]
 
+  activeOrganizationId String?
+
   emailVerified Boolean   @default(false)
   image         String?
   createdAt     DateTime  @default(now())
@@ -53,6 +55,7 @@ model Company {
   email      String   @unique
   slug       String   @unique
   logo       String?
+  phone      Int?
   address    String
   created_at DateTime @default(now())
 
@@ -61,10 +64,11 @@ model Company {
 }
 
 model Membership {
-  id         String @id @default(cuid())
+  id         String   @id @default(cuid())
   user_id    String
   company_id String
   user_role  String
+  created_at DateTime @default(now())
 
   user    User    @relation(fields: [user_id], references: [id], onDelete: Cascade)
   company Company @relation(fields: [company_id], references: [id], onDelete: Cascade)
@@ -146,6 +150,8 @@ model Session {
   userAgent String?
   userId    String
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  activeOrganizationId String?
 
   @@unique([token])
   @@index([userId])
