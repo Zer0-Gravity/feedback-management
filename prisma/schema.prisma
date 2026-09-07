@@ -74,6 +74,17 @@ model Membership {
   @@index([company_id])
 }
 
+model Invitation {
+  id             String   @id @default(nanoid())
+  email          String   @unique
+  inviterId      String
+  organizationId String
+  role           String?
+  status         String
+  createdAt      DateTime @default(now())
+  expiresAt      DateTime
+}
+
 model Post {
   id         String     @id @default(nanoid())
   author_id  String

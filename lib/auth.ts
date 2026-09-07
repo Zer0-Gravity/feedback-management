@@ -28,6 +28,15 @@ export const auth = betterAuth({
                         address: { type: "string", required: true },
                     },
                 },
+                member: {
+                    modelName: "Membership",
+                    fields: {
+                        id: "id",
+                        userId: "user_id",
+                        organizationId: "company_id",
+                        role: "user_role",
+                    },
+                },
             },
         }),
     ],

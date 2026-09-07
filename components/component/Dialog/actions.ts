@@ -1,5 +1,3 @@
 "use server";
 
-export async function createOrganization(data: any) {
-    
-}
+export async function createOrganization(data: any) {}
