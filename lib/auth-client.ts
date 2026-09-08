@@ -1,5 +1,5 @@
 import "dotenv/config";
-import { createAuthClient } from "better-auth/client";
+import { createAuthClient } from "better-auth/react";
 import {
     inferOrgAdditionalFields,
     organizationClient,

@@ -14,6 +14,8 @@ import Link from "next/link";
 import { authClient } from "@/lib/auth-client";
 
 function CompanySwitcher({ companyDb }: { companyDb: Company[] }) {
+    const { data: activeOrg } = authClient.useActiveOrganization();
+
     // Set active organization function
     const handleActiveOrg = async (id: string, slug: string) => {
         try {
@@ -29,7 +31,13 @@ function CompanySwitcher({ companyDb }: { companyDb: Company[] }) {
     return (
         <DropdownMenu>
             <DropdownMenuTrigger className="bg-background-secondary border border-border-clr w-full md:w-50 h-10 text-white rounded-md">
-                <h1>Company</h1>
+                {activeOrg ? (
+                    <div>
+                        <p>{activeOrg.name}</p>
+                    </div>
+                ) : (
+                    <p>Company</p>
+                )}
             </DropdownMenuTrigger>
             <DropdownMenuContent className="bg-background-secondary">
                 <DropdownMenuGroup className="space-y-1">
@@ -59,7 +67,7 @@ function CompanySwitcher({ companyDb }: { companyDb: Company[] }) {
     );
 }
 
-function CompanyList({ db, css }: { db: Company; css?: string }) {
+function CompanyList({ db, css }: { db: any; css?: string }) {
     return (
         <div className="flex gap-2 items-center">
             <Avatar>
