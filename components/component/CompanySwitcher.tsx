@@ -1,95 +1,35 @@
 "use client";
 
-import {
-    Select,
-    SelectContent,
-    SelectGroup,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "../ui/select";
-import { useCompany } from "@/utils/store";
 import { Company } from "@/app/generated/prisma/client";
-import { Plus } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { useEffect } from "react";
-import Link from "next/link";
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuGroup,
+    DropdownMenuItem,
+    DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
 
 function CompanySwitcher({ companyDb }: { companyDb: Company[] }) {
-    const { companyId, setCompany, setDefault } = useCompany();
-
-    //Grab the selected company data
-    const selectedCompany = companyDb.find((db) => db.id === companyId);
-
-    //If the company database empty set the company id back to null
-    useEffect(() => {
-        if (companyDb.length === 0) {
-            setDefault();
-        }
-    }, [companyDb, setDefault]);
-
     return (
-        <div>
-            <Select
-                value={companyId}
-                onValueChange={(val) => setCompany(val as string)}
-            >
-                <SelectTrigger className="border bg-background-secondary border-border-clr p-2 h-10! md:w-60">
-                    {selectedCompany ? (
-                        <CompanyList
-                            db={selectedCompany}
-                            css="hidden md:flex flex-col text-left"
-                        />
-                    ) : (
-                        <SelectValue
-                            placeholder="Organization"
-                            className="text-primary-text"
-                        />
-                    )}
-                </SelectTrigger>
-
-                <SelectContent
-                    align="start"
-                    sideOffset={20}
-                    className="bg-background ring-0 border-border-clr rounded-md w-full"
-                >
-                    <SelectGroup>
-                        <div className="space-y-2">
-                            {companyDb.map((db) => (
-                                <SelectItem
-                                    key={db.name}
-                                    value={db.id}
-                                    className="hover:bg-background-secondary"
-                                >
-                                    <CompanyList
-                                        db={db}
-                                        css="flex flex-col text-left"
-                                    />
-                                </SelectItem>
-                            ))}
-                            <Link
-                                href={"?new-organization=true"}
-                                scroll={false}
-                            >
-                                <button className="flex hover:bg-background-secondary gap-2 items-center p-3 justify-center w-full rounded-md">
-                                    <Plus
-                                        size={14}
-                                        className="text-primary-text"
-                                    />
-                                    <span className="text-[12px] text-primary-text md:text-[14px]">
-                                        Create Organization
-                                    </span>
-                                </button>
-                            </Link>
-                        </div>
-                    </SelectGroup>
-                </SelectContent>
-            </Select>
-        </div>
+        <DropdownMenu>
+            <DropdownMenuTrigger className="bg-background-secondary border border-border-clr w-full md:w-[200px] h-[40px] text-white rounded-md">
+                <h1>Company</h1>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="bg-background-secondary">
+                <DropdownMenuGroup>
+                    {companyDb.map((company) => (
+                        <DropdownMenuItem key={company.id}>
+                            <CompanyList db={company} />
+                        </DropdownMenuItem>
+                    ))}
+                </DropdownMenuGroup>
+            </DropdownMenuContent>
+        </DropdownMenu>
     );
 }
 
-function CompanyList({ db, css }: { db: Company; css: string }) {
+function CompanyList({ db, css }: { db: Company; css?: string }) {
     return (
         <div className="flex gap-2 items-center">
             <Avatar>
