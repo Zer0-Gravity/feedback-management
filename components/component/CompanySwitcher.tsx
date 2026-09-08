@@ -9,20 +9,50 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
+import { Plus } from "lucide-react";
+import Link from "next/link";
+import { authClient } from "@/lib/auth-client";
 
 function CompanySwitcher({ companyDb }: { companyDb: Company[] }) {
+    // Set active organization function
+    const handleActiveOrg = async (id: string, slug: string) => {
+        try {
+            await authClient.organization.setActive({
+                organizationId: id, //Set based on the id
+                organizationSlug: slug,
+            });
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
     return (
         <DropdownMenu>
-            <DropdownMenuTrigger className="bg-background-secondary border border-border-clr w-full md:w-[200px] h-[40px] text-white rounded-md">
+            <DropdownMenuTrigger className="bg-background-secondary border border-border-clr w-full md:w-50 h-10 text-white rounded-md">
                 <h1>Company</h1>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="bg-background-secondary">
-                <DropdownMenuGroup>
+                <DropdownMenuGroup className="space-y-1">
                     {companyDb.map((company) => (
-                        <DropdownMenuItem key={company.id}>
+                        <DropdownMenuItem
+                            key={company.id}
+                            className="hover:bg-background"
+                            onClick={() =>
+                                handleActiveOrg(company.id, company.slug)
+                            }
+                        >
                             <CompanyList db={company} />
                         </DropdownMenuItem>
                     ))}
+                </DropdownMenuGroup>
+                <DropdownMenuGroup>
+                    <Link
+                        href={"?new-organization=true"}
+                        className="flex gap-2 items-center text-secondary-text h-10 border border-border-clr text-[12px] justify-center hover:bg-background"
+                    >
+                        <Plus size={12} />
+                        <p>Create Organization</p>
+                    </Link>
                 </DropdownMenuGroup>
             </DropdownMenuContent>
         </DropdownMenu>
