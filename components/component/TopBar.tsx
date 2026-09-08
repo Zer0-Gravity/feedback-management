@@ -3,15 +3,14 @@
 import { useTheme } from "@/utils/store";
 import { Moon, Sun } from "lucide-react";
 import CompanySwitcher from "./CompanySwitcher";
-import { Company } from "@/app/generated/prisma/client";
 import { AnimatePresence, motion } from "motion/react";
 
-function TopBar({ companyDb }: { companyDb: Company[] }) {
+function TopBar() {
     const { isDark, toggleTheme } = useTheme();
 
     return (
         <div className="bg-background p-2 h-16.25 flex gap-2 items-center justify-end">
-            <CompanySwitcher companyDb={companyDb} />
+            <CompanySwitcher />
 
             <button
                 onClick={toggleTheme}

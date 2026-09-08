@@ -10,7 +10,6 @@ import Link from "next/link";
 import { ReactNode } from "react";
 import AccountBar from "./AccountBar";
 import TopBar from "./TopBar";
-import prisma from "@/lib/prisma";
 
 async function AppLayout({ children }: { children: ReactNode }) {
     const navList = [
@@ -20,9 +19,6 @@ async function AppLayout({ children }: { children: ReactNode }) {
         { link: "member", name: "Member", icon: Users },
         { link: "audit-post", name: "Audit Post", icon: TableProperties },
     ];
-
-    //Get the company database
-    const companyDb = await prisma.company.findMany();
 
     return (
         <main className="flex md:flex-row flex-col h-screen">
@@ -52,7 +48,7 @@ async function AppLayout({ children }: { children: ReactNode }) {
 
             {/* | Main Content | */}
             <section className="flex-1 overflow-hidden bg-background-secondary">
-                <TopBar companyDb={companyDb} />
+                <TopBar />
                 <div>{children}</div>
             </section>
 

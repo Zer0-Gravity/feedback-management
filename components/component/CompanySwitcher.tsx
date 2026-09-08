@@ -1,6 +1,5 @@
 "use client";
 
-import { Company } from "@/app/generated/prisma/client";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import {
     DropdownMenu,
@@ -13,7 +12,8 @@ import { Plus } from "lucide-react";
 import Link from "next/link";
 import { authClient } from "@/lib/auth-client";
 
-function CompanySwitcher({ companyDb }: { companyDb: Company[] }) {
+function CompanySwitcher() {
+    // Get the active data
     const { data: activeOrg } = authClient.useActiveOrganization();
 
     // Set active organization function
@@ -28,28 +28,56 @@ function CompanySwitcher({ companyDb }: { companyDb: Company[] }) {
         }
     };
 
+    // Get organization list
+    const { data: listOrg } = authClient.useListOrganizations();
+
+    if (!listOrg) return;
+
     return (
         <DropdownMenu>
-            <DropdownMenuTrigger className="bg-background-secondary border border-border-clr w-full md:w-50 h-10 text-white rounded-md">
+            <DropdownMenuTrigger className="bg-background-secondary border border-border-clr md:fit h-10 text-white rounded-md px-2">
                 {activeOrg ? (
-                    <div>
-                        <p>{activeOrg.name}</p>
+                    <div className="flex gap-2 items-center">
+                        <Avatar className="size-7">
+                            <AvatarImage />
+                            <AvatarFallback className="bg-button-clr">
+                                {activeOrg.name.toUpperCase().slice(0, 2)}
+                            </AvatarFallback>
+                        </Avatar>
+                        <p className="text-[14px] text-primary-text hidden md:flex">
+                            {activeOrg.name}
+                        </p>
                     </div>
                 ) : (
                     <p>Company</p>
                 )}
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="bg-background-secondary">
+            <DropdownMenuContent className="bg-background-secondary min-w-[200px]">
                 <DropdownMenuGroup className="space-y-1">
-                    {companyDb.map((company) => (
+                    {listOrg.map((org) => (
                         <DropdownMenuItem
-                            key={company.id}
+                            key={org.id}
                             className="hover:bg-background"
-                            onClick={() =>
-                                handleActiveOrg(company.id, company.slug)
-                            }
+                            onClick={() => handleActiveOrg(org.id, org.slug)}
                         >
-                            <CompanyList db={company} />
+                            <Avatar>
+                                <AvatarImage />
+                                <AvatarFallback className="bg-button-clr">
+                                    <span className="font-semibold text-white">
+                                        {org.name.toUpperCase().slice(0, 2)}
+                                    </span>
+                                </AvatarFallback>
+                            </Avatar>
+
+                            {/* | Company Description | */}
+                            <div>
+                                <h1 className="text-primary-text font-semibold text-[14px]">
+                                    {org.name}
+                                </h1>
+                                <p className="text-secondary-text text-[10px]">
+                                    {org.email}
+                                </p>
+                            </div>
                         </DropdownMenuItem>
                     ))}
                 </DropdownMenuGroup>
@@ -64,29 +92,6 @@ function CompanySwitcher({ companyDb }: { companyDb: Company[] }) {
                 </DropdownMenuGroup>
             </DropdownMenuContent>
         </DropdownMenu>
-    );
-}
-
-function CompanyList({ db, css }: { db: any; css?: string }) {
-    return (
-        <div className="flex gap-2 items-center">
-            <Avatar>
-                <AvatarImage />
-                <AvatarFallback className="bg-button-clr">
-                    <span className="font-semibold text-white">
-                        {db.name.slice(0, 2)}
-                    </span>
-                </AvatarFallback>
-            </Avatar>
-
-            {/* | Company Description | */}
-            <div className={css}>
-                <h1 className="text-primary-text font-semibold text-[14px]">
-                    {db.name}
-                </h1>
-                <p className="text-secondary-text text-[10px]">{db.email}</p>
-            </div>
-        </div>
     );
 }
 
