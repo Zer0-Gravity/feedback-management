@@ -11,18 +11,31 @@ import {
 import { Plus } from "lucide-react";
 import Link from "next/link";
 import { authClient } from "@/lib/auth-client";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 function CompanySwitcher() {
     // Get the active data
     const { data: activeOrg } = authClient.useActiveOrganization();
+    const router = useRouter();
 
     // Set active organization function
     const handleActiveOrg = async (id: string, slug: string) => {
         try {
-            await authClient.organization.setActive({
-                organizationId: id, //Set based on the id
-                organizationSlug: slug,
-            });
+            await toast.promise(
+                async () => {
+                    await authClient.organization.setActive({
+                        organizationId: id, //Set based on the id
+                        organizationSlug: slug,
+                    });
+                    router.refresh();
+                },
+                {
+                    loading: "Fetching your data..",
+                    success: "Data fetched",
+                    error: "There is problem when fetching your data",
+                },
+            );
         } catch (error) {
             console.log(error);
         }
