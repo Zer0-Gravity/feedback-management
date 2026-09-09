@@ -10,6 +10,8 @@ import CategoryControl from "@/components/component/FilterComponent/CategoryCont
 import SortControl from "@/components/component/FilterComponent/SortControl";
 import { formatDistanceToNow } from "date-fns";
 import PageWrapper from "@/components/component/PageWrapper";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 
 type PageProps = {
     searchParams: Promise<{
@@ -36,12 +38,18 @@ async function Feed({ searchParams }: PageProps) {
         popular: { upVotes: { _count: "desc" } },
     };
 
+    // Get active organization ID
+    const session = await auth.api.getFullOrganization({
+        headers: await headers(),
+    });
+
     //Set the index into the variable
     const orderByList = sortMap[sort.toLowerCase()] || { created_at: "desc" };
 
     const postDb = await prisma.post.findMany({
         //prettier-ignore
-        where: {
+        where: {    
+            company_id: session?.id,
             AND: [
                 //Find a data that match the query based on user input for bot title and content
                 ...(query
