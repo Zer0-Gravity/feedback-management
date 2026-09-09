@@ -53,7 +53,12 @@ function FormSub() {
                 return;
             }
 
-            addPost(data, orgActive?.id);
+            await toast.promise(addPost(data, orgActive?.id), {
+                loading: "Creating your post",
+                success: "Post created successfully",
+                error: "Failed to create a post, please try again",
+            });
+
             router.push("/post");
         } catch (error) {
             console.log(error);
