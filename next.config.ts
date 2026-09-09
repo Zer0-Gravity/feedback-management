@@ -14,6 +14,16 @@ const nextConfig: NextConfig = {
             config.devtool = false;
         }
 
+        if (!isServer) {
+            config.resolve.fallback = {
+                ...config.resolve.fallback,
+                async_hooks: false,
+                fs: false,
+                net: false,
+                tls: false,
+            };
+        }
+
         return config;
     },
 };

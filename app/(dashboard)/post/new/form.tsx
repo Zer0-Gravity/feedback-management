@@ -10,14 +10,29 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select";
+import { authClient } from "@/lib/auth-client";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Controller, useForm } from "react-hook-form";
 import * as yup from "yup";
+import { addPost } from "./actions";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
+
+const CATEGORIES = ["Feature_Request", "Integration", "Bug_Report"];
+
+export interface FormData {
+    title: string;
+    content?: string | undefined;
+    category: string;
+}
 
 const schema = yup.object({
     title: yup.string().required("Title can't be empty"),
     content: yup.string().optional(),
-    category: yup.string().required("Please select any category for your post"),
+    category: yup
+        .string()
+        .oneOf([...CATEGORIES])
+        .required("Please select any category for your post"),
 });
 
 function FormSub() {
@@ -28,8 +43,21 @@ function FormSub() {
         formState: { errors },
     } = useForm({ resolver: yupResolver(schema) });
 
-    const handleNewPost = (data: any) => {
-        console.log(data);
+    const { data: orgActive } = authClient.useActiveOrganization(); //Get current active organization
+    const router = useRouter();
+
+    const handleNewPost = async (data: FormData) => {
+        try {
+            if (!orgActive) {
+                toast.error("Please select a company first");
+                return;
+            }
+
+            addPost(data, orgActive?.id);
+            router.push("/post");
+        } catch (error) {
+            console.log(error);
+        }
     };
 
     return (

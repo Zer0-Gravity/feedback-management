@@ -20,6 +20,7 @@ export interface SelectType {
     value: string;
 }
 
+
 export const CATEGORY_CONFIG: CategoryType = {
     feature_request: {
         color: "#ff6b1a",
