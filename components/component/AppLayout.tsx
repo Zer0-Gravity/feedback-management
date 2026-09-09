@@ -1,3 +1,5 @@
+"use client";
+
 import {
     Newspaper,
     Send,
@@ -8,10 +10,13 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { ReactNode } from "react";
-import AccountBar from "./AccountBar";
-import TopBar from "./TopBar";
 
-async function AppLayout({ children }: { children: ReactNode }) {
+import TopBar from "./TopBar";
+import { authClient } from "@/lib/auth-client";
+import { usePathname } from "next/navigation";
+import { motion } from "motion/react";
+
+function AppLayout({ children }: { children: ReactNode }) {
     const navList = [
         { link: "feed", name: "Feed", icon: Newspaper },
         { link: "roadmap", name: "Roadmap", icon: SquareKanban },
@@ -20,12 +25,24 @@ async function AppLayout({ children }: { children: ReactNode }) {
         { link: "audit-post", name: "Audit Post", icon: TableProperties },
     ];
 
+    const path = usePathname();
+
+    //Get the current active role
+    const { data: role } = authClient.useActiveMemberRole();
+    if (!role) return;
+
+    //Slice the navigation bar if the user are just a member
+    const filteredList =
+        role.role !== "owner" && role.role !== "admin"
+            ? navList.slice(0, 4)
+            : navList;
+
     return (
         <main className="flex md:flex-row flex-col h-screen">
             {/* | Desktop Sidebar | */}
             <aside className="w-65 p-5 hidden md:flex flex-col">
                 <nav className="space-y-2 flex-1">
-                    {navList.map((list, index) => (
+                    {filteredList.map((list, index) => (
                         <Link
                             key={index}
                             href={`/${list.link}`}
@@ -39,11 +56,22 @@ async function AppLayout({ children }: { children: ReactNode }) {
                             <span className="text-primary-text text-[14px]">
                                 {list.name}
                             </span>
+
+                            {path === `/${list.link}` && (
+                                <motion.div
+                                    layout
+                                    layoutId="hover"
+                                    transition={{
+                                        type: "spring",
+                                        damping: 30,
+                                        stiffness: 300,
+                                    }}
+                                    className="absolute inset-0 bg-button-clr -z-1 rounded-md"
+                                />
+                            )}
                         </Link>
                     ))}
                 </nav>
-
-                <AccountBar />
             </aside>
 
             {/* | Main Content | */}
@@ -59,23 +87,29 @@ async function AppLayout({ children }: { children: ReactNode }) {
                         <Link
                             key={index}
                             href={`/${list.link}`}
-                            className="flex gap-2 flex-col items-center"
+                            className={`flex gap-2 flex-col items-center relative p-2 ${path.replace("/", "") === list.link ? "text-button-clr" : "text-primary-text"}`}
                         >
-                            <list.icon
-                                size={20}
-                                className="text-primary-text"
-                            />
-                            <span className="text-[12px] text-primary-text">
-                                {list.name}
-                            </span>
+                            <list.icon size={20} />
+
+                            {path === `/${list.link}` && (
+                                <motion.div
+                                    layout
+                                    layoutId="hover"
+                                    transition={{
+                                        type: "spring",
+                                        damping: 30,
+                                        stiffness: 300,
+                                    }}
+                                    className="absolute inset-0 border-b border-b-button-clr"
+                                />
+                            )}
                         </Link>
                     ))}
 
-                    <button className="flex gap-2 flex-col items-center">
-                        <User size={20} className="text-primary-text" />
-                        <span className="text-[12px] text-primary-text">
-                            Account
-                        </span>
+                    <button
+                        className={`flex gap-2 flex-col items-center relative p-2 ${path.replace("/", "") === "account" ? "text-button-clr" : "text-primary-text"}`}
+                    >
+                        <User size={20} />
                     </button>
                 </nav>
             </div>
