@@ -12,6 +12,8 @@ import { formatDistanceToNow } from "date-fns";
 import PageWrapper from "@/components/component/PageWrapper";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
+import UpvoteButton from "@/components/component/UpvoteButton";
+import { handleUpvote } from "./actions";
 
 type PageProps = {
     searchParams: Promise<{
@@ -113,18 +115,13 @@ async function Feed({ searchParams }: PageProps) {
                                             </p>
                                         </div>
                                     </div>
-                                    <button className="flex gap-2 items-center">
-                                        <Triangle
-                                            size={12}
-                                            className="text-primary-text"
-                                        />
-                                        <div className="text-primary-text text-[12px] flex items-center gap-2">
-                                            <p>{post._count.upVotes}</p>{" "}
-                                            <p className="hidden sm:flex">
-                                                Upvote
-                                            </p>
-                                        </div>
-                                    </button>
+                                    <UpvoteButton
+                                        onChange={handleUpvote.bind(
+                                            null,
+                                            post.id,
+                                        )}
+                                        count={post._count.upVotes}
+                                    />
                                     <CategoryBadge category={post.category} />
                                 </div>
 
