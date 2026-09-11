@@ -1,14 +1,22 @@
 import PageWrapper from "@/components/component/PageWrapper";
-import prisma from "@/lib/prisma";
+import MemberTable from "./table";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
+import { columns, MemberList } from "./column";
 
 async function Member() {
-    const userDb = await prisma.user.findMany({
-        include: { memberships: true },
-    });
+    const data = await auth.api.listMembers({ headers: await headers() });
+
+    const mappedData: MemberList[] = data.members.map((member) => ({
+        id: member.id,
+        name: member.user.name,
+        email: member.user.email,
+        role: member.role,
+    }));
 
     return (
         <PageWrapper header="Member">
-            <div></div>
+            <MemberTable columns={columns} data={mappedData} />
         </PageWrapper>
     );
 }
