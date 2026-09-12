@@ -15,6 +15,7 @@ import { RadioGroup } from "@base-ui/react";
 import { RadioGroupItem } from "@/components/ui/radio-group";
 import { UserPlus } from "lucide-react";
 import Link from "next/link";
+import { authClient } from "@/lib/auth-client";
 
 function MemberTable({
     columns,
@@ -44,6 +45,11 @@ function MemberTable({
         },
     });
 
+    //Get current active member role
+    const user = authClient.useActiveMemberRole();
+
+    if (!user) return;
+
     const currentTag =
         (table.getColumn("role")?.getFilterValue() as string) || "All";
 
@@ -59,13 +65,16 @@ function MemberTable({
                 />
 
                 <div className="flex gap-2 items-center">
-                    <Link
-                        href={"?invite-member=true"}
-                        className="flex gap-2 items-center px-2 py-1 rounded-md bg-button-clr"
-                    >
-                        <UserPlus size={12} />
-                        <span>Member</span>
-                    </Link>
+                    {user.data?.role === "owner" ||
+                        (user.data?.role === "admin" && (
+                            <Link
+                                href={"?invite-member=true"}
+                                className="flex gap-2 items-center px-2 py-1 rounded-md bg-button-clr"
+                            >
+                                <UserPlus size={12} />
+                                <span>Member</span>
+                            </Link>
+                        ))}
 
                     <RadioGroup
                         value={currentTag}
