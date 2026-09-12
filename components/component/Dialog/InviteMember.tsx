@@ -7,10 +7,16 @@ import {
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog";
+import { authClient } from "@/lib/auth-client";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import * as yup from "yup";
+
+interface FormDataInvite {
+    email: string;
+}
 
 const schema = yup
     .object({
@@ -33,6 +39,22 @@ function InviteMember() {
         router.push("?", { scroll: false });
     };
 
+    const handleInviteMember = async (data: FormDataInvite) => {
+        const session = await authClient.useActiveOrganization(); //Get the organization ID
+
+        // Send the invitation
+        const { error } = await authClient.organization.inviteMember({
+            email: data.email,
+            organizationId: session.data?.id,
+            role: "member",
+        });
+
+        //Throw error if exist
+        if (error) {
+            toast.error(error.message as string);
+        }
+    };
+
     return (
         <Dialog open={isOpen} onOpenChange={handleClose}>
             <DialogContent>
@@ -42,7 +64,10 @@ function InviteMember() {
                         Input an email and send the invitation
                     </DialogDescription>
                 </DialogHeader>
-                <form className="space-y-3">
+                <form
+                    className="space-y-3"
+                    onSubmit={handleSubmit(handleInviteMember)}
+                >
                     <div className="space-y-2">
                         <input
                             type="email"
