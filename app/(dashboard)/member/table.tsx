@@ -14,6 +14,7 @@ import { useState } from "react";
 import { RadioGroup } from "@base-ui/react";
 import { RadioGroupItem } from "@/components/ui/radio-group";
 import { UserPlus } from "lucide-react";
+import Link from "next/link";
 
 function MemberTable({
     columns,
@@ -58,10 +59,13 @@ function MemberTable({
                 />
 
                 <div className="flex gap-2 items-center">
-                    <button className="flex gap-2 items-center px-2 py-1 rounded-md bg-button-clr">
+                    <Link
+                        href={"?invite-member=true"}
+                        className="flex gap-2 items-center px-2 py-1 rounded-md bg-button-clr"
+                    >
                         <UserPlus size={12} />
                         <span>Member</span>
-                    </button>
+                    </Link>
 
                     <RadioGroup
                         value={currentTag}
