@@ -40,6 +40,17 @@ export const auth = betterAuth({
                     },
                 },
             },
+            async sendInvitationEmail(data) {
+                await prisma.notification.create({
+                    data: {
+                        userId: data.email,
+                        type: "ORG-INVITE",
+                        title: "Organization invitation",
+                        message: `You've been invited to ${data.organization.name}`,
+                        invitationId: data.invitation.id,
+                    },
+                });
+            },
         }),
     ],
 });
