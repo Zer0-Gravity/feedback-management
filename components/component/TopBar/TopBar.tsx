@@ -4,6 +4,7 @@ import { useTheme } from "@/utils/store";
 import { Moon, Sun } from "lucide-react";
 import CompanySwitcher from "./CompanySwitcher";
 import { AnimatePresence, motion } from "motion/react";
+import Notifications from "./Notifications";
 
 function TopBar() {
     const { isDark, toggleTheme } = useTheme();
@@ -11,6 +12,9 @@ function TopBar() {
     return (
         <div className="bg-background p-2 h-16.25 flex gap-2 items-center justify-end">
             <CompanySwitcher />
+
+            {/* Notifications section */}
+            <Notifications />
 
             <button
                 onClick={toggleTheme}
@@ -27,7 +31,7 @@ function TopBar() {
                             className="flex gap-2 items-center"
                         >
                             <Moon
-                                size={18}
+                                size={16}
                                 className="text-primary-text fill-border-clr"
                             />
                         </motion.div>
@@ -41,7 +45,7 @@ function TopBar() {
                             className="flex gap-2 items-center"
                         >
                             <Sun
-                                size={18}
+                                size={16}
                                 className="text-primary-text fill-border-clr"
                             />
                         </motion.div>

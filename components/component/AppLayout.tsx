@@ -11,7 +11,7 @@ import {
 import Link from "next/link";
 import { ReactNode } from "react";
 
-import TopBar from "./TopBar";
+import TopBar from "./TopBar/TopBar";
 import { authClient } from "@/lib/auth-client";
 import { usePathname } from "next/navigation";
 import { motion } from "motion/react";
