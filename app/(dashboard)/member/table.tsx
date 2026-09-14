@@ -50,6 +50,7 @@ function MemberTable({
 
     if (!user) return;
 
+    //Set variable for filter value and give All as default
     const currentTag =
         (table.getColumn("role")?.getFilterValue() as string) || "All";
 
@@ -59,22 +60,24 @@ function MemberTable({
                 <input
                     type="text"
                     className="border border-border-clr rounded-lg bg-background h-10 w-full md:w-60 text-primary-text text-[12px] p-2"
-                    placeholder="Search post.."
+                    placeholder="Search user.."
                     value={globalFilter}
                     onChange={(e) => table.setGlobalFilter(e.target.value)}
                 />
 
                 <div className="flex gap-2 items-center">
-                    {user.data?.role === "owner" ||
-                        (user.data?.role === "admin" && (
-                            <Link
-                                href={"?invite-member=true"}
-                                className="flex gap-2 items-center px-2 py-1 rounded-md bg-button-clr"
-                            >
-                                <UserPlus size={12} />
-                                <span>Member</span>
-                            </Link>
-                        ))}
+                    {/* Check the user role 
+                        || if not a member then render the add member button
+                    */}
+                    {["owner", "admin"].includes(user.data?.role as string) && (
+                        <Link
+                            href={"?invite-member=true"}
+                            className="flex gap-2 items-center px-2 py-1 rounded-md bg-button-clr text-white"
+                        >
+                            <UserPlus size={12} />
+                            <span className="text-[12px]">Member</span>
+                        </Link>
+                    )}
 
                     <RadioGroup
                         value={currentTag}
@@ -85,19 +88,20 @@ function MemberTable({
                                     val === "All" ? undefined : val,
                                 )
                         }
-                        className="px-2 py-1 border border-border-clr rounded-md has-checked:bg-button-clr has-checked:border-none"
+                        className="flex gap-2"
                     >
-                        {["all", "owner", "admin", "member"].map(
+                        {["All", "Owner", "Admin", "Member"].map(
                             (role, index) => (
-                                <label key={index}>
+                                <label
+                                    key={index}
+                                    className="flex item-center rounded-md px-2 py-1 border border-border-clr text-primary-text has-checked:bg-button-clr has-checked:text-white"
+                                >
                                     <RadioGroupItem
                                         value={role}
                                         id={role.toLowerCase()}
                                         className="hidden"
                                     />
-                                    <span className="text-[12px]">
-                                        {role.charAt(0).toUpperCase()}
-                                    </span>
+                                    <span className="text-[12px]">{role}</span>
                                 </label>
                             ),
                         )}
