@@ -73,6 +73,7 @@ function InviteMember() {
                             type="email"
                             {...register("email")}
                             className="input-field"
+                            placeholder="Type email.."
                         />
                         {errors.email && (
                             <p className="error-message">

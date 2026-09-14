@@ -79,14 +79,28 @@ model Membership {
 }
 
 model Invitation {
-  id             String   @id @default(nanoid())
-  email          String   @unique
+  id             String         @id @default(nanoid())
+  email          String         @unique
   inviterId      String
   organizationId String
   role           String?
   status         String
-  createdAt      DateTime @default(now())
+  createdAt      DateTime       @default(now())
   expiresAt      DateTime
+  notifications  Notification[]
+}
+
+model Notification {
+  id        String   @id @default(nanoid())
+  userId    String
+  type      String
+  title     String
+  message   String
+  isRead    Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  invitationId String
+  invitation   Invitation @relation(fields: [invitationId], references: [id], onDelete: Cascade)
 }
 
 model Post {
