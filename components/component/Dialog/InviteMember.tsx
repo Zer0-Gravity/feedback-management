@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/dialog";
 import { authClient } from "@/lib/auth-client";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { UserPlus } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -33,7 +34,7 @@ function InviteMember() {
         formState: { errors },
     } = useForm({ resolver: yupResolver(schema) });
 
-    const isOpen = searchParams.get("invite") === "true";
+    const isOpen = searchParams.get("invite-member") === "true";
 
     const handleClose = () => {
         router.push("?", { scroll: false });
@@ -59,13 +60,15 @@ function InviteMember() {
         <Dialog open={isOpen} onOpenChange={handleClose}>
             <DialogContent>
                 <DialogHeader>
-                    <DialogTitle>Invite Member</DialogTitle>
-                    <DialogDescription>
+                    <DialogTitle className="text-primary-text">
+                        Invite Member
+                    </DialogTitle>
+                    <DialogDescription className="text-secondary-text">
                         Input an email and send the invitation
                     </DialogDescription>
                 </DialogHeader>
                 <form
-                    className="space-y-3"
+                    className="space-y-3 text-primary-text"
                     onSubmit={handleSubmit(handleInviteMember)}
                 >
                     <div className="space-y-2">
@@ -82,12 +85,15 @@ function InviteMember() {
                         )}
                     </div>
 
-                    <button
-                        type="submit"
-                        className="px-2 py-1 bg-button-clr rounded-md text-white flex justify-end"
-                    >
-                        Send Invitation
-                    </button>
+                    <div className="flex justify-end">
+                        <button
+                            type="submit"
+                            className="px-2 py-1 bg-button-clr rounded-md text-white flex items-center gap-2"
+                        >
+                            <UserPlus size={14} />
+                            <span> Invite</span>
+                        </button>
+                    </div>
                 </form>
             </DialogContent>
         </Dialog>
