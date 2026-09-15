@@ -40,15 +40,17 @@ function InviteMember() {
         router.push("?", { scroll: false });
     };
 
-    const handleInviteMember = async (data: FormDataInvite) => {
-        const session = await authClient.useActiveOrganization(); //Get the organization ID
+    const session = authClient.useActiveOrganization(); //Get the organization ID
 
+    const handleInviteMember = async (data: FormDataInvite) => {
         // Send the invitation
         const { error } = await authClient.organization.inviteMember({
             email: data.email,
             organizationId: session.data?.id,
             role: "member",
         });
+
+        toast.success("Invitation send");
 
         //Throw error if exist
         if (error) {

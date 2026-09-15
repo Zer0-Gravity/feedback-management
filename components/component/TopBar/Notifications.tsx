@@ -7,9 +7,63 @@ import {
     PopoverTitle,
     PopoverTrigger,
 } from "@/components/ui/popover";
-import { Bell } from "lucide-react";
+import { Bell, Loader2 } from "lucide-react";
+
+import { notificationDbs } from "./actions";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
+import { authClient } from "@/lib/auth-client";
+
+interface NotificationsItems {
+    id: string;
+    userId: string;
+    type: string;
+    title: string;
+    message: string;
+    isRead: boolean;
+    invitationId: string;
+}
 
 function Notifications() {
+    const [notifications, setNotifications] = useState<NotificationsItems[]>(
+        [],
+    );
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+
+    async function acceptInvitation(invitationId: string) {
+        const { error } = await authClient.organization.acceptInvitation({
+            invitationId: invitationId,
+        });
+
+        if (error) {
+            toast.error(error.message as string);
+        }
+    }
+
+    async function rejectInvitation(invitationId: string) {
+        const { error } = await authClient.organization.rejectInvitation({
+            invitationId: invitationId,
+        });
+
+        if (error) {
+            toast.error(error.message as string);
+        }
+    }
+
+    useEffect(() => {
+        async function loadNotifications() {
+            const data = await notificationDbs();
+
+            if (data) {
+                setNotifications(data);
+            }
+
+            setIsLoading(false);
+        }
+
+        loadNotifications();
+    }, []);
+
     return (
         <Popover>
             <PopoverTrigger className="p-2 rounded-full border border-border-clr bg-background-secondary">
@@ -21,25 +75,59 @@ function Notifications() {
                         Notifications
                     </PopoverTitle>
                 </PopoverHeader>
-                <div className="flax">
-                    <div className="flex justify-between border border-border-clr rounded-md p-2 items-center">
-                        <div>
-                            <h1 className="font-bold text-primary-text">
-                                Notifications title
+                <div className="flex">
+                    {isLoading && (
+                        <div className="flex gap-2 items-center justify-center p-4 w-full">
+                            <Loader2 className="animate-spin" size={14} />
+                            <p>Loading...</p>
+                        </div>
+                    )}
+
+                    {notifications.length !== 0 ? (
+                        notifications.map((notification) => (
+                            <div
+                                key={notification.id}
+                                className="flex justify-between border border-border-clr rounded-md p-2 items-center"
+                            >
+                                <div>
+                                    <h1 className="font-bold text-primary-text">
+                                        {notification.title}
+                                    </h1>
+                                    <p className="text-secondary-text text-[12px]">
+                                        {notification.message}
+                                    </p>
+                                </div>
+                                <div className="flex gap-2">
+                                    <button
+                                        onClick={() =>
+                                            acceptInvitation(
+                                                notification.invitationId,
+                                            )
+                                        }
+                                        className="border-2 rounded-md h-6.25 w-15 text-[12px] text-green-500 border-green-500 bg-green-500/20 scale-95 active:scale-95 hover:scale-100"
+                                    >
+                                        Accept
+                                    </button>
+                                    <button
+                                        onClick={() =>
+                                            rejectInvitation(
+                                                notification.invitationId,
+                                            )
+                                        }
+                                        className="border-2 rounded-md h-6.25 w-15 text-[12px] text-red-500 border-red-500 bg-red-500/20 scale-95 active:scale-95 hover:scale-100"
+                                    >
+                                        Reject
+                                    </button>
+                                </div>
+                            </div>
+                        ))
+                    ) : (
+                        <div className="flex items-center justify-center p-4 w-full">
+                            <h1 className="text-secondary-text font-semibold text-[12px]">
+                                No notifications
                             </h1>
-                            <p className="text-secondary-text text-[12px]">
-                                Notifications message
-                            </p>
                         </div>
-                        <div className="flex gap-2">
-                            <button className="border-2 rounded-md h-6.25 w-15 text-[12px] text-green-500 border-green-500 bg-green-500/20 scale-95 active:scale-95 hover:scale-100">
-                                Accept
-                            </button>
-                            <button className="border-2 rounded-md h-6.25 w-15 text-[12px] text-red-500 border-red-500 bg-red-500/20 scale-95 active:scale-95 hover:scale-100">
-                                Reject
-                            </button>
-                        </div>
-                    </div>
+                    )}
                 </div>
             </PopoverContent>
         </Popover>
