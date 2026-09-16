@@ -48,7 +48,7 @@ function MemberTable({
     //Get current active member role
     const user = authClient.useActiveMemberRole();
 
-    if (!user) return;
+    if (!user) return;  
 
     //Set variable for filter value and give All as default
     const currentTag =

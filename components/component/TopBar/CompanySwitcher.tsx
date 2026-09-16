@@ -62,7 +62,9 @@ function CompanySwitcher() {
                         </p>
                     </div>
                 ) : (
-                    <p>Company</p>
+                    <p className="text-[14px] text-secondary-text">
+                        Organization
+                    </p>
                 )}
             </DropdownMenuTrigger>
             <DropdownMenuContent className="bg-background-secondary min-w-[200px]">

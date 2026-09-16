@@ -8,12 +8,10 @@ export default async function Dashboard({ children }: { children: ReactNode }) {
     return (
         <main>
             <ThemeProvider>
+                <Toaster />
+                <ModalComp />
                 <AppLayout>
-                    <div>
-                        <Toaster />
-                        <ModalComp />
-                        {children}
-                    </div>
+                    <div>{children}</div>
                 </AppLayout>
             </ThemeProvider>
         </main>

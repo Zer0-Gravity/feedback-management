@@ -1,7 +1,10 @@
 "use client";
 
 import {
+    Hourglass,
+    Loader2,
     Newspaper,
+    Plus,
     Send,
     SquareKanban,
     TableProperties,
@@ -28,8 +31,65 @@ function AppLayout({ children }: { children: ReactNode }) {
     const path = usePathname();
 
     //Get the current active role
-    const { data: role } = authClient.useActiveMemberRole();
-    if (!role) return;
+    const { data: role, isPending, error } = authClient.useActiveMemberRole();
+
+    //Loading component
+    if (isPending) {
+        return (
+            <div className="flex flex-col h-screen">
+                <TopBar />
+                <div className="w-full h-full flex flex-col items-center justify-center gap-2">
+                    <Loader2
+                        size={14}
+                        className="animate-spin text-primary-text"
+                    />
+                    <h1 className="text-primary-text text-[14px]">
+                        Loading Data...
+                    </h1>
+                </div>
+            </div>
+        );
+    }
+
+    // Render different page if the user not part of any organization yet
+    if (error || !role) {
+        return (
+            <div className="flex flex-col h-screen">
+                <TopBar />
+                <div className="h-full w-full bg-background-secondary flex justify-center">
+                    <div className="mt-5 space-y-3">
+                        <div>
+                            <h1 className="text-[20px] text-primary-text font-bold">
+                                Currently not part of any organizations
+                            </h1>
+                            <p className="text-[14px] text-secondary-text md:max-w-200">
+                                Contact your system administrator or owner to
+                                add your email address to the company. This page
+                                will update automatically once you are added.
+                            </p>
+                        </div>
+                        <div className="text-secondary-text text-[12px]">
+                            OR
+                        </div>
+                        <div className="space-y-3">
+                            <p className="text-primary-text text-[14px]">
+                                You can create your own organization
+                            </p>
+                            <Link
+                                href={"?new-organization=true"}
+                                className="bg-button-clr text-white rounded-md p-2 flex gap-2 items-center active:scale-98 w-fit"
+                            >
+                                <Plus size={12} />
+                                <span className="text-[12px]">
+                                    Create Organization
+                                </span>
+                            </Link>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
 
     //Slice the navigation bar if the user are just a member
     const filteredList =
