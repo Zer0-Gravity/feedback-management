@@ -7,12 +7,13 @@ import {
     PopoverTitle,
     PopoverTrigger,
 } from "@/components/ui/popover";
-import { Bell, Loader2 } from "lucide-react";
+import { Bell, BellDot, Loader2 } from "lucide-react";
 
 import { notificationDbs } from "./actions";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { authClient } from "@/lib/auth-client";
+import { useRouter } from "next/navigation";
 
 interface NotificationsItems {
     id: string;
@@ -25,6 +26,8 @@ interface NotificationsItems {
 }
 
 function Notifications() {
+    const router = useRouter();
+
     const [notifications, setNotifications] = useState<NotificationsItems[]>(
         [],
     );
@@ -38,6 +41,8 @@ function Notifications() {
         if (error) {
             toast.error(error.message as string);
         }
+
+        router.refresh();
     }
 
     async function rejectInvitation(invitationId: string) {
@@ -67,7 +72,11 @@ function Notifications() {
     return (
         <Popover>
             <PopoverTrigger className="p-2 rounded-full border border-border-clr bg-background-secondary">
-                <Bell size={16} className="text-primary-text" />
+                {notifications.length === 0 ? (
+                    <Bell size={16} className="text-primary-text" />
+                ) : (
+                    <BellDot size={16} className="text-primary-text" />
+                )}
             </PopoverTrigger>
             <PopoverContent className="bg-background ring-0 shadow-lg min-w-150">
                 <PopoverHeader>
@@ -87,7 +96,7 @@ function Notifications() {
                         notifications.map((notification) => (
                             <div
                                 key={notification.id}
-                                className="flex justify-between border border-border-clr rounded-md p-2 items-center"
+                                className="flex justify-between border border-border-clr rounded-md p-2 items-center w-full"
                             >
                                 <div>
                                     <h1 className="font-bold text-primary-text">

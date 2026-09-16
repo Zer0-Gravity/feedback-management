@@ -68,7 +68,7 @@ function NewCompany() {
                 phone: data.phone,
             });
             handleClose();
-            console.log(data)
+            router.refresh();
         } catch (error) {
             console.log(error);
         }
