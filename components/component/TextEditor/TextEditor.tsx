@@ -4,18 +4,26 @@ import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import EditorButton from "./EditorButton";
 import { useEffect, useRef } from "react";
+import Placeholder from "@tiptap/extension-placeholder";
 
 function TextEditor({
+    style,
     value,
+    text,
     onChange,
 }: {
+    style: string;
     value: string;
+    text?: string;
     onChange: (value: string) => void;
 }) {
     const onChangeRef = useRef(onChange); //Stable reference
 
     const editor = useEditor({
-        extensions: [StarterKit.configure({ heading: { levels: [1, 2, 3] } })],
+        extensions: [
+            StarterKit.configure({ heading: { levels: [1, 2, 3] } }),
+            Placeholder.configure({ placeholder: text }),
+        ],
         immediatelyRender: false,
         content: value, //Set the value to hook form
         onUpdate: ({ editor }) => {
@@ -26,7 +34,7 @@ function TextEditor({
         },
         editorProps: {
             attributes: {
-                class: "bg-background p-5 border border-border-clr text-primary-text text-[16px] min-h-full outline-none rounded-lg",
+                class: style,
             },
         },
     });
@@ -43,7 +51,7 @@ function TextEditor({
     }
 
     return (
-        <div>
+        <div className="space-y-2">
             <EditorButton editor={editor} />
             <EditorContent editor={editor} className="min-h-[600px]" />
         </div>

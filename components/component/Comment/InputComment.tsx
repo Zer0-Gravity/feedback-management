@@ -1,35 +1,52 @@
 "use client";
 
-import { EditorContent, useEditor } from "@tiptap/react";
-import StarterKit from "@tiptap/starter-kit";
-import Placeholder from "@tiptap/extension-placeholder";
-import EditorButton from "../TextEditor/EditorButton";
-import { ReactNode } from "react";
+import { Controller, useForm } from "react-hook-form";
+import TextEditor from "../TextEditor/TextEditor";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 
-function InputComment({ children }: { children?: ReactNode }) {
-    const editor = useEditor({
-        extensions: [
-            StarterKit,
-            Placeholder.configure({ placeholder: "Write a comment..." }),
-        ],
-        editorProps: {
-            attributes: {
-                class: "w-full rounded-lg border border-border-clr p-3 text-[14px] text-primary-text outline-none",
-            },
-        },
+const schema = yup
+    .object({
+        comment: yup.string().required("comment can't be empty"),
+    })
+    .required();
+
+function InputComment() {
+    const { handleSubmit, control } = useForm({
+        resolver: yupResolver(schema),
     });
 
+    const handleComment = (data: any) => {
+        console.log(data);
+    };
+
     return (
-        <div className="flex flex-col gap-2">
-            <EditorButton editor={editor} />
-            <EditorContent editor={editor} placeholder="Write a comment" />
-            <div className="flex gap-2 items-center justify-end">
-                {children}
-                <button className="text-[12px] rounded-full text-white bg-button-clr px-2 py-1">
-                    Send
-                </button>
-            </div>
-        </div>
+        <form className="relative" onSubmit={handleSubmit(handleComment)}>
+            <Controller
+                name="comment"
+                control={control}
+                render={({ field, fieldState: { error } }) => (
+                    <div>
+                        <TextEditor
+                            style="rich-editor-comment"
+                            text="Write a comment"
+                            value={field.value}
+                            onChange={field.onChange}
+                        />
+                        {error && (
+                            <p className="error-message">{error.message}</p>
+                        )}
+                    </div>
+                )}
+            />
+
+            <button
+                type="submit"
+                className="text-[12px] rounded-full text-white bg-button-clr px-2 py-1 absolute"
+            >
+                Send
+            </button>
+        </form>
     );
 }
 

@@ -145,6 +145,7 @@ function FormSub() {
                 control={control}
                 render={({ field }) => (
                     <TextEditor
+                        style="rich-editor-new"
                         value={field.value ?? ""}
                         onChange={field.onChange}
                     />

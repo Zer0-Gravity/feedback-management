@@ -71,6 +71,14 @@ body {
     background-color: var(--button-clr);
 }
 
+.rich-editor-comment {
+    @apply w-full rounded-lg border border-border-clr p-3 text-[14px] text-primary-text outline-none;
+}
+
+.rich-editor-new {
+    @apply bg-background p-5 border border-border-clr text-primary-text text-[16px] min-h-full outline-none rounded-lg;
+}
+
 .toolbar-toggle {
     @apply h-6.25 w-6.25 flex items-center justify-center rounded-md;
 }
