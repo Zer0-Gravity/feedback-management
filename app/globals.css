@@ -116,7 +116,7 @@ body {
         }
     }
 
-    proseMirror {
+    ProseMirror {
         height: auto;
         min-height: 120px;
         field-sizing: content;

@@ -14,6 +14,8 @@ import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import UpvoteButton from "@/components/component/UpvoteButton";
 import { handleUpvote } from "./actions";
+import Link from "next/link";
+import { ContentPostInline } from "@/components/component/ContentPost";
 
 type PageProps = {
     searchParams: Promise<{
@@ -84,7 +86,8 @@ async function Feed({ searchParams }: PageProps) {
             <div className="flex-1 flex overflow-y-auto flex-col gap-2 hide-scrollbar">
                 {postDb.length !== 0 ? (
                     postDb.map((post) => (
-                        <div
+                        <Link
+                            href={`post/${post.id}`}
                             key={post.id}
                             className="w-full h-27 bg-card-clr p-3 rounded-lg flex flex-col justify-between gap-2"
                         >
@@ -97,9 +100,9 @@ async function Feed({ searchParams }: PageProps) {
                                 </div>
                             </div>
 
-                            <p className="text-secondary-text text-[12px] truncate">
-                                {post.content}
-                            </p>
+                            <ContentPostInline
+                                content={post.content as string}
+                            />
 
                             <div className="flex items-center justify-between">
                                 <div className="flex items-center gap-5">
@@ -131,7 +134,7 @@ async function Feed({ searchParams }: PageProps) {
                                     })}
                                 </p>
                             </div>
-                        </div>
+                        </Link>
                     ))
                 ) : (
                     <div className="flex justify-center w-full p-5 mt-5 border border-border-clr rounded-md items-center gap-3">

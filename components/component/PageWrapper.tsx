@@ -5,7 +5,7 @@ function PageWrapper({
     header,
 }: {
     children: ReactNode;
-    header: string;
+    header?: string;
 }) {
     return (
         <main className="flex justify-center h-screen">

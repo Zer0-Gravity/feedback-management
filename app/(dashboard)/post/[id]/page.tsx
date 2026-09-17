@@ -5,6 +5,7 @@ import { STATUS_CONFIG } from "@/utils/func";
 import { formatDistanceToNow } from "date-fns";
 import { ArrowLeft, MessageCircle, Triangle } from "lucide-react";
 import { notFound } from "next/navigation";
+import { ContentPost } from "@/components/component/ContentPost";
 
 interface PostDetail {
     params: Promise<{ id: string }>;
@@ -26,7 +27,6 @@ async function PostDetail({ params }: PostDetail) {
     }
 
     const status = STATUS_CONFIG[postDetailDb.status.toLowerCase()];
-    console.log(postDetailDb);
 
     return (
         <PageWrapper>
@@ -56,9 +56,7 @@ async function PostDetail({ params }: PostDetail) {
 
                 {/* | Content | */}
                 <div className="mb-5">
-                    <p className="text-primary-text text-[14px]">
-                        {postDetailDb.content}
-                    </p>
+                    <ContentPost content={postDetailDb.content as string} />
                 </div>
 
                 {/* | Comment and Upvote render | */}
