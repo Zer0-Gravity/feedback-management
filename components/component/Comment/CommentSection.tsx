@@ -15,7 +15,7 @@ async function CommentSection({ postId }: { postId: string }) {
 
     return (
         <div className="space-y-5 mb-100">
-            <InputComment />
+            <InputComment postId={postId} />
 
             <div className="flex flex-col gap-2">
                 {commentsDb.map((comment) => (
@@ -50,7 +50,10 @@ async function CommentSection({ postId }: { postId: string }) {
                                 </p>
 
                                 {/* | Reply button | */}
-                                <ReplyButton commentId={comment.id} />
+                                <ReplyButton
+                                    parentId={comment.id}
+                                    postId={postId}
+                                />
 
                                 {/* | Comment Replies | */}
                                 {comment.replies &&

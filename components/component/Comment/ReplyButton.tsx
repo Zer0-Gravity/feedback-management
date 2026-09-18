@@ -3,20 +3,26 @@
 import { useState } from "react";
 import InputComment from "./InputComment";
 
-function ReplyButton({ commentId }: { commentId: string }) {
+function ReplyButton({
+    parentId,
+    postId,
+}: {
+    parentId: string;
+    postId: string;
+}) {
     const [onReply, setOnReply] = useState<string>("");
 
     return (
         <div>
             <button
-                onClick={() => setOnReply(commentId)}
+                onClick={() => setOnReply(parentId)}
                 className="text-[12px] text-secondary-text hover:text-primary-text transition-colors"
             >
-                {onReply !== commentId && <p>Reply</p>}
+                {onReply !== parentId && <p>Reply</p>}
             </button>
 
-            {onReply === commentId && (
-                <InputComment>
+            {onReply === parentId && (
+                <InputComment postId={postId}>
                     <button
                         onClick={() => setOnReply("")}
                         className="text-[12px] rounded-full text-button-clr border border-button-clr px-2 py-1"
