@@ -11,6 +11,7 @@ function ReplyButton({
     postId: string;
 }) {
     const [onReply, setOnReply] = useState<string>("");
+    console.log(parentId);
 
     return (
         <div>
@@ -22,7 +23,7 @@ function ReplyButton({
             </button>
 
             {onReply === parentId && (
-                <InputComment postId={postId}>
+                <InputComment postId={postId} parentId={parentId}>
                     <button
                         onClick={() => setOnReply("")}
                         className="text-[12px] rounded-full text-button-clr border border-button-clr px-2 py-1"

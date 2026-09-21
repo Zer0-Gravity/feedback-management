@@ -15,3 +15,19 @@ export async function addComment(data: CommentProps, post_id: string) {
         },
     });
 }
+
+export async function addReply(
+    data: CommentProps,
+    post_id: string,
+    msgPar: string,
+) {
+    const session = await auth.api.getSession({ headers: await headers() });
+    await prisma.comment.create({
+        data: {
+            author_id: session?.user.id as string,
+            post_id: post_id,
+            parent_id: msgPar,
+            content: data.content,
+        },
+    });
+}

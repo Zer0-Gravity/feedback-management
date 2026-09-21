@@ -8,7 +8,7 @@ import { Category } from "@/app/generated/prisma/client";
 
 export async function addPost(data: FormData, orgId: string) {
     const session = await auth.api.getSession({ headers: await headers() }); //Get author id
-    const {} = await prisma.post.create({
+    await prisma.post.create({
         data: {
             author_id: session?.user.id as string,
             company_id: orgId,
