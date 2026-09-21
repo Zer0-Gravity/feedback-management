@@ -2,6 +2,7 @@ import { Comment, User } from "@/app/generated/prisma/client";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { formatDistanceToNow } from "date-fns";
 import { Dot } from "lucide-react";
+import { ContentPost } from "../ContentPost";
 
 type RepliesProps = Comment & { user: User };
 
@@ -28,9 +29,7 @@ function CommentReplies({ replies }: Replies) {
                         })}
                     </p>
                 </div>
-                <p className="text-primary-text text-[14px]">
-                    {replies.content}
-                </p>
+                <ContentPost content={replies.content} />
             </div>
         </div>
     );

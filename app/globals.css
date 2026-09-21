@@ -101,6 +101,9 @@ body {
         font-weight: 700;
     }
 
+    p {
+        font-size: 14px;
+    }
     pre {
         background-color: var(--code-bg);
         color: var(--text-primary-text);

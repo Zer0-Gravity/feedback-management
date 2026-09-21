@@ -5,6 +5,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import prisma from "@/lib/prisma";
 import CommentReplies from "./CommentReplies";
 import ReplyButton from "./ReplyButton";
+import { ContentPost } from "../ContentPost";
 
 async function CommentSection({ postId }: { postId: string }) {
     //Fetch comment data alongside its replies
@@ -45,9 +46,7 @@ async function CommentSection({ postId }: { postId: string }) {
                                         )}
                                     </p>
                                 </div>
-                                <p className="text-primary-text text-[14px]">
-                                    {comment.content}
-                                </p>
+                                <ContentPost content={comment.content} />
 
                                 {/* | Reply button | */}
                                 <ReplyButton
