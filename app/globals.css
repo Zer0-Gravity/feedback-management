@@ -72,7 +72,7 @@ body {
 }
 
 .rich-editor-comment {
-    @apply w-full rounded-lg border border-border-clr p-3 text-[14px] text-primary-text outline-none;
+    @apply w-full rounded-lg border border-border-clr p-3 text-[14px] text-primary-text outline-none max-h-20;
 }
 
 .rich-editor-new {

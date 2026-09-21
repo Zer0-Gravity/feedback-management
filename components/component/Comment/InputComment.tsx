@@ -8,6 +8,7 @@ import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { addComment, addReply } from "@/app/(dashboard)/post/[id]/actions";
 import { ReactNode } from "react";
+import { useReply } from "@/utils/store";
 
 export interface CommentProps {
     content: string;
@@ -33,6 +34,7 @@ function InputComment({
     });
 
     const router = useRouter();
+    const { closeReply } = useReply();
 
     const handleComment = async (content: CommentProps) => {
         try {
@@ -55,6 +57,7 @@ function InputComment({
                 });
             }
 
+            closeReply(); //Close the reply component
             router.refresh();
         } catch (error) {
             console.log(error);
@@ -62,12 +65,12 @@ function InputComment({
     };
 
     return (
-        <form className="relative" onSubmit={handleSubmit(handleComment)}>
+        <form onSubmit={handleSubmit(handleComment)}>
             <Controller
                 name="content"
                 control={control}
                 render={({ field, fieldState: { error } }) => (
-                    <div>
+                    <div className="max-h-[90px]">
                         <TextEditor
                             style="rich-editor-comment"
                             text="Write a comment"
@@ -81,7 +84,7 @@ function InputComment({
                 )}
             />
 
-            <div className="flex gap-2 items-center">
+            <div className="flex gap-2 items-center justify-end">
                 {children}
                 <button
                     type="submit"

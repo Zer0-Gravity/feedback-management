@@ -13,6 +13,12 @@ interface ThemeType {
     toggleTheme: () => void;
 }
 
+interface OnReplyType {
+    replyId: string | null;
+    startReply: (replyId: string) => void;
+    closeReply: () => void;
+}
+
 export const useCompany = create<CompanyType>()(
     persist(
         (set) => ({
@@ -40,3 +46,9 @@ export const useTheme = create<ThemeType>()(
         },
     ),
 );
+
+export const useReply = create<OnReplyType>((set) => ({
+    replyId: null,
+    startReply: (id: string) => set({ replyId: id }),
+    closeReply: () => set({ replyId: null }),
+}));
