@@ -51,20 +51,21 @@ function Member() {
     } = useForm({ resolver: yupResolver(schema) });
 
     //Fetching the member list
+    const fetchMembers = async () => {
+        const { data, error } = await authClient.organization.listMembers();
+
+        if (error) {
+            toast.error(error.message as string);
+        }
+
+        if (!data) return;
+
+        setMemberDb(data?.members);
+    };
+
     useEffect(() => {
-        const fetchData = async () => {
-            const { data, error } = await authClient.organization.listMembers();
-
-            if (error) {
-                toast.error(error.message as string);
-            }
-
-            if (!data) return;
-
-            setMemberDb(data?.members);
-        };
-
-        fetchData();
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        fetchMembers();
     }, []);
 
     //Reset the current page to 1 if user perform search pr tag filter
@@ -224,6 +225,7 @@ function Member() {
                                     memberId={member.id}
                                     role={member.role}
                                     name={member.user.name}
+                                    onRoleUpdate={fetchMembers}
                                 />
                             </div>
                         </div>

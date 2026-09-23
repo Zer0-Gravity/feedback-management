@@ -15,15 +15,45 @@ import {
     SelectTrigger,
     SelectValue,
 } from "../ui/select";
+import { authClient } from "@/lib/auth-client";
+import toast from "react-hot-toast";
 
 interface MemberDropdownProps {
     memberId: string;
     role: string;
     name: string;
+    onRoleUpdate: () => void;
 }
 
-function DropdownMember({ memberId, role, name }: MemberDropdownProps) {
+function DropdownMember({
+    memberId,
+    role,
+    name,
+    onRoleUpdate,
+}: MemberDropdownProps) {
     const [confirmRemove, setConfirmRemove] = useState<boolean>(false);
+
+    //Get the current active organization data
+    const { data: orgActives } = authClient.useActiveOrganization();
+
+    const handleUpdateRole = async (role: string) => {
+        //Update database
+        const { error } = await authClient.organization.updateMemberRole({
+            role,
+            memberId,
+            organizationId: orgActives?.id,
+        });
+
+        //Catch the error if there any
+        if (error) {
+            toast.error(error?.message as string);
+            return;
+        }
+
+        toast.success("Role updated successfully");
+
+        await onRoleUpdate?.(); //Refetch the data
+    };
 
     return (
         <Popover>
@@ -41,12 +71,13 @@ function DropdownMember({ memberId, role, name }: MemberDropdownProps) {
                 <div className="space-y-2">
                     <Select
                         value={role.charAt(0).toUpperCase() + role.slice(1)}
+                        onValueChange={(val) => handleUpdateRole(val as string)}
                     >
                         <SelectTrigger className="w-full bg-background text-secondary-text text-[14px] border-none">
                             <SelectValue placeholder={role} />
                         </SelectTrigger>
                         <SelectContent className="bg-background ring-0 ">
-                            {["owner", "admin", "member"].map((role, index) => (
+                            {["admin", "member"].map((role, index) => (
                                 <SelectItem
                                     key={index}
                                     value={role}
