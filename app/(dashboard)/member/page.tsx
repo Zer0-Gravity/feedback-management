@@ -225,7 +225,7 @@ function Member() {
                                     memberId={member.id}
                                     role={member.role}
                                     name={member.user.name}
-                                    onRoleUpdate={fetchMembers}
+                                    onMemberUpdate={fetchMembers}
                                 />
                             </div>
                         </div>

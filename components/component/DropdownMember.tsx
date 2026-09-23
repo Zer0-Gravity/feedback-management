@@ -22,14 +22,14 @@ interface MemberDropdownProps {
     memberId: string;
     role: string;
     name: string;
-    onRoleUpdate: () => void;
+    onMemberUpdate: () => void;
 }
 
 function DropdownMember({
     memberId,
     role,
     name,
-    onRoleUpdate,
+    onMemberUpdate,
 }: MemberDropdownProps) {
     const [confirmRemove, setConfirmRemove] = useState<boolean>(false);
 
@@ -52,7 +52,23 @@ function DropdownMember({
 
         toast.success("Role updated successfully");
 
-        await onRoleUpdate?.(); //Refetch the data
+        await onMemberUpdate?.(); //Refetch the data
+    };
+
+    const handleRemoveMember = async () => {
+        const { error } = await authClient.organization.removeMember({
+            memberIdOrEmail: memberId,
+            organizationId: orgActives?.id,
+        });
+
+        if (error) {
+            toast.error(error.message as string);
+            return;
+        }
+
+        toast.success("User removed from organization");
+
+        await onMemberUpdate?.();
     };
 
     return (
@@ -109,7 +125,10 @@ function DropdownMember({
                                     >
                                         Cancel
                                     </button>
-                                    <button className="p-2 rounded-md bg-red-500 text-white flex-1 text-[12px] font-semibold active:scale-95">
+                                    <button
+                                        onClick={handleRemoveMember}
+                                        className="p-2 rounded-md bg-red-500 text-white flex-1 text-[12px] font-semibold active:scale-95"
+                                    >
                                         Remove
                                     </button>
                                 </div>
