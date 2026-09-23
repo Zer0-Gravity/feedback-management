@@ -4,10 +4,13 @@ import PageWrapper from "@/components/component/PageWrapper";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { authClient } from "@/lib/auth-client";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { MoreHorizontal, PackageOpen } from "lucide-react";
 import { motion } from "motion/react";
 import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
+import * as yup from "yup";
 
 interface MemberType {
     id: string;
@@ -23,8 +26,16 @@ interface MemberType {
     };
 }
 
+const schema = yup
+    .object({
+        email: yup
+            .string()
+            .email("Invalid e-mail address")
+            .required("E-mail can't be empty"),
+    })
+    .required();
+
 function Member() {
-    const [userEmail, setUserEmail] = useState<string>("");
     const [currentTag, setCurrentTag] = useState<string>("All");
     const [searchMember, setSearchMember] = useState<string>("");
     const [currentPage, setCurrentPage] = useState<number>(1);
@@ -32,6 +43,13 @@ function Member() {
 
     const [memberDb, setMemberDb] = useState<MemberType[]>([]);
 
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm({ resolver: yupResolver(schema) });
+
+    //Fetching the member list
     useEffect(() => {
         const fetchData = async () => {
             const { data, error } = await authClient.organization.listMembers();
@@ -55,6 +73,7 @@ function Member() {
         setCurrentPage(1);
     }
 
+    // Pagination and filtering Section
     //Filtered data
     const filteredData = memberDb.filter((data) => {
         //Filter by name
@@ -81,21 +100,51 @@ function Member() {
     const totalPages = Math.ceil(filteredData.length / itemPerPage); //Calculate all the page needed
     const handleButton = (page: number) => setCurrentPage(page); // function to handle the button navigation
 
+    // Sending an invitation section
+    const session = authClient.useActiveOrganization(); //Get the organization ID
+
+    const handleInviteMember = async (data: any) => {
+        // Send the invitation
+        const { error } = await authClient.organization.inviteMember({
+            email: data.email,
+            organizationId: session.data?.id,
+            role: "member",
+        });
+
+        toast.success("Invitation send");
+
+        //Throw error if exist
+        if (error) {
+            toast.error(error.message as string);
+        }
+    };
+
     return (
         <PageWrapper header="Member">
-            <div className="flex gap-2 items-center bg-background p-3 rounded-lg border-border-clr my-4">
+            <form
+                onSubmit={handleSubmit(handleInviteMember)}
+                className="flex gap-2 items-center bg-background p-3 rounded-lg border-border-clr my-4 relative"
+            >
                 <input
+                    {...register("email")}
                     type="text"
-                    className="border border-border-clr rounded-lg bg-background h-9 w-full text-primary-text text-[12px] p-2"
+                    className={`border border-border-clr rounded-lg bg-background h-9 w-full text-primary-text text-[12px] p-2 ${errors.email ? "border-red-500 outline-0 text-red-500" : ""}`}
                     placeholder="Invite by email - johnDoe@mail.com"
-                    value={userEmail}
-                    onChange={(e) => setUserEmail(e.target.value)}
                 />
 
-                <button className="bg-button-clr whitespace-nowrap text-white h-9 text-[14px] p-2 rounded-md">
+                {errors.email && (
+                    <p className="error-message absolute top-15 bg-red-500/20 p-2 rounded-full">
+                        {errors.email.message}
+                    </p>
+                )}
+
+                <button
+                    type="submit"
+                    className="bg-button-clr whitespace-nowrap text-white h-9 text-[14px] p-2 rounded-md"
+                >
                     <p>Send Invite</p>
                 </button>
-            </div>
+            </form>
 
             <div className="flex gap-2 items-center">
                 <input
