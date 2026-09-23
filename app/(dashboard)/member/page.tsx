@@ -1,5 +1,6 @@
 "use client";
 
+import DropdownMember from "@/components/component/DropdownMember";
 import PageWrapper from "@/components/component/PageWrapper";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
@@ -61,7 +62,6 @@ function Member() {
             if (!data) return;
 
             setMemberDb(data?.members);
-            console.log(data);
         };
 
         fetchData();
@@ -193,10 +193,10 @@ function Member() {
                             key={member.id}
                             className="flex justify-between items-center"
                         >
-                            <div className="flex gap-2 items-center text-primary-text">
+                            <div className="flex gap-2 items-center text-secondary-text">
                                 <Avatar className="bg-background">
                                     <AvatarImage />
-                                    <AvatarFallback className="text-[10px]">
+                                    <AvatarFallback className="text-[10px] bg-background-secondary">
                                         {member.user.name
                                             .slice(0, 2)
                                             .toUpperCase()}
@@ -220,12 +220,11 @@ function Member() {
                                             member.role.slice(1)}
                                     </p>
                                 </div>
-                                <button className="hover:bg-background-secondary h-8 w-8 grid place-content-center rounded-full transition-all">
-                                    <MoreHorizontal
-                                        size={14}
-                                        className="text-secondary-text "
-                                    />
-                                </button>
+                                <DropdownMember
+                                    memberId={member.id}
+                                    role={member.role}
+                                    name={member.user.name}
+                                />
                             </div>
                         </div>
                     ))
