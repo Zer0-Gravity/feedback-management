@@ -5,6 +5,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { authClient } from "@/lib/auth-client";
 import { MoreHorizontal } from "lucide-react";
+import { motion } from "motion/react";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
@@ -48,7 +49,7 @@ function Member() {
 
     return (
         <PageWrapper header="Member">
-            <div className="flex gap-2 items-center bg-background p-3 rounded-lg border-border-clr">
+            <div className="flex gap-2 items-center bg-background p-3 rounded-lg border-border-clr my-4">
                 <input
                     type="text"
                     className="border border-border-clr rounded-lg bg-background h-9 w-full text-primary-text text-[12px] p-2"
@@ -62,7 +63,7 @@ function Member() {
                 </button>
             </div>
 
-            <div className="flex gap-2 ">
+            <div className="flex gap-2 items-center">
                 <input
                     type="text"
                     className="border border-border-clr rounded-lg bg-background h-9 w-full text-primary-text text-[12px] p-2"
@@ -78,14 +79,25 @@ function Member() {
                     {["All", "Owner", "Admin", "Member"].map((role, index) => (
                         <label
                             key={index}
-                            className="flex item-center rounded-md h-9 p-2 border border-border-clr text-secondary-text has-checked:bg-button-clr has-checked:text-white"
+                            className="relative text-secondary-text h-9 w-17 flex items-center justify-center border border-border-clr rounded-md has-checked:text-white transition-all"
                         >
                             <RadioGroupItem
                                 value={role}
                                 id={role.toLowerCase()}
                                 className="hidden"
                             />
-                            <span className="text-[14px]">{role}</span>
+                            {currentTag === role && (
+                                <motion.div
+                                    layoutId="roles"
+                                    transition={{
+                                        type: "spring",
+                                        damping: 30,
+                                        stiffness: 280,
+                                    }}
+                                    className="absolute inset-0 rounded-md bg-button-clr z-1"
+                                />
+                            )}
+                            <span className="text-[14px] z-10">{role}</span>
                         </label>
                     ))}
                 </RadioGroup>
