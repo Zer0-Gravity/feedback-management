@@ -92,7 +92,7 @@ async function Feed({ searchParams }: PageProps) {
                             className="w-full bg-card-clr p-3 rounded-lg flex flex-col-reverse md:flex-row gap-2"
                         >
                             <UpvoteButton
-                                onChange={handleUpvote.bind(null, post.id)}
+                                postId={post.id}
                                 count={post._count.upVotes}
                             />
 

@@ -40,3 +40,19 @@ export async function handleUpvote(post_id: string) {
 
     return { isVoted };
 }
+
+export async function checkUpvote(post_id: string) {
+    const session = await auth.api.getSession({ headers: await headers() });
+
+    //Get the voted data
+    const isVoted = await prisma.upVote.findUnique({
+        where: {
+            user_id_post_id: {
+                user_id: session?.user.id as string,
+                post_id,
+            },
+        },
+    });
+
+    return isVoted;
+}
