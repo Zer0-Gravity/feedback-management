@@ -89,50 +89,44 @@ async function Feed({ searchParams }: PageProps) {
                         <Link
                             href={`post/${post.id}`}
                             key={post.id}
-                            className="w-full h-27 bg-card-clr p-3 rounded-lg flex flex-col justify-between gap-2"
+                            className="w-full bg-card-clr p-3 rounded-lg flex flex-col-reverse md:flex-row gap-2"
                         >
-                            <div>
-                                <div className="text-[14px] font-medium flex gap-3 items-center">
-                                    <h1 className="text-primary-text">
-                                        {post.title}
-                                    </h1>
-                                    <StatusBadge status={post.status} />
-                                </div>
-                            </div>
-
-                            <ContentPostInline
-                                content={post.content as string}
+                            <UpvoteButton
+                                onChange={handleUpvote.bind(null, post.id)}
+                                count={post._count.upVotes}
                             />
 
-                            <div className="flex items-center justify-between">
-                                <div className="flex items-center gap-5">
-                                    <div className="flex gap-2 items-center">
-                                        <MessageCircle
-                                            size={12}
-                                            className="text-primary-text"
-                                        />
-                                        <div className="text-primary-text text-[12px] flex gap-2 items-center">
-                                            <p>{post._count.comments}</p>{" "}
-                                            <p className="hidden sm:flex">
-                                                Comment
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <UpvoteButton
-                                        onChange={handleUpvote.bind(
-                                            null,
-                                            post.id,
-                                        )}
-                                        count={post._count.upVotes}
-                                    />
+                            <div className="space-y-1 w-full">
+                                <div className="flex gap-2 items-center">
                                     <CategoryBadge category={post.category} />
+                                    <StatusBadge status={post.status} />
                                 </div>
 
-                                <p className="text-primary-text text-[12px]">
-                                    {formatDistanceToNow(post.created_at, {
-                                        addSuffix: true,
-                                    })}
-                                </p>
+                                {/* Post Title */}
+                                <h1 className="text-primary-text font-semibold">
+                                    {post.title}
+                                </h1>
+
+                                {/* Post Content */}
+                                <ContentPostInline
+                                    content={post.content as string}
+                                />
+
+                                {/* Comment date */}
+                                <div className="flex justify-between">
+                                    <div className="flex gap-2 items-center text-primary-text">
+                                        <MessageCircle size={12} />
+                                        <div className=" text-[12px] flex gap-2 items-center">
+                                            <p>{post._count.comments}</p>{" "}
+                                            <p>Comment</p>
+                                        </div>
+                                    </div>
+                                    <p className="text-primary-text text-[12px]">
+                                        {formatDistanceToNow(post.created_at, {
+                                            addSuffix: true,
+                                        })}
+                                    </p>
+                                </div>
                             </div>
                         </Link>
                     ))
@@ -158,7 +152,7 @@ function CategoryBadge({ category }: { category: string }) {
     return (
         <div
             style={{ color: `${currentCategory.color}` }}
-            className="px-2 py-1 rounded-full flex gap-2 items-center"
+            className="flex gap-2 items-center"
         >
             <currentCategory.icon size={12} />
             <p className="text-[12px]">{currentCategory.label}</p>
