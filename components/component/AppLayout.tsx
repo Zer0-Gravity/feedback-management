@@ -1,11 +1,11 @@
 "use client";
 
 import {
-    Hourglass,
     Loader2,
     Newspaper,
     Plus,
     Send,
+    Settings,
     SquareKanban,
     TableProperties,
     User,
@@ -18,6 +18,9 @@ import TopBar from "./TopBar/TopBar";
 import { authClient } from "@/lib/auth-client";
 import { usePathname } from "next/navigation";
 import { motion } from "motion/react";
+import Image from "next/image";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 
 function AppLayout({ children }: { children: ReactNode }) {
     const navList = [
@@ -29,6 +32,9 @@ function AppLayout({ children }: { children: ReactNode }) {
     ];
 
     const path = usePathname();
+
+    //Get the user account information
+    const userDb = authClient.useSession();
 
     //Get the current active role
     const { data: role, isPending, error } = authClient.useActiveMemberRole();
@@ -100,7 +106,56 @@ function AppLayout({ children }: { children: ReactNode }) {
     return (
         <main className="flex md:flex-row flex-col h-screen">
             {/* | Desktop Sidebar | */}
+
             <aside className="w-65 p-5 hidden md:flex flex-col">
+                {/* Desktop Logo and Account */}
+                <div className="flex justify-between items-center mb-15">
+                    <Image
+                        src="/VotifyFull.svg"
+                        width={100}
+                        height={200}
+                        alt="desktop-logo"
+                    />
+
+                    <Popover>
+                        <PopoverTrigger>
+                            <Avatar className="bg-background-secondary size-7">
+                                <AvatarImage
+                                    src={userDb.data?.user.image as string}
+                                />
+                                <AvatarFallback className="text-[10px] font-semibold text-secondary-text">
+                                    {userDb.data?.user.name
+                                        .slice(0, 2)
+                                        .toUpperCase()}
+                                </AvatarFallback>
+                            </Avatar>
+                        </PopoverTrigger>
+                        <PopoverContent
+                            className="bg-background-secondary ring-0 max-w-60"
+                            align="start"
+                            sideOffset={10}
+                        >
+                            <div className="flex justify-between items-center">
+                                <div>
+                                    <h1 className="font-bold text-primary-text text-[14px]">
+                                        {userDb.data?.user.name}
+                                    </h1>
+                                    <p className="text-secondary-text text-[12px]">
+                                        {userDb.data?.user.email}
+                                    </p>
+                                </div>
+
+                                <Link href="/account">
+                                    <Settings
+                                        size={20}
+                                        className="text-primary-text"
+                                    />
+                                </Link>
+                            </div>
+                        </PopoverContent>
+                    </Popover>
+                </div>
+
                 <nav className="space-y-2 flex-1">
                     {filteredList.map((list, index) => (
                         <Link
