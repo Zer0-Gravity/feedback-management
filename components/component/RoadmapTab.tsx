@@ -58,7 +58,7 @@ function RoadmapTab({ database, search, status, category }: RoadmapProps) {
                 {tabsStatus.map((status, index) => (
                     <label
                         key={index}
-                        className="group p-3 border border-border-clr bg-card-clr h-fit md:h-[100px] w-[250px] text-secondary-text rounded-md has-checked:bg-button-clr/10  has-checked:border-button-clr has-checked:text-primary-text"
+                        className="group p-3 border border-border-clr bg-card-clr h-fit md:h-[100px] w-[250px] text-secondary-text rounded-md has-checked:bg-button-clr/10  has-checked:border-button-clr has-checked:text-primary-text flex flex-col justify-between"
                     >
                         <RadioGroupItem
                             value={status.value}
@@ -73,6 +73,13 @@ function RoadmapTab({ database, search, status, category }: RoadmapProps) {
                                 {status.label}
                             </p>
                         </div>
+                        <p className="text-primary-text font-bold text-[25px] hidden md:flex">
+                            {
+                                database.filter(
+                                    (data) => data.status === status.value,
+                                ).length
+                            }
+                        </p>
                     </label>
                 ))}
             </RadioGroup>
