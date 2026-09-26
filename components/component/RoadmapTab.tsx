@@ -29,6 +29,7 @@ function RoadmapTab({ database, search, status, category }: RoadmapProps) {
     const searchParams = useSearchParams();
 
     const tabsStatus = [
+        { label: "All", value: "All", color: "#FFFFFF" },
         { label: "Backlog", value: "Backlog", color: "#8F8C88" },
         { label: "Accepted", value: "Accepted", color: "#4FB0FF" },
         { label: "Progress", value: "In_Progress", color: "#4FB0FF" },
@@ -98,59 +99,74 @@ function RoadmapTab({ database, search, status, category }: RoadmapProps) {
             </div>
 
             <div className="flex flex-col gap-2 ">
-                {database.map((data) => {
-                    const category =
-                        CATEGORY_CONFIG[data.category.toLowerCase()];
+                {database.length !== 0 ? (
+                    database.map((data) => {
+                        const category =
+                            CATEGORY_CONFIG[data.category.toLowerCase()];
 
-                    return (
-                        <div
-                            key={data.id}
-                            className="bg-card-clr p-3 flex gap-2 items-center"
-                        >
-                            <UpvoteButton
-                                postId={data.id}
-                                count={data._count.upVotes}
-                            />
-                            <div>
-                                <div className="flex gap-2">
-                                    <p className="font-bold text-primary-text">
-                                        {data.title}
-                                    </p>
-                                    <p
-                                        style={{
-                                            color: category.color,
-                                            backgroundColor: `${category.color}20`,
-                                        }}
-                                        className="text-[12px] font-medium px-2 py-1 flex items-center justify-center rounded-full"
-                                    >
-                                        {category.label}
-                                    </p>
-                                </div>
-                                <div className="flex gap-1 items-center">
-                                    <div className="flex items-center justify-center">
-                                        <Avatar>
-                                            <AvatarImage />
-                                            <AvatarFallback className="bg-background-secondary text-[10px] text-primary-text size-6">
-                                                {data.user.name
-                                                    .slice(0, 2)
-                                                    .toUpperCase()}
-                                            </AvatarFallback>
-                                        </Avatar>
-                                        <p className="text-[12px] text-secondary-text">
-                                            {data.user.name}
+                        return (
+                            <div
+                                key={data.id}
+                                className="bg-card-clr p-3 flex gap-2 items-center"
+                            >
+                                <UpvoteButton
+                                    postId={data.id}
+                                    count={data._count.upVotes}
+                                />
+
+                                <div>
+                                    <div className="flex gap-2">
+                                        <p className="font-bold text-primary-text">
+                                            {data.title}
+                                        </p>
+                                        <p
+                                            style={{
+                                                color: category.color,
+                                                backgroundColor: `${category.color}20`,
+                                            }}
+                                            className="text-[12px] font-medium px-2 py-1 flex items-center justify-center rounded-full"
+                                        >
+                                            {category.label}
                                         </p>
                                     </div>
-                                    <Dot className="text-secondary-text" />
-                                    <p className="text-[12px] text-secondary-text">
-                                        {formatDistanceToNow(data.created_at, {
-                                            addSuffix: true,
-                                        })}
-                                    </p>
+                                    <div className="flex gap-1 items-center">
+                                        <div className="flex items-center justify-center">
+                                            <Avatar>
+                                                <AvatarImage />
+                                                <AvatarFallback className="bg-background-secondary text-[10px] text-primary-text size-6">
+                                                    {data.user.name
+                                                        .slice(0, 2)
+                                                        .toUpperCase()}
+                                                </AvatarFallback>
+                                            </Avatar>
+                                            <p className="text-[12px] text-secondary-text">
+                                                {data.user.name}
+                                            </p>
+                                        </div>
+                                        <Dot className="text-secondary-text" />
+                                        <p className="text-[12px] text-secondary-text">
+                                            {formatDistanceToNow(
+                                                data.created_at,
+                                                {
+                                                    addSuffix: true,
+                                                },
+                                            )}
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    );
-                })}
+                        );
+                    })
+                ) : (
+                    <div className="border-2  p-5 flex flex-col items-center justify-center gap-2 rounded-lg border-border-clr">
+                        <h1 className="text-primary-text font-bold text-[20px]">
+                            Nothing here yet
+                        </h1>
+                        <p className="text-secondary-text text-[12px]">
+                            Any idea will be listed here
+                        </p>
+                    </div>
+                )}
             </div>
         </div>
     );
