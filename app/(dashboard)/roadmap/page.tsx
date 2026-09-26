@@ -11,7 +11,7 @@ async function Roadmap() {
 
     const postDb = await prisma.post.findMany({
         where: { company_id: session?.id },
-        include: { user: true },
+        include: { user: true, _count: { select: { upVotes: true } } },
     });
 
     return (

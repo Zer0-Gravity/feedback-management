@@ -6,9 +6,13 @@ import { CATEGORY_CONFIG } from "@/utils/func";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Dot } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
+import UpvoteButton from "./UpvoteButton";
 
 type Database = Post & {
     user: User;
+    _count: {
+        upVotes: number;
+    };
 };
 
 function RoadmapTab({ database }: { database: Database[] }) {
@@ -77,41 +81,50 @@ function RoadmapTab({ database }: { database: Database[] }) {
                         CATEGORY_CONFIG[data.category.toLowerCase()];
 
                     return (
-                        <div key={data.id} className="bg-card-clr p-2">
-                            <div className="flex gap-2">
-                                <p className="font-bold text-primary-text">
-                                    {data.title}
-                                </p>
-                                <p
-                                    style={{
-                                        color: category.color,
-                                        backgroundColor: `${category.color}20`,
-                                    }}
-                                    className="text-[12px] font-medium px-2 py-1 flex items-center justify-center rounded-full"
-                                >
-                                    {category.label}
-                                </p>
-                            </div>
-                            <div className="flex gap-1 items-center">
-                                <div className="flex items-center justify-center">
-                                    <Avatar>
-                                        <AvatarImage />
-                                        <AvatarFallback className="bg-background-secondary text-[10px] text-primary-text size-6">
-                                            {data.user.name
-                                                .slice(0, 2)
-                                                .toUpperCase()}
-                                        </AvatarFallback>
-                                    </Avatar>
-                                    <p className="text-[12px] text-secondary-text">
-                                        {data.user.name}
+                        <div
+                            key={data.id}
+                            className="bg-card-clr p-3 flex gap-2 items-center"
+                        >
+                            <UpvoteButton
+                                postId={data.id}
+                                count={data._count.upVotes}
+                            />
+                            <div>
+                                <div className="flex gap-2">
+                                    <p className="font-bold text-primary-text">
+                                        {data.title}
+                                    </p>
+                                    <p
+                                        style={{
+                                            color: category.color,
+                                            backgroundColor: `${category.color}20`,
+                                        }}
+                                        className="text-[12px] font-medium px-2 py-1 flex items-center justify-center rounded-full"
+                                    >
+                                        {category.label}
                                     </p>
                                 </div>
-                                <Dot className="text-secondary-text" />
-                                <p className="text-[12px] text-secondary-text">
-                                    {formatDistanceToNow(data.created_at, {
-                                        addSuffix: true,
-                                    })}
-                                </p>
+                                <div className="flex gap-1 items-center">
+                                    <div className="flex items-center justify-center">
+                                        <Avatar>
+                                            <AvatarImage />
+                                            <AvatarFallback className="bg-background-secondary text-[10px] text-primary-text size-6">
+                                                {data.user.name
+                                                    .slice(0, 2)
+                                                    .toUpperCase()}
+                                            </AvatarFallback>
+                                        </Avatar>
+                                        <p className="text-[12px] text-secondary-text">
+                                            {data.user.name}
+                                        </p>
+                                    </div>
+                                    <Dot className="text-secondary-text" />
+                                    <p className="text-[12px] text-secondary-text">
+                                        {formatDistanceToNow(data.created_at, {
+                                            addSuffix: true,
+                                        })}
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     );
