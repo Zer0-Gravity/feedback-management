@@ -7,6 +7,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Dot } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import UpvoteButton from "./UpvoteButton";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 type Database = Post & {
     user: User;
@@ -15,7 +16,18 @@ type Database = Post & {
     };
 };
 
-function RoadmapTab({ database }: { database: Database[] }) {
+interface RoadmapProps {
+    database: Database[];
+    search: string;
+    status: string;
+    category: string;
+}
+
+function RoadmapTab({ database, search, status, category }: RoadmapProps) {
+    const router = useRouter();
+    const pathName = usePathname();
+    const searchParams = useSearchParams();
+
     const tabsStatus = [
         { label: "Backlog", value: "Backlog", color: "#8F8C88" },
         { label: "Accepted", value: "Accepted", color: "#4FB0FF" },
@@ -30,6 +42,14 @@ function RoadmapTab({ database }: { database: Database[] }) {
         { label: "Bug report", value: "Bug_Report" },
         { label: "Integration", value: "Integration" },
     ];
+
+    const handleSearch = (value: string) => {
+        const param = new URLSearchParams(searchParams);
+        param.set("search", value);
+
+        //Update url
+        router.push(`${pathName}?${param.toString()}`);
+    };
 
     return (
         <div className="space-y-3">
@@ -61,6 +81,8 @@ function RoadmapTab({ database }: { database: Database[] }) {
                     type="search"
                     className="h-10 w-full border border-border-clr rounded-lg bg-card-clr  text-secondary-text text-[12px] p-2"
                     placeholder="Search post"
+                    value={search}
+                    onChange={(e) => handleSearch(e.target.value)}
                 />
                 <RadioGroup className="flex gap-2">
                     {tabCategory.map((cat, index) => (

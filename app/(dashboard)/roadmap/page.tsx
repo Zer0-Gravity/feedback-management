@@ -4,13 +4,35 @@ import { auth } from "@/lib/auth";
 import prisma from "@/lib/prisma";
 import { headers } from "next/headers";
 
-async function Roadmap() {
+interface RoadmapPromise {
+    searchParams: Promise<{
+        search?: string;
+        status?: string;
+        category?: string;
+    }>;
+}
+
+async function Roadmap({ searchParams }: RoadmapPromise) {
+    const { search = "", status = "", category = "" } = await searchParams;
+
     const session = await auth.api.getFullOrganization({
         headers: await headers(),
     });
 
     const postDb = await prisma.post.findMany({
-        where: { company_id: session?.id },
+        //prettier-ignore
+        where: {
+            company_id: session?.id,
+            AND: [
+                ...(search
+                    ? [{
+                        OR: [
+                               { title: { contains: search, mode: "insensitive" as const } },
+                            ],
+                          },
+                      ] : []),
+            ],
+        },
         include: { user: true, _count: { select: { upVotes: true } } },
     });
 
@@ -20,7 +42,12 @@ async function Roadmap() {
                 See what we&apos;re working on, what&apos;s coming next, and
                 vote on what matters to you.
             </p>
-            <RoadmapTab database={postDb} />
+            <RoadmapTab
+                database={postDb}
+                search={search}
+                status={status}
+                category={category}
+            />
         </PageWrapper>
     );
 }
