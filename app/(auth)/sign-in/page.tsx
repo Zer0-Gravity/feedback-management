@@ -4,6 +4,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { authClient } from "@/lib/auth-client";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Eye, EyeOff, Loader2 } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -176,8 +177,8 @@ function SignIn() {
                     </Link>
                 </p>
             </section>
-            <section className="bg-amber-300 w-112.5 h-175 p-2 rounded-r-lg hidden md:flex">
-                Image
+            <section className="bg-amber-300 w-112.5 h-175 p-2 rounded-r-lg hidden md:flex relative">
+                <Image src="/AuthImagePage.jpg" alt="auth-image" fill />
             </section>
         </div>
     );

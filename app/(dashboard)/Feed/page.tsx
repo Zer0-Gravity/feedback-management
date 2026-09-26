@@ -13,7 +13,6 @@ import PageWrapper from "@/components/component/PageWrapper";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import UpvoteButton from "@/components/component/UpvoteButton";
-import { handleUpvote } from "./actions";
 import Link from "next/link";
 import { ContentPostInline } from "@/components/component/ContentPost";
 

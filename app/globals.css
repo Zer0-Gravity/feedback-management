@@ -26,11 +26,11 @@
 
 .dark {
     --background: #0f0f11;
-    --background-secondary: #18181b;
+    --background-secondary: #141416;
     --primary-text: #f4f4f5;
     --secondary-text: #a1a1aa;
     --button-clr: #ff6b1a;
-    --card-clr: #0f0f11;
+    --card-clr: #1b1b1f;
     --border-clr: #27272a;
     --text-field: #27272a;
     --code-bg: #2e2e2e;

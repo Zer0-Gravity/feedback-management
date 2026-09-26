@@ -1,169 +1,123 @@
 "use client";
 
-import { Post, User } from "@/app/generated/prisma/client";
+import { Category, Post, User } from "@/app/generated/prisma/client";
+import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { CATEGORY_CONFIG } from "@/utils/func";
-import { formatDistanceToNow } from "date-fns";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Dot } from "lucide-react";
-import { AnimatePresence, motion } from "motion/react";
-import { useState } from "react";
+import { formatDistanceToNow } from "date-fns";
 
 type Database = Post & {
     user: User;
 };
 
 function RoadmapTab({ database }: { database: Database[] }) {
-    const [currentTab, setCurrentTab] = useState<string>("Backlog");
-    const tabs = ["Backlog", "Accepted", "Progress", "Review", "Completed"];
-    return (
-        <div className="flex flex-col gap-2 h-dvh">
-            <div className="flex gap-3 items-center w-full sm:w-fit justify-between md:justify-normal bg-background p-2 rounded-lg">
-                {tabs.map((tab, index) => (
-                    <button
-                        key={index}
-                        onClick={() => setCurrentTab(tab)}
-                        className="relative p-1 rounded-lg cursor-pointer"
-                    >
-                        <span
-                            className={`text-[12px] md:text-[14pxx] text-secondary-text transition-all relative z-10 ${currentTab === tab ? "text-white" : ""}`}
-                        >
-                            {tab}
-                        </span>
+    const tabsStatus = [
+        { label: "Backlog", value: "Backlog", color: "#8F8C88" },
+        { label: "Accepted", value: "Accepted", color: "#4FB0FF" },
+        { label: "Progress", value: "In_Progress", color: "#4FB0FF" },
+        { label: "Review", value: "Review", color: "#B78CFF" },
+        { label: "Completed", value: "Completed", color: "#4CC38A" },
+    ];
 
-                        {currentTab === tab && (
-                            <motion.div
-                                layoutId="activeTab"
-                                transition={{
-                                    type: "spring",
-                                    damping: 30,
-                                    stiffness: 300,
-                                }}
-                                className="absolute inset-0 bg-button-clr rounded-lg"
+    const tabCategory = [
+        { label: "All", value: "all" },
+        { label: "Feature request", value: "Feature_Request" },
+        { label: "Bug report", value: "Bug_Report" },
+        { label: "Integration", value: "Integration" },
+    ];
+
+    return (
+        <div className="space-y-3">
+            <RadioGroup className="flex gap-3">
+                {tabsStatus.map((status, index) => (
+                    <label
+                        key={index}
+                        className="group p-3 border border-border-clr bg-card-clr h-fit md:h-[100px] w-[250px] text-secondary-text rounded-md has-checked:bg-button-clr/10  has-checked:border-button-clr has-checked:text-primary-text"
+                    >
+                        <RadioGroupItem
+                            value={status.value}
+                            className="hidden"
+                        />
+                        <div className="flex gap-2 items-center">
+                            <div
+                                className="w-2 h-2 rounded-full hidden md:flex"
+                                style={{ backgroundColor: status.color }}
                             />
-                        )}
-                    </button>
+                            <p className="text-[12px] md:text-[12px]">
+                                {status.label}
+                            </p>
+                        </div>
+                    </label>
                 ))}
+            </RadioGroup>
+
+            <div className="flex gap-4 flex-col md:flex-row items-center">
+                <input
+                    type="search"
+                    className="h-10 w-full border border-border-clr rounded-lg bg-card-clr  text-secondary-text text-[12px] p-2"
+                    placeholder="Search post"
+                />
+                <RadioGroup className="flex gap-2">
+                    {tabCategory.map((cat, index) => (
+                        <label
+                            key={index}
+                            className="px-2 py-1 flex items-center justify-center border border-border-clr bg-card-clr rounded-full text-secondary-text has-checked:bg-button-clr/10 has-checked:text-primary-text has-checked:border-button-clr"
+                        >
+                            <RadioGroupItem value={cat} className="hidden" />
+                            <p className="text-[12px]">{cat.label}</p>
+                        </label>
+                    ))}
+                </RadioGroup>
             </div>
 
-            <div className="flex-1 flex flex-col min-h-0">
-                {currentTab === "Backlog" && (
-                    <TabPanel
-                        database={database}
-                        status="Backlog"
-                        label="Backlog"
-                    />
-                )}
+            <div className="flex flex-col gap-2 ">
+                {database.map((data) => {
+                    const category =
+                        CATEGORY_CONFIG[data.category.toLowerCase()];
 
-                {currentTab === "Accepted" && (
-                    <TabPanel
-                        database={database}
-                        status="Accepted"
-                        label="Accepted"
-                    />
-                )}
-
-                {currentTab === "Progress" && (
-                    <TabPanel
-                        database={database}
-                        status="In_Progress"
-                        label="In Progress"
-                    />
-                )}
-
-                {currentTab === "Review" && (
-                    <TabPanel
-                        database={database}
-                        status="Review"
-                        label="Review"
-                    />
-                )}
-
-                {currentTab === "Completed" && (
-                    <TabPanel
-                        database={database}
-                        status="Completed"
-                        label="Completed"
-                    />
-                )}
+                    return (
+                        <div key={data.id} className="bg-card-clr p-2">
+                            <div className="flex gap-2">
+                                <p className="font-bold text-primary-text">
+                                    {data.title}
+                                </p>
+                                <p
+                                    style={{
+                                        color: category.color,
+                                        backgroundColor: `${category.color}20`,
+                                    }}
+                                    className="text-[12px] font-medium px-2 py-1 flex items-center justify-center rounded-full"
+                                >
+                                    {category.label}
+                                </p>
+                            </div>
+                            <div className="flex gap-1 items-center">
+                                <div className="flex items-center justify-center">
+                                    <Avatar>
+                                        <AvatarImage />
+                                        <AvatarFallback className="bg-background-secondary text-[10px] text-primary-text size-6">
+                                            {data.user.name
+                                                .slice(0, 2)
+                                                .toUpperCase()}
+                                        </AvatarFallback>
+                                    </Avatar>
+                                    <p className="text-[12px] text-secondary-text">
+                                        {data.user.name}
+                                    </p>
+                                </div>
+                                <Dot className="text-secondary-text" />
+                                <p className="text-[12px] text-secondary-text">
+                                    {formatDistanceToNow(data.created_at, {
+                                        addSuffix: true,
+                                    })}
+                                </p>
+                            </div>
+                        </div>
+                    );
+                })}
             </div>
         </div>
-    );
-}
-
-function TabPanel({
-    database,
-    status,
-    label,
-}: {
-    database: Database[];
-    status: string;
-    label: string;
-}) {
-    return (
-        <AnimatePresence mode="wait">
-            <motion.div
-                layoutId="tabs"
-                initial={{ y: 2, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                className="space-y-2 h-full flex flex-col"
-            >
-                <p className="text-[14px] text-primary-text font-medium">
-                    {label}
-                </p>
-
-                <div className="border-2 border-border-clr rounded-md flex-1 p-2 flex gap-2 flex-col overflow-y-auto hide-scrollbar">
-                    {database.length !== 0 ? (
-                        database
-                            .filter((db) => db.status === status)
-                            .map((post) => {
-                                const category =
-                                    CATEGORY_CONFIG[
-                                        post.category.toLowerCase()
-                                    ];
-
-                                return (
-                                    <div
-                                        key={post.id}
-                                        className="bg-card-clr p-2 rounded-lg space-y-2"
-                                    >
-                                        <div className="flex gap-2 items-center">
-                                            <h1 className="text-primary-text text-[14px] font-semibold">
-                                                {post.title}
-                                            </h1>
-                                            <p
-                                                style={{
-                                                    color: `${category.color}`,
-                                                }}
-                                                className="text-[10px]"
-                                            >
-                                                {category.label}
-                                            </p>
-                                        </div>
-                                        <div className="flex gap-2 items-center">
-                                            <p className="text-secondary-text text-[12px]">
-                                                {`Submitted by ${post.user.name ?? "Unknown"}`}
-                                            </p>
-                                            <Dot
-                                                size={14}
-                                                className="text-secondary-text"
-                                            />
-                                            <p className="text-secondary-text text-[12px]">
-                                                {formatDistanceToNow(
-                                                    post.created_at,
-                                                    {
-                                                        addSuffix: true,
-                                                    },
-                                                )}
-                                            </p>
-                                        </div>
-                                    </div>
-                                );
-                            })
-                    ) : (
-                        <div>No submission yet</div>
-                    )}
-                </div>
-            </motion.div>
-        </AnimatePresence>
     );
 }
 
