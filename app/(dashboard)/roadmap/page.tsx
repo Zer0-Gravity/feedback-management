@@ -1,3 +1,4 @@
+import { Category, StatusPost } from "@/app/generated/prisma/enums";
 import PageWrapper from "@/components/component/PageWrapper";
 import RoadmapTab from "@/components/component/RoadmapTab";
 import { auth } from "@/lib/auth";
@@ -19,6 +20,7 @@ async function Roadmap({ searchParams }: RoadmapPromise) {
         headers: await headers(),
     });
 
+    //Find the database based on the query
     const postDb = await prisma.post.findMany({
         //prettier-ignore
         where: {
@@ -31,6 +33,8 @@ async function Roadmap({ searchParams }: RoadmapPromise) {
                             ],
                           },
                       ] : []),
+                 ...(status ? [{status: status as StatusPost}] : []),
+                 ...(category ? [{category: category as Category}] : [])
             ],
         },
         include: { user: true, _count: { select: { upVotes: true } } },

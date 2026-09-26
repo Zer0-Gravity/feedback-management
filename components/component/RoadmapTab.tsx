@@ -38,7 +38,7 @@ function RoadmapTab({ database, search, status, category }: RoadmapProps) {
     ];
 
     const tabCategory = [
-        { label: "All", value: "all" },
+        { label: "All", value: "All" },
         { label: "Feature request", value: "Feature_Request" },
         { label: "Bug report", value: "Bug_Report" },
         { label: "Integration", value: "Integration" },
@@ -52,9 +52,27 @@ function RoadmapTab({ database, search, status, category }: RoadmapProps) {
         router.push(`${pathName}?${param.toString()}`);
     };
 
+    //Function for handling a filter
+    const handleFilter = (value: string, label: string) => {
+        const param = new URLSearchParams(searchParams);
+
+        //Check if the filter value is ALL
+        if (value === "All") {
+            param.delete(`${label}`); //Delete the url query
+        } else {
+            param.set(`${label}`, value);
+        }
+
+        router.push(`${pathName}?${param.toString()}`);
+    };
+
     return (
         <div className="space-y-3">
-            <RadioGroup className="flex gap-3">
+            <RadioGroup
+                className="flex gap-3"
+                value={status ? status : "All"}
+                onValueChange={(val) => handleFilter(val, "status")}
+            >
                 {tabsStatus.map((status, index) => (
                     <label
                         key={index}
@@ -92,13 +110,20 @@ function RoadmapTab({ database, search, status, category }: RoadmapProps) {
                     value={search}
                     onChange={(e) => handleSearch(e.target.value)}
                 />
-                <RadioGroup className="flex gap-2">
+                <RadioGroup
+                    className="flex gap-2"
+                    value={category ? category : "All"}
+                    onValueChange={(val) => handleFilter(val, "category")}
+                >
                     {tabCategory.map((cat, index) => (
                         <label
                             key={index}
                             className="px-2 py-1 flex items-center justify-center border border-border-clr bg-card-clr rounded-full text-secondary-text has-checked:bg-button-clr/10 has-checked:text-primary-text has-checked:border-button-clr"
                         >
-                            <RadioGroupItem value={cat} className="hidden" />
+                            <RadioGroupItem
+                                value={cat.value}
+                                className="hidden"
+                            />
                             <p className="text-[12px]">{cat.label}</p>
                         </label>
                     ))}
