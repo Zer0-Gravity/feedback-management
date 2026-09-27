@@ -1,6 +1,7 @@
 "use server";
 
 import prisma from "@/lib/prisma";
+import { revalidatePath } from "next/cache";
 
 export async function DeletePost(idToDelete: string[]) {
     try {
@@ -12,6 +13,9 @@ export async function DeletePost(idToDelete: string[]) {
             console.log(error.message);
         }
     }
+
+    revalidatePath("/post");
+    revalidatePath("/audit-post");
 
     return { success: true };
 }

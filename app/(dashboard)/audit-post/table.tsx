@@ -33,7 +33,7 @@ function AuditTable({
         initialState: {
             pagination: {
                 pageIndex: 0,
-                pageSize: 10,
+                pageSize: 15,
             },
         },
         state: {
@@ -44,10 +44,7 @@ function AuditTable({
     return (
         <div className="flex flex-col gap-3">
             <div className="flex gap-2 md:justify-between items-baseline">
-                <TableController
-                    table={table}
-                    globalFilter={globalFilter}
-                />
+                <TableController table={table} globalFilter={globalFilter} />
             </div>
 
             <TableCustom table={table} />

@@ -1,4 +1,5 @@
-import { Checkbox } from "@/components/ui/checkbox";
+"use client";
+
 import {
     Popover,
     PopoverContent,
@@ -7,7 +8,9 @@ import {
 } from "@/components/ui/popover";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Table } from "@tanstack/react-table";
-import { Filter } from "lucide-react";
+import { Filter, Plus } from "lucide-react";
+import Link from "next/link";
+import { useState } from "react";
 
 interface TableProps<TData> {
     table: Table<TData>;
@@ -15,6 +18,8 @@ interface TableProps<TData> {
 }
 
 function TableController<TData>({ table, globalFilter }: TableProps<TData>) {
+    const [deleteWarn, setDeleteWarn] = useState<boolean>(false);
+
     const selectedRow = table.getSelectedRowModel(); //Get the selected row
     const currentStatus =
         (table.getColumn("status")?.getFilterValue() as string) || "All";
@@ -22,7 +27,7 @@ function TableController<TData>({ table, globalFilter }: TableProps<TData>) {
         (table.getColumn("category")?.getFilterValue() as string) || "All";
 
     return (
-        <div className="w-full flex gap-3 md:justify-between">
+        <div className="w-full flex gap-3">
             <div className="flex flex-1 flex-col gap-3">
                 <input
                     type="text"
@@ -32,13 +37,33 @@ function TableController<TData>({ table, globalFilter }: TableProps<TData>) {
                     onChange={(e) => table.setGlobalFilter(e.target.value)}
                 />
                 <div className="flex gap-3 items-center h-5">
-                    <p className="text-secondary-text text-[12px]">{`${selectedRow.rows.length} selected out of ${table.getPreSelectedRowModel().rows.length}`}</p>
+                    <p className="text-secondary-text text-[12px]">
+                        {deleteWarn
+                            ? `Are you sure to delete ${selectedRow.rows.length} items?`
+                            : `${selectedRow.rows.length} selected out of ${table.getPreSelectedRowModel().rows.length}`}
+                    </p>
 
-                    {selectedRow.rows.length > 0 && (
-                        <button className="bg-red-500 text-white p-1 rounded-md text-[12px]">
-                            Delete?
-                        </button>
-                    )}
+                    {selectedRow.rows.length > 0 &&
+                        (deleteWarn ? (
+                            <div className="flex gap-2">
+                                <button className="bg-green-500 text-white p-1 rounded-md text-[12px] w-15 ">
+                                    Yes
+                                </button>
+                                <button
+                                    className="bg-red-500 text-white p-1 rounded-md text-[12px] w-15"
+                                    onClick={() => setDeleteWarn(false)}
+                                >
+                                    No
+                                </button>
+                            </div>
+                        ) : (
+                            <button
+                                onClick={() => setDeleteWarn(true)}
+                                className="bg-red-500 text-white p-1 rounded-md text-[12px] w-15"
+                            >
+                                Delete
+                            </button>
+                        ))}
                 </div>
             </div>
 
@@ -133,6 +158,14 @@ function TableController<TData>({ table, globalFilter }: TableProps<TData>) {
                     </div>
                 </PopoverContent>
             </Popover>
+
+            <Link
+                href={"/post/new"}
+                className="flex gap-2 items-center bg-button-clr text-white rounded-md h-10 px-2 text-[14px]"
+            >
+                <Plus size={14} />
+                <span>Post</span>
+            </Link>
         </div>
     );
 }
