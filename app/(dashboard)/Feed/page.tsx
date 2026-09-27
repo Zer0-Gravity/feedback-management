@@ -75,12 +75,11 @@ async function Feed({ searchParams }: PageProps) {
     });
 
     return (
-        <PageWrapper header="Feed">
-            <p className="text-secondary-text text-[12px]">
-                See what other user said, discuss together and vote what you
-                think is worth push
-            </p>
-
+        <PageWrapper
+            header="Feed"
+            desc=" See what other user said, discuss together and vote what you
+                think is worth push"
+        >
             {/* Feed controller */}
             <div className="flex flex-col gap-2 lg:flex-row md:justify-between md:items-center">
                 <SearchControl defVal={query} />

@@ -121,7 +121,10 @@ function Member() {
     };
 
     return (
-        <PageWrapper header="Member">
+        <PageWrapper
+            header="Member"
+            desc="Manage your current organization members "
+        >
             <form
                 onSubmit={handleSubmit(handleInviteMember)}
                 className="flex gap-2 items-center bg-background p-3 rounded-lg border-border-clr my-4 relative"
@@ -147,7 +150,7 @@ function Member() {
                 </button>
             </form>
 
-            <div className="flex gap-2 items-center">
+            <div className="flex gap-2 items-center mb-5">
                 <input
                     type="text"
                     className="border border-border-clr rounded-lg bg-background h-9 w-full text-primary-text text-[12px] p-2"

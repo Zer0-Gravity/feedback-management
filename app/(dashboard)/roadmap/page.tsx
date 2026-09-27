@@ -41,11 +41,11 @@ async function Roadmap({ searchParams }: RoadmapPromise) {
     });
 
     return (
-        <PageWrapper header="Roadmap">
-            <p className="text-secondary-text text-[12px]">
-                See what we&apos;re working on, what&apos;s coming next, and
-                vote on what matters to you.
-            </p>
+        <PageWrapper
+            header="Roadmap"
+            desc="See what we're working on, what's coming next, and vote on what
+                matters to you."
+        >
             <RoadmapTab
                 database={postDb}
                 search={search}

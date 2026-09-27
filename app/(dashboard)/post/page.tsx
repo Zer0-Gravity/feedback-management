@@ -32,7 +32,10 @@ async function Post() {
     }));
 
     return (
-        <PageWrapper header="Your Post">
+        <PageWrapper
+            header="Your Post"
+            desc="Manage your own post across all the company you already join"
+        >
             <div>
                 <TableData columns={columns} data={mappedPostDb} />
             </div>

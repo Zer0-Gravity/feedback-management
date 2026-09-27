@@ -27,7 +27,10 @@ async function Audit() {
     }));
 
     return (
-        <PageWrapper header="Audit Post">
+        <PageWrapper
+            header="Audit Post"
+            desc="Manage submission across your organization and updated each post according your development"
+        >
             <div>
                 <AuditTable columns={columns} data={mappedData} />
             </div>
