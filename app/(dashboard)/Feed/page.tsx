@@ -80,6 +80,8 @@ async function Feed({ searchParams }: PageProps) {
                 See what other user said, discuss together and vote what you
                 think is worth push
             </p>
+
+            {/* Feed controller */}
             <div className="flex flex-col gap-2 lg:flex-row md:justify-between md:items-center">
                 <SearchControl defVal={query} />
                 <div className="flex gap-2 justify-end">
@@ -112,7 +114,7 @@ async function Feed({ searchParams }: PageProps) {
             </div>
 
             {/* Post card sections */}
-            <div className="flex-1 flex overflow-y-auto flex-col gap-2 hide-scrollbar">
+            <div className="flex-1 flex min-h-0 overflow-y-auto flex-col gap-2 hide-scrollbar pb-24 ">
                 {postDb.length !== 0 ? (
                     postDb.map((post) => (
                         <Link

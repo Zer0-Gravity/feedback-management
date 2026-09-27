@@ -56,7 +56,7 @@ function RoadmapTab({ database, search, status, category }: RoadmapProps) {
     };
 
     return (
-        <div className="space-y-3">
+        <div className="flex flex-col gap-3 h-full min-h-0">
             <RadioGroup
                 className="flex gap-3"
                 value={status ? status : "All"}
@@ -119,7 +119,7 @@ function RoadmapTab({ database, search, status, category }: RoadmapProps) {
                 </RadioGroup>
             </div>
 
-            <div className="flex flex-col gap-2 ">
+            <div className="flex flex-1 flex-col gap-2 min-h-0 overflow-y-auto pb-24 hide-scrollbar">
                 {database.length !== 0 ? (
                     database.map((data) => {
                         const category =

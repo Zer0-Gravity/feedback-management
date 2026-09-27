@@ -70,7 +70,7 @@ function FormSub() {
             onSubmit={handleSubmit(handleNewPost)}
             className="flex flex-col gap-3 "
         >
-            <div className="flex gap-2 items-center">
+            <div className="flex flex-1 gap-2 items-center">
                 <div>
                     <input
                         {...register("title")}
@@ -83,6 +83,7 @@ function FormSub() {
                         <p className="error-message">{errors.title.message}</p>
                     )}
                 </div>
+
                 {/* Select controller */}
                 <Controller
                     name="category"
