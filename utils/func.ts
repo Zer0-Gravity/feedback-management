@@ -47,3 +47,30 @@ export const STATUS_LIST: SelectType[] = [
     { label: "Review", value: "Review" },
     { label: "Completed", value: "Completed" },
 ];
+
+export const EMPTY_STATE = {
+    all: {
+        header: "Nothing here yet",
+        desc: "Ideas and requests will show up here once submitted.",
+    },
+    backlog: {
+        header: "Backlog is empty",
+        desc: "New posts land here until the team reviews them.",
+    },
+    accepted: {
+        header: "No accepted ideas yet",
+        desc: "Posts we've agreed to build will show up here.",
+    },
+    in_progress: {
+        header: "Nothing in progress",
+        desc: "Work the team has started will appear here.",
+    },
+    review: {
+        header: "Nothing in review",
+        desc: "Changes ready to check move here before release.",
+    },
+    completed: {
+        header: "Nothing shipped yet",
+        desc: "Completed items will be listed here.",
+    },
+};

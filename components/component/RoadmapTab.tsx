@@ -1,8 +1,8 @@
 "use client";
 
-import { Category, Post, User } from "@/app/generated/prisma/client";
+import { Post, User } from "@/app/generated/prisma/client";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
-import { CATEGORY_CONFIG } from "@/utils/func";
+import { CATEGORY_CONFIG, EMPTY_STATE } from "@/utils/func";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Dot } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
@@ -76,7 +76,7 @@ function RoadmapTab({ database, search, status, category }: RoadmapProps) {
                 {tabsStatus.map((status, index) => (
                     <label
                         key={index}
-                        className="group p-3 border border-border-clr bg-card-clr h-fit md:h-[100px] w-[250px] text-secondary-text rounded-md has-checked:bg-button-clr/10  has-checked:border-button-clr has-checked:text-primary-text flex flex-col justify-between"
+                        className="group p-1 md:p-3 border border-border-clr bg-card-clr h-fit md:h-[100px] w-[250px] text-secondary-text rounded-md has-checked:bg-button-clr/10  has-checked:border-button-clr has-checked:text-primary-text flex flex-col justify-between"
                     >
                         <RadioGroupItem
                             value={status.value}
@@ -190,18 +190,26 @@ function RoadmapTab({ database, search, status, category }: RoadmapProps) {
                         );
                     })
                 ) : (
-                    <div className="border-2  p-5 flex flex-col items-center justify-center gap-2 rounded-lg border-border-clr">
-                        <h1 className="text-primary-text font-bold text-[20px]">
-                            Nothing here yet
-                        </h1>
-                        <p className="text-secondary-text text-[12px]">
-                            Any idea will be listed here
-                        </p>
-                    </div>
+                    <EmptyState status={status} />
                 )}
             </div>
         </div>
     );
 }
 
+function EmptyState({ status }: { status: string }) {
+    // Set empty state based on the current filter status
+    const emptyState =
+        EMPTY_STATE[status.toLowerCase() as keyof typeof EMPTY_STATE] ??
+        EMPTY_STATE.all;
+
+    return (
+        <div className="border-2  p-5 flex flex-col items-center justify-center gap-2 rounded-lg border-border-clr">
+            <h1 className="text-primary-text font-bold text-[20px]">
+                {emptyState.header}
+            </h1>
+            <p className="text-secondary-text text-[12px]">{emptyState.desc}</p>
+        </div>
+    );
+}
 export default RoadmapTab;
