@@ -81,7 +81,7 @@ async function Feed({ searchParams }: PageProps) {
                 think is worth push"
         >
             {/* Feed controller */}
-            <div className="flex flex-col gap-2 lg:flex-row md:justify-between md:items-center">
+            <div className="flex flex-col gap-2 lg:flex-row md:justify-between md:items-center mb-5">
                 <SearchControl defVal={query} />
                 <div className="flex gap-2 justify-end">
                     <FeedFilter

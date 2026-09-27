@@ -6,7 +6,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { authClient } from "@/lib/auth-client";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { MoreHorizontal, PackageOpen } from "lucide-react";
+import { MoreHorizontal, PackageOpen, Search } from "lucide-react";
 import { motion } from "motion/react";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -127,12 +127,12 @@ function Member() {
         >
             <form
                 onSubmit={handleSubmit(handleInviteMember)}
-                className="flex gap-2 items-center bg-background p-3 rounded-lg border-border-clr my-4 relative"
+                className="flex gap-2 items-center bg-card-clr p-3 rounded-lg border-border-clr my-4 relative"
             >
                 <input
                     {...register("email")}
                     type="text"
-                    className={`border border-border-clr rounded-lg bg-background h-9 w-full text-primary-text text-[12px] p-2 ${errors.email ? "border-red-500 outline-0 text-red-500" : ""}`}
+                    className={`border border-border-clr rounded-lg bg-background-secondary h-9 w-full text-primary-text text-[12px] p-2 outline-none ${errors.email ? "border-red-500 outline-0 text-red-500" : ""}`}
                     placeholder="Invite by email - johnDoe@mail.com"
                 />
 
@@ -151,13 +151,19 @@ function Member() {
             </form>
 
             <div className="flex gap-2 items-center mb-5">
-                <input
-                    type="text"
-                    className="border border-border-clr rounded-lg bg-background h-9 w-full text-primary-text text-[12px] p-2"
-                    placeholder="Search member..."
-                    value={searchMember}
-                    onChange={(e) => setSearchMember(e.target.value)}
-                />
+                <div className="relative h-10 w-full bg-card-clr rounded-lg">
+                    <input
+                        type="text"
+                        className="h-full w-full text-[12px] text-secondary-text py-2 pl-10"
+                        placeholder="Search member..."
+                        value={searchMember}
+                        onChange={(e) => setSearchMember(e.target.value)}
+                    />
+                    <Search
+                        size={12}
+                        className="text-secondary-text absolute top-1/2 -translate-y-1/2 left-4"
+                    />
+                </div>
                 <RadioGroup
                     value={currentTag}
                     onValueChange={(val) => setCurrentTag(val)}
@@ -184,18 +190,18 @@ function Member() {
                                     className="absolute inset-0 rounded-md bg-button-clr z-1"
                                 />
                             )}
-                            <span className="text-[14px] z-10">{role}</span>
+                            <span className="text-[12px] z-10">{role}</span>
                         </label>
                     ))}
                 </RadioGroup>
             </div>
 
-            <div className="flex gap-2 flex-col bg-background rounded-lg p-3">
+            <div className="flex gap-2 flex-col bg-card-clr rounded-lg p-3">
                 {paginatedData.length !== 0 ? (
                     paginatedData.map((member) => (
                         <div
                             key={member.id}
-                            className="flex justify-between items-center"
+                            className="flex justify-between items-center p-2 rounded-md"
                         >
                             <div className="flex gap-2 items-center text-secondary-text">
                                 <Avatar className="bg-background">
