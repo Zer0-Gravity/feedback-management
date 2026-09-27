@@ -8,9 +8,8 @@ import {
 } from "@/components/ui/popover";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Table } from "@tanstack/react-table";
-import { Filter, Plus } from "lucide-react";
+import { Filter, Plus, Search } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
 
 interface TableProps<TData> {
     table: Table<TData>;
@@ -18,8 +17,6 @@ interface TableProps<TData> {
 }
 
 function TableController<TData>({ table, globalFilter }: TableProps<TData>) {
-    const [deleteWarn, setDeleteWarn] = useState<boolean>(false);
-
     const selectedRow = table.getSelectedRowModel(); //Get the selected row
     const currentStatus =
         (table.getColumn("status")?.getFilterValue() as string) || "All";
@@ -27,145 +24,149 @@ function TableController<TData>({ table, globalFilter }: TableProps<TData>) {
         (table.getColumn("category")?.getFilterValue() as string) || "All";
 
     return (
-        <div className="w-full flex gap-3">
-            <div className="flex flex-1 flex-col gap-3">
-                <input
-                    type="text"
-                    className="border border-border-clr rounded-lg bg-background h-10 w-full md:w-60 text-primary-text text-[12px] p-2"
-                    placeholder="Search post.."
-                    value={globalFilter}
-                    onChange={(e) => table.setGlobalFilter(e.target.value)}
-                />
-                <div className="flex gap-3 items-center h-5">
-                    <p className="text-secondary-text text-[12px]">
-                        {deleteWarn
-                            ? `Are you sure to delete ${selectedRow.rows.length} items?`
-                            : `${selectedRow.rows.length} selected out of ${table.getPreSelectedRowModel().rows.length}`}
-                    </p>
-
-                    {selectedRow.rows.length > 0 &&
-                        (deleteWarn ? (
-                            <div className="flex gap-2">
-                                <button className="bg-green-500 text-white p-1 rounded-md text-[12px] w-15 ">
-                                    Yes
-                                </button>
-                                <button
-                                    className="bg-red-500 text-white p-1 rounded-md text-[12px] w-15"
-                                    onClick={() => setDeleteWarn(false)}
-                                >
-                                    No
-                                </button>
+        <div className="w-full flex gap-3 flex-col">
+            <div className="flex gap-3">
+                <div
+                    className={`relative flex-1 h-10 rounded-lg border ${selectedRow.rows.length !== 0 ? "border-button-clr bg-button-clr/10" : "border-border-clr bg-card-clr"}`}
+                >
+                    {selectedRow.rows.length === 0 ? (
+                        <>
+                            <input
+                                type="text"
+                                className="h-full w-full text-secondary-text text-[12px] py-2 px-10 outline-none"
+                                placeholder="Search post.."
+                                value={globalFilter}
+                                onChange={(e) =>
+                                    table.setGlobalFilter(e.target.value)
+                                }
+                            />
+                            <Search
+                                size={14}
+                                className="text-secondary-text absolute top-1/2 -translate-y-1/2 left-4"
+                            />
+                        </>
+                    ) : (
+                        <div className="h-full flex justify-between items-center p-2">
+                            <div className="flex gap-2 items-center">
+                                <div className="w-2 h-2 bg-button-clr rounded-full" />
+                                <p className="text-primary-text text-[12px]">{`${selectedRow.rows.length} Selected`}</p>
                             </div>
-                        ) : (
-                            <button
-                                onClick={() => setDeleteWarn(true)}
-                                className="bg-red-500 text-white p-1 rounded-md text-[12px] w-15"
-                            >
-                                Delete
-                            </button>
-                        ))}
-                </div>
-            </div>
-
-            <Popover>
-                <PopoverTrigger className="flex gap-2 items-center bg-button-clr text-white rounded-md h-10 px-2 text-[14px]">
-                    <Filter size={12} />
-                    <span>Filter</span>
-                </PopoverTrigger>
-
-                <PopoverContent className="ring-0 bg-background min-y-[300px]!">
-                    <div>
-                        {/* Status */}
-                        <div className="space-y-4">
-                            <div className="space-y-3">
-                                <PopoverHeader className="text-primary-text text-[14px]">
-                                    Status
-                                </PopoverHeader>
-                                <RadioGroup
-                                    value={currentStatus}
-                                    onValueChange={(val) =>
-                                        table
-                                            .getColumn("status")
-                                            ?.setFilterValue(
-                                                val === "All" ? undefined : val,
-                                            )
-                                    }
-                                    className="flex flex-wrap "
-                                >
-                                    {[
-                                        "All",
-                                        "Backlog",
-                                        "Accepted",
-                                        "Rejected",
-                                        "In_Progress",
-                                        "Review",
-                                        "Completed",
-                                    ].map((status, index) => (
-                                        <label
-                                            key={index}
-                                            className="group flex items-center justify-center gap-2 has-checked:bg-button-clr p-1 rounded-md border border-border-clr"
-                                        >
-                                            <RadioGroupItem
-                                                value={status}
-                                                id={status.toLowerCase()}
-                                                className="hidden"
-                                            />
-                                            <span className="group-has-checked:text-primary-text text-[12px] text-secondary-text">
-                                                {status.replace("_", " ")}
-                                            </span>
-                                        </label>
-                                    ))}
-                                </RadioGroup>
-                            </div>
-                            <div className="space-y-3">
-                                <PopoverHeader className="text-primary-text text-[14px] ">
-                                    Category
-                                </PopoverHeader>
-                                <RadioGroup
-                                    value={currentCategory}
-                                    onValueChange={(val) =>
-                                        table
-                                            .getColumn("category")
-                                            ?.setFilterValue(
-                                                val === "All" ? undefined : val,
-                                            )
-                                    }
-                                    className="flex flex-wrap "
-                                >
-                                    {[
-                                        "All",
-                                        "Feature_Request",
-                                        "Integration",
-                                        "Bug_Report",
-                                    ].map((status, index) => (
-                                        <label
-                                            key={index}
-                                            className="group flex items-center justify-center gap-2 has-checked:bg-button-clr p-1 rounded-md border border-border-clr"
-                                        >
-                                            <RadioGroupItem
-                                                value={status}
-                                                id={status.toLowerCase()}
-                                                className="hidden"
-                                            />
-                                            <span className="group-has-checked:text-primary-text text-[12px] text-secondary-text">
-                                                {status.replace("_", " ")}
-                                            </span>
-                                        </label>
-                                    ))}
-                                </RadioGroup>
+                            <div className="flex gap-2 items-center">
+                                <button className="py-1 px-2 bg-card-clr border border-border-clr rounded-md text-[12px] text-secondary-text">
+                                    Cancel
+                                </button>
+                                <button className="py-1 px-2 bg-red-500 rounded-md text-[12px] text-white">
+                                    Delete
+                                </button>
                             </div>
                         </div>
-                    </div>
-                </PopoverContent>
-            </Popover>
+                    )}
+                </div>
 
-            <Link
-                href={"/post/new"}
-                className="flex gap-2 items-center bg-button-clr text-white rounded-md h-10 px-2 text-[14px]"
-            >
-                <Plus size={14} />
-                <span>Post</span>
-            </Link>
+                <Popover>
+                    <PopoverTrigger className="flex gap-2 items-center bg-button-clr text-white rounded-md py-1 px-2 text-[12px]">
+                        <Filter size={12} />
+                        <span>Filter</span>
+                    </PopoverTrigger>
+
+                    <PopoverContent className="ring-0 bg-background min-y-[300px]!">
+                        <div>
+                            {/* Status */}
+                            <div className="space-y-4">
+                                <div className="space-y-3">
+                                    <PopoverHeader className="text-primary-text text-[14px]">
+                                        Status
+                                    </PopoverHeader>
+                                    <RadioGroup
+                                        value={currentStatus}
+                                        onValueChange={(val) =>
+                                            table
+                                                .getColumn("status")
+                                                ?.setFilterValue(
+                                                    val === "All"
+                                                        ? undefined
+                                                        : val,
+                                                )
+                                        }
+                                        className="flex flex-wrap "
+                                    >
+                                        {[
+                                            "All",
+                                            "Backlog",
+                                            "Accepted",
+                                            "Rejected",
+                                            "In_Progress",
+                                            "Review",
+                                            "Completed",
+                                        ].map((status, index) => (
+                                            <label
+                                                key={index}
+                                                className="group flex items-center justify-center gap-2 has-checked:bg-button-clr p-1 rounded-md border border-border-clr"
+                                            >
+                                                <RadioGroupItem
+                                                    value={status}
+                                                    id={status.toLowerCase()}
+                                                    className="hidden"
+                                                />
+                                                <span className="group-has-checked:text-primary-text text-[12px] text-secondary-text">
+                                                    {status.replace("_", " ")}
+                                                </span>
+                                            </label>
+                                        ))}
+                                    </RadioGroup>
+                                </div>
+                                <div className="space-y-3">
+                                    <PopoverHeader className="text-primary-text text-[14px] ">
+                                        Category
+                                    </PopoverHeader>
+                                    <RadioGroup
+                                        value={currentCategory}
+                                        onValueChange={(val) =>
+                                            table
+                                                .getColumn("category")
+                                                ?.setFilterValue(
+                                                    val === "All"
+                                                        ? undefined
+                                                        : val,
+                                                )
+                                        }
+                                        className="flex flex-wrap "
+                                    >
+                                        {[
+                                            "All",
+                                            "Feature_Request",
+                                            "Integration",
+                                            "Bug_Report",
+                                        ].map((status, index) => (
+                                            <label
+                                                key={index}
+                                                className="group flex items-center justify-center gap-2 has-checked:bg-button-clr p-1 rounded-md border border-border-clr"
+                                            >
+                                                <RadioGroupItem
+                                                    value={status}
+                                                    id={status.toLowerCase()}
+                                                    className="hidden"
+                                                />
+                                                <span className="group-has-checked:text-primary-text text-[12px] text-secondary-text">
+                                                    {status.replace("_", " ")}
+                                                </span>
+                                            </label>
+                                        ))}
+                                    </RadioGroup>
+                                </div>
+                            </div>
+                        </div>
+                    </PopoverContent>
+                </Popover>
+
+                <Link
+                    href={"/post/new"}
+                    className="flex gap-2 items-center bg-button-clr/10 border border-button-clr text-button-clr rounded-md py-1 px-2 text-[12px]"
+                >
+                    <Plus size={14} />
+                    <span>Post</span>
+                </Link>
+            </div>
         </div>
     );
 }
