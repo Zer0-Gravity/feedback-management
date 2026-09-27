@@ -2,7 +2,12 @@
 
 import { Post, User } from "@/app/generated/prisma/client";
 import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
-import { CATEGORY_CONFIG, EMPTY_STATE } from "@/utils/func";
+import {
+    CATEGORY_CONFIG,
+    EMPTY_STATE,
+    tabCategory,
+    tabsStatus,
+} from "@/utils/func";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Dot } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
@@ -27,22 +32,6 @@ function RoadmapTab({ database, search, status, category }: RoadmapProps) {
     const router = useRouter();
     const pathName = usePathname();
     const searchParams = useSearchParams();
-
-    const tabsStatus = [
-        { label: "All", value: "All", color: "#FFFFFF" },
-        { label: "Backlog", value: "Backlog", color: "#8F8C88" },
-        { label: "Accepted", value: "Accepted", color: "#4FB0FF" },
-        { label: "Progress", value: "In_Progress", color: "#4FB0FF" },
-        { label: "Review", value: "Review", color: "#B78CFF" },
-        { label: "Completed", value: "Completed", color: "#4CC38A" },
-    ];
-
-    const tabCategory = [
-        { label: "All", value: "All" },
-        { label: "Feature request", value: "Feature_Request" },
-        { label: "Bug report", value: "Bug_Report" },
-        { label: "Integration", value: "Integration" },
-    ];
 
     const handleSearch = (value: string) => {
         const param = new URLSearchParams(searchParams);

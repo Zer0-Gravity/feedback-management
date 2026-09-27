@@ -74,3 +74,26 @@ export const EMPTY_STATE = {
         desc: "Completed items will be listed here.",
     },
 };
+
+export const tabsStatus = [
+    { label: "All", value: "All", color: "#FFFFFF" },
+    { label: "Backlog", value: "Backlog", color: "#8F8C88" },
+    { label: "Accepted", value: "Accepted", color: "#4FB0FF" },
+    { label: "Progress", value: "In_Progress", color: "#4FB0FF" },
+    { label: "Review", value: "Review", color: "#B78CFF" },
+    { label: "Completed", value: "Completed", color: "#4CC38A" },
+];
+
+export const tabCategory = [
+    { label: "All", value: "All" },
+    { label: "Feature request", value: "Feature_Request" },
+    { label: "Bug report", value: "Bug_Report" },
+    { label: "Integration", value: "Integration" },
+];
+
+export const tabSort = [
+    { label: "Newest", value: "Newest" },
+    { label: "Oldest", value: "Oldest" },
+    { label: "TItle", value: "Title" },
+    { label: "Popular", value: "Popular" },
+];

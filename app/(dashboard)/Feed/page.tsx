@@ -1,13 +1,16 @@
 "use server";
 
 import { Category, StatusPost } from "@/app/generated/prisma/enums";
-import StatusControl from "@/components/component/FilterComponent/StatusControl";
 import SearchControl from "@/components/component/FilterComponent/SearchControl";
 import prisma from "@/lib/prisma";
-import { CATEGORY_CONFIG, STATUS_CONFIG } from "@/utils/func";
-import { MessageCircle, PackageOpen, Triangle } from "lucide-react";
-import CategoryControl from "@/components/component/FilterComponent/CategoryControl";
-import SortControl from "@/components/component/FilterComponent/SortControl";
+import {
+    CATEGORY_CONFIG,
+    STATUS_CONFIG,
+    tabCategory,
+    tabSort,
+    tabsStatus,
+} from "@/utils/func";
+import { MessageCircle, PackageOpen, Pencil } from "lucide-react";
 import { formatDistanceToNow } from "date-fns";
 import PageWrapper from "@/components/component/PageWrapper";
 import { auth } from "@/lib/auth";
@@ -15,6 +18,7 @@ import { headers } from "next/headers";
 import UpvoteButton from "@/components/component/UpvoteButton";
 import Link from "next/link";
 import { ContentPostInline } from "@/components/component/ContentPost";
+import FeedFilter from "@/components/component/FilterComponent/FeedFilter";
 
 type PageProps = {
     searchParams: Promise<{
@@ -62,8 +66,8 @@ async function Feed({ searchParams }: PageProps) {
                               { content: {contains: query, mode: "insensitive" as const} }
                             ],
                         }] : []),
-                ...(category ? [{ category }] : []),
-                ...(status ? [{status}] : [])
+                ...(category ? [{ category: category as Category }] : []),
+                ...(status ? [{status: status as StatusPost}] : [])
             ],
         },
         orderBy: orderByList,
@@ -72,12 +76,38 @@ async function Feed({ searchParams }: PageProps) {
 
     return (
         <PageWrapper header="Feed">
+            <p className="text-secondary-text text-[12px]">
+                See what other user said, discuss together and vote what you
+                think is worth push
+            </p>
             <div className="flex flex-col gap-2 lg:flex-row md:justify-between md:items-center">
                 <SearchControl defVal={query} />
                 <div className="flex gap-2 justify-end">
-                    <StatusControl status={status} />
-                    <CategoryControl category={category} />
-                    <SortControl sort={sort} />
+                    <FeedFilter
+                        filter={status}
+                        placeholder="Status"
+                        url="status"
+                        data={tabsStatus}
+                    />
+                    <FeedFilter
+                        filter={category}
+                        placeholder="Category"
+                        url="category"
+                        data={tabCategory}
+                    />
+                    <FeedFilter
+                        filter={sort}
+                        placeholder="Newest"
+                        url="sort"
+                        data={tabSort}
+                    />
+                    <Link
+                        href={"/post/new"}
+                        className="flex gap-2 items-center text-button-clr text-[12px] bg-button-clr/10 border-button-clr border  rounded-md p-2"
+                    >
+                        <Pencil size={14} />
+                        <p>New</p>
+                    </Link>
                 </div>
             </div>
 
