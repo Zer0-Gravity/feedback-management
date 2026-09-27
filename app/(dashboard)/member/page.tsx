@@ -6,7 +6,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { authClient } from "@/lib/auth-client";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { MoreHorizontal, PackageOpen, Search } from "lucide-react";
+import { PackageOpen, Search } from "lucide-react";
 import { motion } from "motion/react";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -120,35 +120,39 @@ function Member() {
         }
     };
 
+    const currentRole = authClient.useActiveMemberRole();
+
     return (
         <PageWrapper
             header="Member"
             desc="Manage your current organization members "
         >
-            <form
-                onSubmit={handleSubmit(handleInviteMember)}
-                className="flex gap-2 items-center bg-card-clr p-3 rounded-lg border-border-clr my-4 relative"
-            >
-                <input
-                    {...register("email")}
-                    type="text"
-                    className={`border border-border-clr rounded-lg bg-background-secondary h-9 w-full text-primary-text text-[12px] p-2 outline-none ${errors.email ? "border-red-500 outline-0 text-red-500" : ""}`}
-                    placeholder="Invite by email - johnDoe@mail.com"
-                />
-
-                {errors.email && (
-                    <p className="error-message absolute top-15 bg-red-500/20 p-2 rounded-full">
-                        {errors.email.message}
-                    </p>
-                )}
-
-                <button
-                    type="submit"
-                    className="bg-button-clr whitespace-nowrap text-white h-9 text-[14px] p-2 rounded-md"
+            {["admin", "owner"].includes(currentRole.data?.role ?? "") && (
+                <form
+                    onSubmit={handleSubmit(handleInviteMember)}
+                    className="flex gap-2 items-center bg-card-clr p-3 rounded-lg border-border-clr my-4 relative"
                 >
-                    <p>Send Invite</p>
-                </button>
-            </form>
+                    <input
+                        {...register("email")}
+                        type="text"
+                        className={`border border-border-clr rounded-lg bg-background-secondary h-9 w-full text-primary-text text-[12px] p-2 outline-none ${errors.email ? "border-red-500 outline-0 text-red-500" : ""}`}
+                        placeholder="Invite by email - johnDoe@mail.com"
+                    />
+
+                    {errors.email && (
+                        <p className="error-message absolute top-15 bg-red-500/20 p-2 rounded-full">
+                            {errors.email.message}
+                        </p>
+                    )}
+
+                    <button
+                        type="submit"
+                        className="bg-button-clr whitespace-nowrap text-white h-9 text-[14px] p-2 rounded-md"
+                    >
+                        <p>Send Invite</p>
+                    </button>
+                </form>
+            )}
 
             <div className="flex gap-2 items-center mb-5">
                 <div className="relative h-10 w-full bg-card-clr rounded-lg">
@@ -230,12 +234,16 @@ function Member() {
                                             member.role.slice(1)}
                                     </p>
                                 </div>
-                                <DropdownMember
-                                    memberId={member.id}
-                                    role={member.role}
-                                    name={member.user.name}
-                                    onMemberUpdate={fetchMembers}
-                                />
+                                {["admin", "owner"].includes(
+                                    currentRole.data?.role ?? "",
+                                ) && (
+                                    <DropdownMember
+                                        memberId={member.id}
+                                        role={member.role}
+                                        name={member.user.name}
+                                        onMemberUpdate={fetchMembers}
+                                    />
+                                )}
                             </div>
                         </div>
                     ))
