@@ -52,7 +52,10 @@ function TableController<TData>({ table, globalFilter }: TableProps<TData>) {
                                 <p className="text-primary-text text-[12px]">{`${selectedRow.rows.length} Selected`}</p>
                             </div>
                             <div className="flex gap-2 items-center">
-                                <button className="py-1 px-2 bg-card-clr border border-border-clr rounded-md text-[12px] text-secondary-text">
+                                <button
+                                    onClick={() => table.resetRowSelection()}
+                                    className="py-1 px-2 bg-card-clr border border-border-clr rounded-md text-[12px] text-secondary-text"
+                                >
                                     Cancel
                                 </button>
                                 <button className="py-1 px-2 bg-red-500 rounded-md text-[12px] text-white">
