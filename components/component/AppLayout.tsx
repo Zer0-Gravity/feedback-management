@@ -90,7 +90,7 @@ function AppLayout({ children }: { children: ReactNode }) {
 
                     <Popover>
                         <PopoverTrigger>
-                            <Avatar className="bg-background-secondary size-7">
+                            <Avatar className="bg-card-clr size-7">
                                 <AvatarImage
                                     src={userDb.data?.user.image as string}
                                 />
