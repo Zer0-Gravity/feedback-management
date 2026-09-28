@@ -1,6 +1,7 @@
 "use client";
 
 import {
+    Building2,
     Loader2,
     Newspaper,
     Plus,
@@ -21,6 +22,7 @@ import { motion } from "motion/react";
 import Image from "next/image";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import Welcome from "./EmptyState/Welcome";
 
 function AppLayout({ children }: { children: ReactNode }) {
     const navList = [
@@ -61,38 +63,7 @@ function AppLayout({ children }: { children: ReactNode }) {
     if (error || !role) {
         return (
             <div className="flex flex-col h-screen">
-                <TopBar />
-                <div className="h-full w-full bg-background-secondary flex justify-center">
-                    <div className="mt-5 space-y-3">
-                        <div>
-                            <h1 className="text-[20px] text-primary-text font-bold">
-                                Currently not part of any organizations
-                            </h1>
-                            <p className="text-[14px] text-secondary-text md:max-w-200">
-                                Contact your system administrator or owner to
-                                add your email address to the company. This page
-                                will update automatically once you are added.
-                            </p>
-                        </div>
-                        <div className="text-secondary-text text-[12px]">
-                            OR
-                        </div>
-                        <div className="space-y-3">
-                            <p className="text-primary-text text-[14px]">
-                                You can create your own organization
-                            </p>
-                            <Link
-                                href={"?new-organization=true"}
-                                className="bg-button-clr text-white rounded-md p-2 flex gap-2 items-center active:scale-98 w-fit"
-                            >
-                                <Plus size={12} />
-                                <span className="text-[12px]">
-                                    Create Organization
-                                </span>
-                            </Link>
-                        </div>
-                    </div>
-                </div>
+                <Welcome />
             </div>
         );
     }

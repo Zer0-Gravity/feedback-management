@@ -13,8 +13,8 @@
 }
 
 :root {
-    --background: #ffffff;
-    --background-secondary: #eff0f1;
+    --background: #f8f9fa;
+    --background-secondary: #f1f3f5;
     --primary-text: #0f172a;
     --secondary-text: #64748b;
     --button-clr: #ff6b1a;
@@ -25,8 +25,8 @@
 }
 
 .dark {
-    --background: #0f0f11;
-    --background-secondary: #141416;
+    --background: #1a1a1d;
+    --background-secondary: #121214;
     --primary-text: #f4f4f5;
     --secondary-text: #a1a1aa;
     --button-clr: #ff6b1a;
