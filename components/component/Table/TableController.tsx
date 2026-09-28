@@ -1,5 +1,6 @@
 "use client";
 
+import { deletePost } from "@/app/(dashboard)/post/actions";
 import {
     Popover,
     PopoverContent,
@@ -16,12 +17,26 @@ interface TableProps<TData> {
     globalFilter: string;
 }
 
-function TableController<TData>({ table, globalFilter }: TableProps<TData>) {
+function TableController<TData extends { id: string }>({
+    table,
+    globalFilter,
+}: TableProps<TData>) {
     const selectedRow = table.getSelectedRowModel(); //Get the selected row
     const currentStatus =
         (table.getColumn("status")?.getFilterValue() as string) || "All";
     const currentCategory =
         (table.getColumn("category")?.getFilterValue() as string) || "All";
+
+    const handleDelete = async () => {
+        const ids = selectedRow.rows.map((row) => row.original.id);
+
+        try {
+            await deletePost(ids);
+            table.resetRowSelection();
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     return (
         <div className="w-full flex gap-3 flex-col">
@@ -58,7 +73,10 @@ function TableController<TData>({ table, globalFilter }: TableProps<TData>) {
                                 >
                                     Cancel
                                 </button>
-                                <button className="py-1 px-2 bg-red-500 rounded-md text-[12px] text-white">
+                                <button
+                                    onClick={handleDelete}
+                                    className="py-1 px-2 bg-red-500 rounded-md text-[12px] text-white"
+                                >
                                     Delete
                                 </button>
                             </div>

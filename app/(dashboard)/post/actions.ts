@@ -3,7 +3,7 @@
 import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 
-export async function DeletePost(idToDelete: string[]) {
+export async function deletePost(idToDelete: string[]) {
     try {
         await prisma.post.deleteMany({
             where: { id: { in: idToDelete } },
@@ -16,6 +16,4 @@ export async function DeletePost(idToDelete: string[]) {
 
     revalidatePath("/post");
     revalidatePath("/audit-post");
-
-    return { success: true };
 }

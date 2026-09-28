@@ -147,8 +147,8 @@ model UpVote {
   user_id String
   post_id String
 
-  user User @relation(fields: [user_id], references: [id])
-  post Post @relation(fields: [post_id], references: [id])
+  user User @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  post Post @relation(fields: [post_id], references: [id], onDelete: Cascade)
 
   @@unique([user_id, post_id])
   @@index([post_id])
