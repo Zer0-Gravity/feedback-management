@@ -179,6 +179,10 @@ function AccountPage({ account }: AccountProps) {
             <div className="bg-red-500/25 p-3 rounded-md">
                 <button
                     type="button"
+                    onClick={async () => {
+                        await authClient.signOut();
+                        router.push("/sign-in");
+                    }}
                     className="bg-red-500 opacity-70 hover:opacity-100 transition-all w-full text-white p-2 rounded-md text-[14px] flex items-center justify-center gap-2"
                 >
                     <LogOut size={18} />
