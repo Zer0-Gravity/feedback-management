@@ -53,6 +53,12 @@ export const auth = betterAuth({
             },
         }),
     ],
+    user: {
+        changeEmail: {
+            enabled: true,
+            updateEmailWithoutVerification: true,
+        },
+    },
 });
 
 export type Auth = typeof auth;
