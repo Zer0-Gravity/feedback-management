@@ -80,7 +80,7 @@ model Membership {
 
 model Invitation {
   id             String         @id @default(nanoid())
-  email          String         @unique
+  email          String
   inviterId      String
   organizationId String
   role           String?
