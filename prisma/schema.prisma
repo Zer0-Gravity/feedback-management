@@ -55,7 +55,7 @@ model Company {
   email      String   @unique
   slug       String   @unique
   logo       String?
-  phone      Int?
+  phone      String?
   address    String
   created_at DateTime @default(now())
 

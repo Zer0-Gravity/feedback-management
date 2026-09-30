@@ -20,7 +20,7 @@ interface FormData {
     slug: string;
     address: string;
     email: string;
-    phone: number;
+    phone: string;
     logo?: string;
 }
 
@@ -36,7 +36,7 @@ const schema = yup
             .string()
             .email("Invalid email address")
             .required("Email is required"),
-        phone: yup.number().required("Company contact is required"),
+        phone: yup.string().required("Company contact is required"),
         logo: yup.string().optional(),
     })
     .required();
@@ -171,7 +171,7 @@ function NewCompany() {
                         </div>
                         <input
                             {...register("phone")}
-                            type="number"
+                            type="text"
                             className="input-field"
                             placeholder="1-1234-233"
                         />
