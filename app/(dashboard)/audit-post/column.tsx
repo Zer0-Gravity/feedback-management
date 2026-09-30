@@ -45,7 +45,7 @@ export const columns = [
                     table.toggleAllPageRowsSelected(!!val)
                 }
                 aria-label="select-row"
-                className="data-checked:bg-button-clr"
+                className="data-checked:bg-accent-clr"
             />
         ),
         cell: ({ row }) => (
@@ -53,7 +53,7 @@ export const columns = [
                 checked={row.getIsSelected()}
                 onCheckedChange={(val) => row.toggleSelected(!!val)}
                 aria-label="select-table"
-                className="data-checked:bg-button-clr"
+                className="data-checked:bg-accent-clr"
             />
         ),
     }),
@@ -114,7 +114,7 @@ export const columns = [
                             {STATUS_LIST.map((status, index) => (
                                 <SelectItem
                                     key={index}
-                                    className="text-secondary-text data-highlighted:bg-button-clr data-highlighted:text-primary-text"
+                                    className="text-secondary-text data-highlighted:bg-accent-clr data-highlighted:text-primary-text"
                                     value={status.value}
                                 >
                                     {status.label}

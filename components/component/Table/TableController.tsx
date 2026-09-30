@@ -42,7 +42,7 @@ function TableController<TData extends { id: string }>({
         <div className="w-full flex gap-3 flex-col">
             <div className="flex gap-3">
                 <div
-                    className={`relative flex-1 h-10 rounded-lg border ${selectedRow.rows.length !== 0 ? "border-button-clr bg-button-clr/10" : "border-border-clr bg-card-clr"}`}
+                    className={`relative flex-1 h-10 rounded-lg border ${selectedRow.rows.length !== 0 ? "border-accent-clr bg-accent-clr/10" : "border-border-clr bg-card-clr"}`}
                 >
                     {selectedRow.rows.length === 0 ? (
                         <>
@@ -63,7 +63,7 @@ function TableController<TData extends { id: string }>({
                     ) : (
                         <div className="h-full flex justify-between items-center p-2">
                             <div className="flex gap-2 items-center">
-                                <div className="w-2 h-2 bg-button-clr rounded-full" />
+                                <div className="w-2 h-2 bg-accent-clr rounded-full" />
                                 <p className="text-primary-text text-[12px]">{`${selectedRow.rows.length} Selected`}</p>
                             </div>
                             <div className="flex gap-2 items-center">
@@ -85,7 +85,7 @@ function TableController<TData extends { id: string }>({
                 </div>
 
                 <Popover>
-                    <PopoverTrigger className="flex gap-2 items-center bg-button-clr text-white rounded-md py-1 px-2 text-[12px]">
+                    <PopoverTrigger className="flex gap-2 items-center bg-accent-clr text-white rounded-md py-1 px-2 text-[12px]">
                         <Filter size={12} />
                         <span>Filter</span>
                     </PopoverTrigger>
@@ -122,7 +122,7 @@ function TableController<TData extends { id: string }>({
                                         ].map((status, index) => (
                                             <label
                                                 key={index}
-                                                className="group flex items-center justify-center gap-2 has-checked:bg-button-clr p-1 rounded-md border border-border-clr"
+                                                className="group flex items-center justify-center gap-2 has-checked:bg-accent-clr p-1 rounded-md border border-border-clr"
                                             >
                                                 <RadioGroupItem
                                                     value={status}
@@ -161,7 +161,7 @@ function TableController<TData extends { id: string }>({
                                         ].map((status, index) => (
                                             <label
                                                 key={index}
-                                                className="group flex items-center justify-center gap-2 has-checked:bg-button-clr p-1 rounded-md border border-border-clr"
+                                                className="group flex items-center justify-center gap-2 has-checked:bg-accent-clr p-1 rounded-md border border-border-clr"
                                             >
                                                 <RadioGroupItem
                                                     value={status}
@@ -182,7 +182,7 @@ function TableController<TData extends { id: string }>({
 
                 <Link
                     href={"/post/new"}
-                    className="flex gap-2 items-center bg-button-clr/10 border border-button-clr text-button-clr rounded-md py-1 px-2 text-[12px]"
+                    className="flex gap-2 items-center bg-accent-clr/10 border border-accent-clr text-accent-clr rounded-md py-1 px-2 text-[12px]"
                 >
                     <Plus size={14} />
                     <span>Post</span>

@@ -1,18 +1,24 @@
+import Image from "next/image";
 import Link from "next/link";
 
 export default function Home() {
     return (
-        <div className="flex flex-col items-center justify-center">
-            <main className="flex flex-col gap-3 ">
-                <h1>My landing page</h1>
+        <main className="p-5">
+            <header className="flex justify-between">
+                <Image
+                    src={"/VotifyFull.svg"}
+                    alt="app-logo"
+                    width={100}
+                    height={100}
+                />
 
                 <Link
                     href={"/sign-in"}
-                    className="p-1 bg-button-clr text-white rounded-lg flex item-center justify-center"
+                    className="p-1 bg-accent-clr text-white rounded-lg flex item-center justify-center"
                 >
                     Login
                 </Link>
-            </main>
-        </div>
+            </header>
+        </main>
     );
 }

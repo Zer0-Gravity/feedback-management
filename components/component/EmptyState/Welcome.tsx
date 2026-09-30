@@ -13,8 +13,8 @@ function Welcome() {
         <>
             <TopBar />
             <div className="h-full w-full bg-background-secondary flex flex-col gap-3 justify-center items-center">
-                <div className="bg-button-clr/20 w-15 h-15 rounded-xl flex items-center justify-center">
-                    <Building2 className="text-button-clr" size={30} />
+                <div className="bg-accent-clr/20 w-15 h-15 rounded-xl flex items-center justify-center">
+                    <Building2 className="text-accent-clr" size={30} />
                 </div>
                 <div className="flex justify-around items-center gap-4">
                     <p className="text-primary-text text-[14px] flex items-center gap-2">
@@ -46,7 +46,7 @@ function Welcome() {
                     >
                         <Link
                             href={"?new-organization=true"}
-                            className="bg-button-clr text-white rounded-md p-2 flex gap-2 items-center active:scale-98 w-full justify-center"
+                            className="bg-accent-clr text-white rounded-md p-2 flex gap-2 items-center active:scale-98 w-full justify-center"
                         >
                             <Plus size={12} />
                             <span className="text-[12px]">
@@ -93,12 +93,12 @@ interface CardProps {
 
 function Card({ header, icon: Icon, title, desc, children }: CardProps) {
     return (
-        <div className="w-65 rounded-xl bg-card-clr border-2 border-button-clr p-5 space-y-3">
-            <p className="text-button-clr font-semibold text-[14px]">
+        <div className="w-65 rounded-xl bg-card-clr border-2 border-accent-clr p-5 space-y-3">
+            <p className="text-accent-clr font-semibold text-[14px]">
                 {header}
             </p>
-            <div className="h-10 w-10 rounded-md bg-button-clr/10 flex items-center justify-center">
-                <Icon size={20} className="text-button-clr" />
+            <div className="h-10 w-10 rounded-md bg-accent-clr/10 flex items-center justify-center">
+                <Icon size={20} className="text-accent-clr" />
             </div>
             <h1 className="text-primary-text font-semibold">{title}</h1>
             <p className="text-secondary-text text-[12px]">{desc}</p>

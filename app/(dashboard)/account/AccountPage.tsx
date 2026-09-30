@@ -158,7 +158,7 @@ function AccountPage({ account }: AccountProps) {
             <div className="flex md:justify-end">
                 <button
                     type="submit"
-                    className="bg-button-clr/10 border w-full md:w-fit border-button-clr rounded-md p-2 text-button-clr text-[14px] flex items-center gap-2 justify-center"
+                    className="bg-accent-clr/10 border w-full md:w-fit border-accent-clr rounded-md p-2 text-accent-clr text-[14px] flex items-center gap-2 justify-center"
                 >
                     {isSubmitting ? (
                         <>

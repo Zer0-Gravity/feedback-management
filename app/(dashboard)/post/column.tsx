@@ -40,7 +40,7 @@ export const columns = [
                     table.toggleAllPageRowsSelected(!!val)
                 }
                 aria-label="select-all"
-                className="data-checked:bg-button-clr"
+                className="data-checked:bg-accent-clr"
             />
         ),
         cell: ({ row }) => (
@@ -48,7 +48,7 @@ export const columns = [
                 checked={row.getIsSelected()}
                 onCheckedChange={(val) => row.toggleSelected(!!val)}
                 aria-label="select-row"
-                className="data-checked:bg-button-clr"
+                className="data-checked:bg-accent-clr"
             />
         ),
     }),

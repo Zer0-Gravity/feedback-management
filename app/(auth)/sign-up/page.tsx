@@ -82,7 +82,7 @@ function SignUp() {
 
                         <button
                             type="submit"
-                            className="h-10 bg-button-clr text-white w-full rounded-md flex justify-center items-center"
+                            className="h-10 bg-accent-clr text-white w-full rounded-md flex justify-center items-center"
                         >
                             {isLoading ? (
                                 <Loader2 size={18} className="animate-spin" />

@@ -22,7 +22,7 @@ export function CheckboxHeader<TData>({ table }: CheckBoxHeaderProps<TData>) {
                     table.toggleAllPageRowsSelected(!!val)
                 }
                 aria-label="select-row"
-                className="data-checked:bg-button-clr"
+                className="data-checked:bg-accent-clr"
             />
         </>
     );
@@ -35,7 +35,7 @@ export function CheckboxCell<TData>({ row }: CheckboxCell<TData>) {
                 checked={row.getIsSelected()}
                 onCheckedChange={(val) => row.toggleSelected(!!val)}
                 aria-label="select-table"
-                className="data-checked:bg-button-clr"
+                className="data-checked:bg-accent-clr"
             />
         </>
     );

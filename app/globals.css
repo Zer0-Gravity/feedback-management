@@ -6,31 +6,31 @@
     --color-background-secondary: var(--background-secondary);
     --color-primary-text: var(--primary-text);
     --color-secondary-text: var(--secondary-text);
-    --color-button-clr: var(--button-clr);
+    --color-accent-clr: var(--accent-clr);
     --color-card-clr: var(--card-clr);
     --color-border-clr: var(--border-clr);
     --color-text-field: var(--text-field);
 }
 
 :root {
-    --background: #f8f9fa;
-    --background-secondary: #f1f3f5;
-    --primary-text: #0f172a;
-    --secondary-text: #64748b;
-    --button-clr: #ff6b1a;
+    --background: #ffffff;
+    --background-secondary: #f4f4f5;
+    --primary-text: #18181b;
+    --secondary-text: #71717a;
+    --accent-clr: #ea580c;
     --card-clr: #ffffff;
-    --border-clr: #cbced3;
+    --border-clr: #e4e4e7;
     --text-field: #f1f5f9;
     --code-bg: #e1e1e1;
 }
 
 .dark {
-    --background: #1a1a1d;
-    --background-secondary: #121214;
-    --primary-text: #f4f4f5;
+    --background: #111113;
+    --background-secondary: #09090b;
+    --primary-text: #fafafa;
     --secondary-text: #a1a1aa;
-    --button-clr: #ff6b1a;
-    --card-clr: #1b1b1f;
+    --accent-clr: #f97316;
+    --card-clr: #18181b;
     --border-clr: #27272a;
     --text-field: #27272a;
     --code-bg: #2e2e2e;
@@ -55,7 +55,7 @@ body {
 }
 
 .select-item-style {
-    @apply text-primary-text text-[14px] data-highlighted:bg-button-clr data-highlighted:text-white;
+    @apply text-primary-text text-[14px] data-highlighted:bg-accent-clr data-highlighted:text-white;
 }
 
 .hide-scrollbar::-webkit-scrollbar {
@@ -68,7 +68,7 @@ body {
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-    background-color: var(--button-clr);
+    background-color: var(--accent-clr);
 }
 
 .rich-editor-comment {

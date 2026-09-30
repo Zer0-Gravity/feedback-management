@@ -104,7 +104,7 @@ async function Feed({ searchParams }: PageProps) {
                     />
                     <Link
                         href={"/post/new"}
-                        className="flex gap-2 items-center text-button-clr text-[12px] bg-button-clr/10 border-button-clr border  rounded-md p-2"
+                        className="flex gap-2 items-center text-accent-clr text-[12px] bg-accent-clr/10 border-accent-clr border  rounded-md p-2"
                     >
                         <Pencil size={14} />
                         <p>New</p>

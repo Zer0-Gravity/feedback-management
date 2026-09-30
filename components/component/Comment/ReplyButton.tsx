@@ -24,7 +24,7 @@ function ReplyButton({
                 <InputComment postId={postId} parentId={parentId}>
                     <button
                         onClick={closeReply}
-                        className="text-[12px] rounded-full text-button-clr border border-button-clr px-2 py-1"
+                        className="text-[12px] rounded-full text-accent-clr border border-accent-clr px-2 py-1"
                     >
                         Cancel
                     </button>

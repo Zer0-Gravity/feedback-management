@@ -204,7 +204,7 @@ function NewCompany() {
                         >
                             Cancel
                         </button>
-                        <button type="submit" className="text-button-clr">
+                        <button type="submit" className="text-accent-clr">
                             Create
                         </button>
                     </div>

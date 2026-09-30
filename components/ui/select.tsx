@@ -142,7 +142,7 @@ function SelectItem({
             >
                 <Dot
                     size={50}
-                    className="pointer-events-none fill-button-clr"
+                    className="pointer-events-none fill-accent-clr"
                 />
             </SelectPrimitive.ItemIndicator>
         </SelectPrimitive.Item>

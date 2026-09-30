@@ -97,7 +97,7 @@ function DropdownMember({
                                 <SelectItem
                                     key={index}
                                     value={role}
-                                    className="data-selected:bg-button-clr data-selected:text-white data-highlighted:bg-background-secondary text-secondary-text"
+                                    className="data-selected:bg-accent-clr data-selected:text-white data-highlighted:bg-background-secondary text-secondary-text"
                                 >
                                     {role.charAt(0).toUpperCase() +
                                         role.slice(1)}

@@ -53,7 +53,7 @@ function CompanySwitcher() {
                     <div className="flex gap-2 items-center">
                         <Avatar className="size-7">
                             <AvatarImage />
-                            <AvatarFallback className="bg-button-clr">
+                            <AvatarFallback className="bg-accent-clr">
                                 {activeOrg.name.toUpperCase().slice(0, 2)}
                             </AvatarFallback>
                         </Avatar>
@@ -77,7 +77,7 @@ function CompanySwitcher() {
                         >
                             <Avatar>
                                 <AvatarImage />
-                                <AvatarFallback className="bg-button-clr">
+                                <AvatarFallback className="bg-accent-clr">
                                     <span className="font-semibold text-white">
                                         {org.name.toUpperCase().slice(0, 2)}
                                     </span>

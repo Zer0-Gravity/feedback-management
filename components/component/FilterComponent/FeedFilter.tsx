@@ -59,7 +59,7 @@ function FeedFilter({ filter, url, data, placeholder }: FilterProps) {
                         <SelectItem
                             key={index}
                             value={status.value}
-                            className="text-[12px] border border-border-clr text-secondary-text data-highlighted:text-primary-text data-highlighted:bg-button-clr/10 data-highlighted:border-button-clr data-selected:bg-button-clr/10 data-selected:border-button-clr data-selected:text-primary-text"
+                            className="text-[12px] border border-border-clr text-secondary-text data-highlighted:text-primary-text data-highlighted:bg-accent-clr/10 data-highlighted:border-accent-clr data-selected:bg-accent-clr/10 data-selected:border-accent-clr data-selected:text-primary-text"
                         >
                             {status.label}
                         </SelectItem>

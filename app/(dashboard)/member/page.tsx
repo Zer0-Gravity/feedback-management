@@ -147,7 +147,7 @@ function Member() {
 
                     <button
                         type="submit"
-                        className="bg-button-clr whitespace-nowrap text-white h-9 text-[14px] p-2 rounded-md"
+                        className="bg-accent-clr whitespace-nowrap text-white h-9 text-[14px] p-2 rounded-md"
                     >
                         <p>Send Invite</p>
                     </button>
@@ -191,7 +191,7 @@ function Member() {
                                         damping: 30,
                                         stiffness: 280,
                                     }}
-                                    className="absolute inset-0 rounded-md bg-button-clr z-1"
+                                    className="absolute inset-0 rounded-md bg-accent-clr z-1"
                                 />
                             )}
                             <span className="text-[12px] z-10">{role}</span>
@@ -261,7 +261,7 @@ function Member() {
                 <button
                     disabled={currentPage === 1 || paginatedData.length === 0}
                     onClick={() => handleButton(currentPage - 1)}
-                    className="bg-button-clr text-white text-[12px] rounded-md px-2 py-1 disabled:opacity-50"
+                    className="bg-accent-clr text-white text-[12px] rounded-md px-2 py-1 disabled:opacity-50"
                 >
                     Prev
                 </button>
@@ -271,7 +271,7 @@ function Member() {
                         currentPage === totalPages || paginatedData.length === 0
                     }
                     onClick={() => handleButton(currentPage + 1)}
-                    className="bg-button-clr text-white text-[12px] rounded-md px-2 py-1 disabled:opacity-50"
+                    className="bg-accent-clr text-white text-[12px] rounded-md px-2 py-1 disabled:opacity-50"
                 >
                     Next
                 </button>

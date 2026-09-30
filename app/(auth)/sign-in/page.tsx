@@ -63,8 +63,8 @@ function SignIn() {
             <section className="w-full h-full flex justify-center flex-col md:h-175 md:w-112.5 p-8 md:p-17.5 md:border md:border-r-0 rounded-l-lg">
                 {/* | Mini Logo | */}
                 <div className="flex gap-2 items-center select-none">
-                    <div className="h-3.75 w-3.75 bg-button-clr" />
-                    <h1 className="font-semibold text-[20px] text-button-clr">
+                    <div className="h-3.75 w-3.75 bg-accent-clr" />
+                    <h1 className="font-semibold text-[20px] text-accent-clr">
                         Votify.io
                     </h1>
                 </div>
@@ -134,7 +134,7 @@ function SignIn() {
                                     checked={field.value ?? false}
                                     onCheckedChange={field.onChange}
                                     id="remember"
-                                    className="border-button-clr rounded-[3px] data-checked:bg-button-clr data-checked:border-0 size-3"
+                                    className="border-accent-clr rounded-[3px] data-checked:bg-accent-clr data-checked:border-0 size-3"
                                 />
                                 <label
                                     htmlFor="remember"
@@ -148,7 +148,7 @@ function SignIn() {
 
                     <button
                         type="submit"
-                        className="h-10 bg-button-clr text-white w-full rounded-md flex justify-center items-center"
+                        className="h-10 bg-accent-clr text-white w-full rounded-md flex justify-center items-center"
                     >
                         {isLoading ? (
                             <Loader2 size={18} className="animate-spin" />
@@ -163,7 +163,7 @@ function SignIn() {
                         <div className="h-0.5 w-full bg-border-clr" />
                     </div>
 
-                    <button className="h-10 bg-button-clr text-white w-full rounded-md flex justify-center items-center">
+                    <button className="h-10 bg-accent-clr text-white w-full rounded-md flex justify-center items-center">
                         <span className="text-[14px]">Google</span>
                     </button>
                 </form>

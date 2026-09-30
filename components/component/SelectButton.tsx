@@ -8,8 +8,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "../ui/select";
-import {
-     LucideIcon } from "lucide-react";
+import { LucideIcon } from "lucide-react";
 
 interface SelectProps {
     data: SelectType[];
@@ -30,7 +29,7 @@ function SelectButton({
         <Select value={value} onValueChange={(val) => onChange(val)}>
             <SelectTrigger
                 icon={Icon}
-                className="flex gap-2 items-center bg-button-clr text-white p-2 rounded-lg border-0"
+                className="flex gap-2 items-center bg-accent-clr text-white p-2 rounded-lg border-0"
             >
                 <SelectValue placeholder={label} className="text-[12px]" />
             </SelectTrigger>
@@ -44,7 +43,7 @@ function SelectButton({
                         <SelectItem
                             key={i}
                             value={d.value}
-                            className="text-primary-text text-[14px] data-highlighted:bg-button-clr data-highlighted:text-white"
+                            className="text-primary-text text-[14px] data-highlighted:bg-accent-clr data-highlighted:text-white"
                         >
                             {d.label}
                         </SelectItem>

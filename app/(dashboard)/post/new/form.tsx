@@ -96,7 +96,7 @@ function FormSub() {
                                     field.onChange(val as string)
                                 }
                             >
-                                <SelectTrigger className="flex gap-2 items-center bg-button-clr text-white p-2 rounded-lg border-0">
+                                <SelectTrigger className="flex gap-2 items-center bg-accent-clr text-white p-2 rounded-lg border-0">
                                     <SelectValue
                                         placeholder="Category"
                                         className="text-[12px]"
@@ -155,13 +155,13 @@ function FormSub() {
             <div className="flex gap-2 items-center justify-end">
                 <button
                     type="button"
-                    className="border border-button-clr text-button-clr p-2 rounded-lg text-[14px]"
+                    className="border border-accent-clr text-accent-clr p-2 rounded-lg text-[14px]"
                 >
                     Cancel
                 </button>
                 <button
                     type="submit"
-                    className="bg-button-clr text-white p-2 rounded-lg text-[14px]"
+                    className="bg-accent-clr text-white p-2 rounded-lg text-[14px]"
                 >
                     Post
                 </button>

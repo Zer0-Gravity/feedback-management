@@ -35,7 +35,7 @@ function UpvoteButton({ count, postId }: ButtonProps) {
                     }
                 });
             }}
-            className={`text-primary-text text-[12px] flex md:flex-col items-center justify-center gap-2 rounded-md p-2 ${voted ? "bg-button-clr" : "border"}`}
+            className={`text-primary-text text-[12px] flex md:flex-col items-center justify-center gap-2 rounded-md p-2 ${voted ? "bg-accent-clr" : "border"}`}
         >
             <Triangle size={18} className={`${voted && "fill-white"}`} />
             <p>{count}</p>

@@ -90,7 +90,7 @@ function AppLayout({ children }: { children: ReactNode }) {
 
                     <Popover>
                         <PopoverTrigger>
-                            <Avatar className="bg-card-clr size-7">
+                            <Avatar className="bg-card-clr size-7 border border-border-clr">
                                 <AvatarImage
                                     src={userDb.data?.user.image as string}
                                 />
@@ -132,16 +132,11 @@ function AppLayout({ children }: { children: ReactNode }) {
                         <Link
                             key={index}
                             href={`/${list.link}`}
-                            className="flex gap-2 items-center p-1.5 w-full relative"
+                            className={`flex gap-2 items-center p-1.5 w-full relative text-primary-text ${path === `/${list.link}` && "font-bold text-white"}`}
                         >
-                            <list.icon
-                                size={20}
-                                className="text-primary-text"
-                            />
+                            <list.icon size={20} />
 
-                            <span className="text-primary-text text-[14px]">
-                                {list.name}
-                            </span>
+                            <span className="text-[14px]">{list.name}</span>
 
                             {path === `/${list.link}` && (
                                 <motion.div
@@ -152,7 +147,7 @@ function AppLayout({ children }: { children: ReactNode }) {
                                         damping: 30,
                                         stiffness: 300,
                                     }}
-                                    className="absolute inset-0 bg-button-clr -z-1 rounded-md"
+                                    className="absolute inset-0 bg-accent-clr -z-1 rounded-md"
                                 />
                             )}
                         </Link>
@@ -173,7 +168,7 @@ function AppLayout({ children }: { children: ReactNode }) {
                         <Link
                             key={index}
                             href={`/${list.link}`}
-                            className={`flex gap-2 flex-col items-center relative p-2 ${path.replace("/", "") === list.link ? "text-button-clr" : "text-primary-text"}`}
+                            className={`flex gap-2 flex-col items-center relative p-2 ${path.replace("/", "") === list.link ? "text-accent-clr" : "text-primary-text"}`}
                         >
                             <list.icon size={20} />
 
@@ -186,14 +181,14 @@ function AppLayout({ children }: { children: ReactNode }) {
                                         damping: 30,
                                         stiffness: 300,
                                     }}
-                                    className="absolute inset-0 border-b border-b-button-clr"
+                                    className="absolute inset-0 border-b border-b-accent-clr"
                                 />
                             )}
                         </Link>
                     ))}
 
                     <button
-                        className={`flex gap-2 flex-col items-center relative p-2 ${path.replace("/", "") === "account" ? "text-button-clr" : "text-primary-text"}`}
+                        className={`flex gap-2 flex-col items-center relative p-2 ${path.replace("/", "") === "account" ? "text-accent-clr" : "text-primary-text"}`}
                     >
                         <User size={20} />
                     </button>

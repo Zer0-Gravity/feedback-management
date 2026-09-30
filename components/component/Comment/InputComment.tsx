@@ -88,7 +88,7 @@ function InputComment({
                 {children}
                 <button
                     type="submit"
-                    className="text-[12px] rounded-full text-white bg-button-clr px-2 py-1"
+                    className="text-[12px] rounded-full text-white bg-accent-clr px-2 py-1"
                 >
                     Send
                 </button>

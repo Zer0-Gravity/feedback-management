@@ -79,14 +79,14 @@ export function TableCustom<TData>({ table }: CustomTable<TData>) {
                 <button
                     onClick={() => table.previousPage()}
                     disabled={!table.getCanPreviousPage()}
-                    className="border-button-clr border text-[14px] text-button-clr px-2 py-1 rounded-lg disabled:opacity-50"
+                    className="border-accent-clr border text-[14px] text-accent-clr px-2 py-1 rounded-lg disabled:opacity-50"
                 >
                     Prev
                 </button>
                 <button
                     onClick={() => table.nextPage()}
                     disabled={!table.getCanNextPage()}
-                    className="border-button-clr border text-[14px] text-button-clr px-2 py-1 rounded-lg disabled:opacity-50"
+                    className="border-accent-clr border text-[14px] text-accent-clr px-2 py-1 rounded-lg disabled:opacity-50"
                 >
                     Next
                 </button>
