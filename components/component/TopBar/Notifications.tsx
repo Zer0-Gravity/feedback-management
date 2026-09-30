@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/popover";
 import { Bell, BellDot, Loader2 } from "lucide-react";
 
-import { notificationDbs } from "./actions";
+import { deleteNotifications, notificationDbs } from "./actions";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { authClient } from "@/lib/auth-client";
@@ -33,26 +33,38 @@ function Notifications() {
     );
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
-    async function acceptInvitation(invitationId: string) {
+    async function acceptInvitation(
+        invitationId: string,
+        notificationId: string,
+    ) {
         const { error } = await authClient.organization.acceptInvitation({
             invitationId: invitationId,
         });
 
         if (error) {
             toast.error(error.message as string);
+            return;
         }
 
+        deleteNotifications(notificationId);
         router.refresh();
     }
 
-    async function rejectInvitation(invitationId: string) {
+    async function rejectInvitation(
+        invitationId: string,
+        notificationId: string,
+    ) {
         const { error } = await authClient.organization.rejectInvitation({
             invitationId: invitationId,
         });
 
         if (error) {
             toast.error(error.message as string);
+            return;
         }
+
+        deleteNotifications(notificationId);
+        router.refresh();
     }
 
     useEffect(() => {
@@ -84,7 +96,7 @@ function Notifications() {
                         Notifications
                     </PopoverTitle>
                 </PopoverHeader>
-                <div className="flex">
+                <div className="flex flex-col gap-2">
                     {isLoading && (
                         <div className="flex gap-2 items-center justify-center p-4 w-full">
                             <Loader2 className="animate-spin" size={14} />
@@ -111,6 +123,7 @@ function Notifications() {
                                         onClick={() =>
                                             acceptInvitation(
                                                 notification.invitationId,
+                                                notification.id,
                                             )
                                         }
                                         className="border-2 rounded-md h-6.25 w-15 text-[12px] text-green-500 border-green-500 bg-green-500/20 scale-95 active:scale-95 hover:scale-100"
@@ -121,6 +134,7 @@ function Notifications() {
                                         onClick={() =>
                                             rejectInvitation(
                                                 notification.invitationId,
+                                                notification.id,
                                             )
                                         }
                                         className="border-2 rounded-md h-6.25 w-15 text-[12px] text-red-500 border-red-500 bg-red-500/20 scale-95 active:scale-95 hover:scale-100"

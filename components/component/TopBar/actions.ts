@@ -11,3 +11,11 @@ export async function notificationDbs() {
         toast.error(`An error occurred when fetching notification: ${error}`);
     }
 }
+
+export async function deleteNotifications(id: string) {
+    try {
+        await prisma.notification.delete({ where: { id } });
+    } catch (error) {
+        toast.error(`An error occurred when removing notifications: ${error}`);
+    }
+}
