@@ -12,7 +12,7 @@ function Welcome() {
     return (
         <>
             <TopBar />
-            <div className="h-full w-full bg-background-secondary flex flex-col gap-3 justify-center items-center">
+            <div className="h-full w-full bg-background-secondary flex flex-col gap-3 justify-center items-center p-2">
                 <div className="bg-accent-clr/20 w-15 h-15 rounded-xl flex items-center justify-center">
                     <Building2 className="text-accent-clr" size={30} />
                 </div>
@@ -27,15 +27,15 @@ function Welcome() {
                     </p>
                 </div>
                 <div className="flex justify-center flex-col items-center">
-                    <h1 className="text-primary-text text-[30px] font-bold">
+                    <h1 className="text-primary-text text-[30px] font-bold text-center">
                         You&apos;re not in an organization yet
                     </h1>
-                    <p className="text-[14px] text-secondary-text">
+                    <p className="text-[14px] text-secondary-text text-center">
                         Organizations hold your team, data and settings in one
                         place. Pick how you&apos;d like to get started.
                     </p>
                 </div>
-                <div className="flex gap-3">
+                <div className="flex flex-col md:flex-row gap-3">
                     {/* Create new */}
                     <Card
                         icon={Plus}
@@ -73,7 +73,7 @@ function Welcome() {
                 </div>
                 <div className="flex gap-2 items-center justify-center">
                     <div className="h-2 w-2 rounded-full bg-green-500 animate-pulse" />
-                    <p className="text-[14px] text-secondary-text">
+                    <p className="text-[14px] text-secondary-text text-center">
                         Waiting for an action. This page updates automatically
                         once you&apos;re start.
                     </p>
@@ -93,7 +93,7 @@ interface CardProps {
 
 function Card({ header, icon: Icon, title, desc, children }: CardProps) {
     return (
-        <div className="w-65 rounded-xl bg-card-clr border-2 border-accent-clr p-5 space-y-3">
+        <div className="w-full md:w-65 rounded-xl bg-card-clr border-2 border-accent-clr p-5 space-y-3">
             <p className="text-accent-clr font-semibold text-[14px]">
                 {header}
             </p>

@@ -25,7 +25,7 @@ export const auth = betterAuth({
                     },
                     additionalFields: {
                         email: { type: "string", required: true },
-                        phone: { type: "number", required: true },
+                        phone: { type: "string", required: false },
                         address: { type: "string", required: true },
                     },
                 },

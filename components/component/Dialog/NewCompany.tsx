@@ -9,9 +9,10 @@ import {
 } from "@/components/ui/dialog";
 import { authClient } from "@/lib/auth-client";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Building2, Image, Link, Mail, MapPin, Phone } from "lucide-react";
+import { Building2, FileImage, Link, Mail, MapPin, Phone } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 import * as yup from "yup";
 
 interface FormData {
@@ -58,20 +59,22 @@ function NewCompany() {
     };
 
     const handleNewOrganization = async (data: FormData) => {
-        try {
-            await authClient.organization.create({
-                name: data.name,
-                slug: data.slug,
-                logo: data.logo,
-                address: data.address,
-                email: data.email,
-                phone: data.phone,
-            });
-            handleClose();
-            router.refresh();
-        } catch (error) {
-            console.log(error);
+        const { error } = await authClient.organization.create({
+            name: data.name,
+            slug: data.slug,
+            logo: data.logo,
+            address: data.address,
+            email: data.email,
+            phone: data.phone,
+        });
+
+        if (error) {
+            toast.error(`An error occurred : ${error.message}`);
+            return;
         }
+
+        handleClose();
+        router.refresh();
     };
 
     return (
@@ -181,7 +184,8 @@ function NewCompany() {
 
                     <div className="space-y-3">
                         <div className="flex gap-2 items-center">
-                            <Image size={14} /> <p>Logo</p>
+                            <FileImage size={14} />
+                            <p>Logo</p>
                         </div>
                         <input
                             {...register("logo")}
