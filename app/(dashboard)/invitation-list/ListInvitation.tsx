@@ -13,10 +13,17 @@ interface ListProps {
     listDb: ListInvitations[];
 }
 
+interface BadgeType {
+    [key: string]: {
+        color: string;
+        label: string;
+    };
+}
+
 function ListInvitation({ listDb }: ListProps) {
     const [currentStatus, setCurrentStatus] = useState<string>("all");
 
-    const badgeColor = {
+    const badgeColor: BadgeType = {
         accepted: { color: "#2AAF6D", label: "Accepted" },
         pending: { color: "#DC7E15", label: "Pending" },
         rejected: { color: "#ec1405ff", label: "Rejected" },
