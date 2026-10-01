@@ -90,7 +90,7 @@ function Notifications() {
                     <BellDot size={16} className="text-primary-text" />
                 )}
             </PopoverTrigger>
-            <PopoverContent className="bg-background ring-0 shadow-lg min-w-150">
+            <PopoverContent className="bg-background ring-0 shadow-lg w-90 md:w-120">
                 <PopoverHeader>
                     <PopoverTitle className="text-secondary-text">
                         Notifications

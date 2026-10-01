@@ -6,8 +6,9 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { authClient } from "@/lib/auth-client";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { PackageOpen, Search } from "lucide-react";
+import { MailOpen, PackageOpen, Search } from "lucide-react";
 import { motion } from "motion/react";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
@@ -154,8 +155,8 @@ function Member() {
                 </form>
             )}
 
-            <div className="flex gap-2 items-center mb-5">
-                <div className="relative h-10 w-full bg-card-clr rounded-lg">
+            <div className="flex flex-col md:flex-row gap-2 items-center mb-5">
+                <div className="relative h-10 w-full md:w-200 bg-card-clr rounded-lg">
                     <input
                         type="text"
                         className="h-full w-full text-[12px] text-secondary-text py-2 pl-10"
@@ -168,36 +169,55 @@ function Member() {
                         className="text-secondary-text absolute top-1/2 -translate-y-1/2 left-4"
                     />
                 </div>
-                <RadioGroup
-                    value={currentTag}
-                    onValueChange={(val) => setCurrentTag(val)}
-                    className="flex gap-2"
-                >
-                    {["All", "Owner", "Admin", "Member"].map((role, index) => (
-                        <label
-                            key={index}
-                            className="relative text-secondary-text h-9 w-17 flex items-center justify-center border border-border-clr rounded-md has-checked:text-white transition-all"
+                <div className="flex justify-between items-center w-full">
+                    <RadioGroup
+                        value={currentTag}
+                        onValueChange={(val) => setCurrentTag(val)}
+                        className="flex gap-2"
+                    >
+                        {["All", "Owner", "Admin", "Member"].map(
+                            (role, index) => (
+                                <label
+                                    key={index}
+                                    className="relative text-secondary-text h-9 px-2 flex items-center justify-center border border-border-clr rounded-md has-checked:text-white transition-all"
+                                >
+                                    <RadioGroupItem
+                                        value={role}
+                                        id={role.toLowerCase()}
+                                        className="hidden"
+                                    />
+                                    {currentTag === role && (
+                                        <motion.div
+                                            layoutId="roles"
+                                            transition={{
+                                                type: "spring",
+                                                damping: 30,
+                                                stiffness: 280,
+                                            }}
+                                            className="absolute inset-0 rounded-md bg-accent-clr z-1"
+                                        />
+                                    )}
+                                    <span className="text-[12px] z-10">
+                                        {role}
+                                    </span>
+                                </label>
+                            ),
+                        )}
+                    </RadioGroup>
+
+                    {/* Open invitation list */}
+                    {["admin", "owner"].includes(
+                        currentRole.data?.role ?? "",
+                    ) && (
+                        <Link
+                            href={"invitation-list"}
+                            className="border border-accent-clr rounded-md bg-accent-clr/10 text-accent-clr flex items-center gap-2 justify-center h-9 px-2"
                         >
-                            <RadioGroupItem
-                                value={role}
-                                id={role.toLowerCase()}
-                                className="hidden"
-                            />
-                            {currentTag === role && (
-                                <motion.div
-                                    layoutId="roles"
-                                    transition={{
-                                        type: "spring",
-                                        damping: 30,
-                                        stiffness: 280,
-                                    }}
-                                    className="absolute inset-0 rounded-md bg-accent-clr z-1"
-                                />
-                            )}
-                            <span className="text-[12px] z-10">{role}</span>
-                        </label>
-                    ))}
-                </RadioGroup>
+                            <MailOpen size={14} />
+                            <span className="text-[12px]">Invitation</span>
+                        </Link>
+                    )}
+                </div>
             </div>
 
             <div className="flex gap-2 flex-col bg-card-clr rounded-lg p-3">
