@@ -5,6 +5,7 @@ import {
     Moon,
     Newspaper,
     Notebook,
+    Scaling,
     Send,
     Table2,
     UsersRound,
@@ -41,9 +42,9 @@ export default function Home() {
             desc: "Review every submission in your organization and change its status from a single table as development moves.",
         },
         {
-            icon: Moon,
-            title: "Theme",
-            desc: "For your comfort we offer dark and light mode theme.",
+            icon: Scaling,
+            title: "Responsive design",
+            desc: "Work for you both desktop and mobile device. So you can access it anytime and anywhere",
         },
     ];
 
@@ -103,46 +104,46 @@ export default function Home() {
                 </div>
             </header>
 
-            <div className="w-full md:w-350 m-auto space-y-15">
-                <section className="flex justify-between">
-                    <div className="space-y-3">
+            <div className="w-full p-5 md:w-350 m-auto space-y-15">
+                <section className="flex lg:justify-between justify-center gap-2 flex-col lg:flex-row">
+                    <div className="space-y-3 flex flex-col items-center lg:items-start">
                         <p className="text-[12px] text-accent-clr font-bold">
                             Feedback management app for your company
                         </p>
-                        <h1 className="text-primary-text font-bold text-[50px] w-200 leading-15">
+                        <h1 className="text-primary-text font-bold text-[30px] md:text-[50px] max-w-2xl leading-10 md:leading-13 text-center lg:text-left">
                             Every idea your customer or team suggest are in one
                             place.
                         </h1>
-                        <p className="text-[14px] text-secondary-text w-100">
+                        <p className="text-[12px] md:text-[14px] text-secondary-text max-w-100 text-center lg:text-left">
                             Votify collects feature requests, bug reports and
                             integration asks in one place. Your team decides
                             what&apos;s next, and everyone can watch it move
                             across the roadmap.
                         </p>
-                        <button className="h-[50px] w-[200px] bg-accent-clr rounded-full text-white">
+                        <button className="h-12.5 w-50 bg-accent-clr rounded-full text-white">
                             Start here
                         </button>
                     </div>
-                    <div className="w-full md:w-[600px] h-[350px] bg-gray-400 rounded-lg"></div>
+                    <div className="w-full md:w-150 h-87.5 bg-gray-400 rounded-lg"></div>
                 </section>
 
                 <section className="space-y-3">
                     <div className="space-y-2">
-                        <h1 className="text-[30px] font-bold w-[500px]">
+                        <h1 className="text-[30px] font-bold max-w-125">
                             One home for your team to progress{" "}
                         </h1>
-                        <p className="text-[12px] text-secondary-text w-100">
+                        <p className="text-[12px] text-secondary-text max-w-100">
                             Stop losing ideas in meetings and chat threads. Your
                             team can log each idea as a post that coworkers can
                             discuss and vote on it
                         </p>
                     </div>
 
-                    <div className="grid grid-cols-3 gap-2 ">
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-2">
                         {cardSection2.map((card, index) => (
                             <div
                                 key={index}
-                                className="bg-card-clr p-5 w-full h-[200px] rounded-lg flex flex-col gap-3 cursor-pointer hover:scale-102 hover:shadow-lg hover:shadow-accent-clr transition-all"
+                                className="bg-card-clr p-5 w-full h-50 rounded-lg flex flex-col gap-3 cursor-pointer hover:scale-102 hover:shadow-lg hover:shadow-accent-clr transition-all"
                             >
                                 <div className="h-10 w-10 flex items-center justify-center rounded-md bg-accent-clr/30 border-2 border-accent-clr text-accent-clr">
                                     <card.icon size={20} />
@@ -158,23 +159,23 @@ export default function Home() {
                     </div>
                 </section>
 
-                <section className="flex justify-between items-center">
+                <section className="flex flex-col lg:flex-row justify-between gap-2">
                     <div className="space-y-2">
                         <div className="space-y-2">
-                            <h1 className="text-[30px] font-bold w-[500px]">
+                            <h1 className="text-[30px] font-bold max-w-125">
                                 From idea to shipped feature in five progress
                             </h1>
-                            <p className="text-[12px] text-secondary-text w-100">
+                            <p className="text-[12px] text-secondary-text max-w-100">
                                 Stop losing ideas in meetings and chat threads.
                                 Your team can log each idea as a post that
                                 coworkers can discuss and vote on it
                             </p>
                         </div>
-                        <div className="grid grid-cols-3 gap-2">
+                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-2">
                             {roadmapStatuses.map((road, index) => (
                                 <div
                                     key={index}
-                                    className="bg-card-clr rounded-md p-2 w-[200px] h-[100px] cursor-pointer hover:scale-105 hover:shadow-lg transition-all"
+                                    className="bg-card-clr rounded-md p-2 w-full max:w-50 h-25 cursor-pointer hover:scale-101 hover:shadow-lg transition-all"
                                 >
                                     <h1 className="text-primary-text font-bold">
                                         {road.title}
@@ -187,22 +188,24 @@ export default function Home() {
                         </div>
                     </div>
 
-                    <div className="bg-card-clr h-80 w-160 rounded-lg">aa</div>
+                    <div className="bg-card-clr h-80 max-w-160 w-full rounded-lg">
+                        aa
+                    </div>
                 </section>
 
-                <section className="flex justify-between">
+                <section className="flex flex-col lg:flex-row justify-between">
                     <div className="space-y-3">
                         <div className="space-y-2">
-                            <h1 className="text-[30px] font-bold w-[500px]">
+                            <h1 className="text-[30px] font-bold max-w-125">
                                 Your whole team. with the right access
                             </h1>
-                            <p className="text-[12px] text-secondary-text w-100">
+                            <p className="text-[12px] text-secondary-text max-w-100">
                                 Only employees you invite can join. Keep control
                                 over who can change what.
                             </p>
                         </div>
 
-                        <div className="flex gap-2">
+                        <div className="flex flex-col md:flex-row gap-2">
                             {cardSection3.map((card, index) => (
                                 <div
                                     key={index}
@@ -216,12 +219,12 @@ export default function Home() {
                             ))}
                         </div>
                     </div>
-                    <div className="bg-card-clr w-180">Hllo</div>
+                    <div className="bg-card-clr w-full lg:max-w-180">Hllo</div>
                 </section>
 
                 <section className="w-full flex flex-col gap-3 justify-center items-center bg-card-clr py-10 px-5 rounded-lg">
                     <h1 className="text-[50px] text-primary-text text-center font-bold">
-                        Start capturing customer ideas today
+                        Start capturing ideas today
                     </h1>
                     <p className="text-[14px] text-secondary-text text-center">
                         Create a workspace, invite your employees and post your
