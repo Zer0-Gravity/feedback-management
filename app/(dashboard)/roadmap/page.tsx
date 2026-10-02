@@ -4,6 +4,7 @@ import RoadmapTab from "@/components/component/RoadmapTab";
 import { auth } from "@/lib/auth";
 import prisma from "@/lib/prisma";
 import { headers } from "next/headers";
+import { getTotalCounts } from "./actions";
 
 interface RoadmapPromise {
     searchParams: Promise<{
@@ -40,6 +41,9 @@ async function Roadmap({ searchParams }: RoadmapPromise) {
         include: { user: true, _count: { select: { upVotes: true } } },
     });
 
+    //Call all counted data function
+    const counts = await getTotalCounts();
+
     return (
         <PageWrapper
             header="Roadmap"
@@ -51,6 +55,7 @@ async function Roadmap({ searchParams }: RoadmapPromise) {
                 search={search}
                 status={status}
                 category={category}
+                counts={counts}
             />
         </PageWrapper>
     );

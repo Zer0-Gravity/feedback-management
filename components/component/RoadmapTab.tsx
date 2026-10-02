@@ -26,9 +26,16 @@ interface RoadmapProps {
     search: string;
     status: string;
     category: string;
+    counts: Record<string, number>;
 }
 
-function RoadmapTab({ database, search, status, category }: RoadmapProps) {
+function RoadmapTab({
+    database,
+    search,
+    status,
+    category,
+    counts,
+}: RoadmapProps) {
     const router = useRouter();
     const pathName = usePathname();
     const searchParams = useSearchParams();
@@ -81,11 +88,7 @@ function RoadmapTab({ database, search, status, category }: RoadmapProps) {
                             </p>
                         </div>
                         <p className="text-primary-text font-bold text-[25px] hidden md:flex">
-                            {
-                                database.filter(
-                                    (data) => data.status === status.value,
-                                ).length
-                            }
+                            {counts[status.value ?? 0]}
                         </p>
                     </label>
                 ))}
