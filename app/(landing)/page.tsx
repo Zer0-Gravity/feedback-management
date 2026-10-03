@@ -104,7 +104,7 @@ export default function Home() {
                 </div>
             </header>
 
-            <div className="w-full p-5 md:w-350 m-auto space-y-15">
+            <div className="w-full max-w-350 mx-auto p-5 space-y-15">
                 <section className="flex lg:justify-between justify-center gap-2 flex-col lg:flex-row">
                     <div className="space-y-3 flex flex-col items-center lg:items-start">
                         <p className="text-[12px] text-accent-clr font-bold">
@@ -124,8 +124,16 @@ export default function Home() {
                             Start here
                         </button>
                     </div>
-                    <div className="w-full md:w-150 h-87.5 bg-gray-400 rounded-lg"></div>
-                </section>
+                    <div className="w-full lg:w-150 aspect-15/8  relative shadow-lg shadow-accent-clr self-center">
+                        <Image
+                            src={"/Feed.png"}
+                            alt="feed-image"
+                            fill
+                            sizes="(min-width: 1024px) 600px, 100vw"
+                            className="rounded-lg object-contain"
+                        />
+                    </div>
+                </section>  
 
                 <section className="space-y-3">
                     <div className="space-y-2">
@@ -139,7 +147,7 @@ export default function Home() {
                         </p>
                     </div>
 
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-2">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                         {cardSection2.map((card, index) => (
                             <div
                                 key={index}
@@ -159,7 +167,7 @@ export default function Home() {
                     </div>
                 </section>
 
-                <section className="flex flex-col lg:flex-row justify-between gap-2">
+                <section className="flex flex-col gap-2 justify-between">
                     <div className="space-y-2">
                         <div className="space-y-2">
                             <h1 className="text-[30px] font-bold max-w-125">
@@ -171,11 +179,11 @@ export default function Home() {
                                 coworkers can discuss and vote on it
                             </p>
                         </div>
-                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-2">
+                        <div className="grid grid-cols-1 md:grid-cols-5 gap-2">
                             {roadmapStatuses.map((road, index) => (
                                 <div
                                     key={index}
-                                    className="bg-card-clr rounded-md p-2 w-full max:w-50 h-25 cursor-pointer hover:scale-101 hover:shadow-lg transition-all"
+                                    className="bg-card-clr rounded-md p-2 w-full h-25 cursor-pointer hover:scale-101 hover:shadow-lg transition-all"
                                 >
                                     <h1 className="text-primary-text font-bold">
                                         {road.title}
@@ -188,38 +196,40 @@ export default function Home() {
                         </div>
                     </div>
 
-                    <div className="bg-card-clr h-80 max-w-160 w-full rounded-lg">
-                        aa
+                    <div className="w-full max-w-[1000px] aspect-15/4 relative self-center shadow-lg shadow-accent-clr">
+                        <Image
+                            src={"/Roadmap.png"}
+                            fill
+                            className="rounded-lg object-contain"
+                            alt="roadmap-image"
+                        />
                     </div>
                 </section>
 
-                <section className="flex flex-col lg:flex-row justify-between">
-                    <div className="space-y-3">
-                        <div className="space-y-2">
-                            <h1 className="text-[30px] font-bold max-w-125">
-                                Your whole team. with the right access
-                            </h1>
-                            <p className="text-[12px] text-secondary-text max-w-100">
-                                Only employees you invite can join. Keep control
-                                over who can change what.
-                            </p>
-                        </div>
-
-                        <div className="flex flex-col md:flex-row gap-2">
-                            {cardSection3.map((card, index) => (
-                                <div
-                                    key={index}
-                                    className="p-2 rounded-md text-accent-clr border-2 border-accent-clr bg-accent-clr/20 flex gap-2"
-                                >
-                                    <card.icon size={18} />
-                                    <p className="text-[14px] font-semibold">
-                                        {card.title}
-                                    </p>
-                                </div>
-                            ))}
-                        </div>
+                <section className="flex flex-col gap-3">
+                    <div className="space-y-2">
+                        <h1 className="text-[30px] font-bold max-w-125">
+                            Your whole team. with the right access
+                        </h1>
+                        <p className="text-[12px] text-secondary-text max-w-100">
+                            Only employees you invite can join. Keep control
+                            over who can change what.
+                        </p>
                     </div>
-                    <div className="bg-card-clr w-full lg:max-w-180">Hllo</div>
+
+                    <div className="flex flex-col md:flex-row gap-2">
+                        {cardSection3.map((card, index) => (
+                            <div
+                                key={index}
+                                className="p-2 rounded-md text-accent-clr border-2 border-accent-clr bg-accent-clr/20 flex gap-2"
+                            >
+                                <card.icon size={18} />
+                                <p className="text-[14px] font-semibold">
+                                    {card.title}
+                                </p>
+                            </div>
+                        ))}
+                    </div>
                 </section>
 
                 <section className="w-full flex flex-col gap-3 justify-center items-center bg-card-clr py-10 px-5 rounded-lg">
