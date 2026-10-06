@@ -5,12 +5,14 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { format } from "date-fns";
 import { Mail, RefreshCcw, Search, Send } from "lucide-react";
 import { motion } from "motion/react";
-import { useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 type ListInvitations = Invitation & { user: User }; //Combine both invitation type with User
 
 interface ListProps {
     listDb: ListInvitations[];
+    search: string;
+    status: string;
 }
 
 interface BadgeType {
@@ -20,13 +22,35 @@ interface BadgeType {
     };
 }
 
-function ListInvitation({ listDb }: ListProps) {
-    const [currentStatus, setCurrentStatus] = useState<string>("all");
+function ListInvitation({ listDb, search, status }: ListProps) {
+    const searchParams = useSearchParams();
+    const router = useRouter();
+    const path = usePathname();
 
     const badgeColor: BadgeType = {
         accepted: { color: "#2AAF6D", label: "Accepted" },
         pending: { color: "#DC7E15", label: "Pending" },
         rejected: { color: "#ec1405ff", label: "Rejected" },
+    };
+
+    const handleSearch = (value: string) => {
+        const param = new URLSearchParams(searchParams);
+
+        param.set("search", value);
+
+        router.push(`${path}?${param.toString()}`);
+    };
+
+    const handleStatus = (value: string) => {
+        const param = new URLSearchParams(searchParams);
+
+        if (value === "all") {
+            param.delete("status");
+        } else {
+            param.set("status", value);
+        }
+
+        router.push(`${path}?${param.toString()}`);
     };
 
     return (
@@ -37,6 +61,8 @@ function ListInvitation({ listDb }: ListProps) {
                         type="search"
                         className="h-full w-full text-[12px] text-secondary-text py-2 pl-10"
                         placeholder="Search invitation"
+                        value={search}
+                        onChange={(e) => handleSearch(e.target.value)}
                     />
                     <Search
                         size={14}
@@ -44,8 +70,8 @@ function ListInvitation({ listDb }: ListProps) {
                     />
                 </div>
                 <RadioGroup
-                    value={currentStatus}
-                    onValueChange={(val) => setCurrentStatus(val)}
+                    value={status}
+                    onValueChange={(val) => handleStatus(val ?? "")}
                     className="flex gap-2 md:w-fit w-full"
                 >
                     {["all", "pending", "rejected", "accepted"].map(
@@ -63,7 +89,7 @@ function ListInvitation({ listDb }: ListProps) {
                                         status.slice(1)}
                                 </span>
 
-                                {currentStatus === status && (
+                                {status === status && (
                                     <motion.div
                                         layoutId="inv-status"
                                         transition={{

@@ -3,14 +3,41 @@ import ListInvitation from "./ListInvitation";
 import prisma from "@/lib/prisma";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
+import { contains } from "@base-ui/react/internals/shadowDom";
 
-async function InvitationList() {
+interface InvitationProps {
+    searchParams: Promise<{
+        search: string;
+        status: string;
+    }>;
+}
+
+async function InvitationList({ searchParams }: InvitationProps) {
+    const { search = "", status = "" } = await searchParams;
+
     const session = await auth.api.getOrganization({
         headers: await headers(),
     });
 
     const invitationDb = await prisma.invitation.findMany({
-        where: { organizationId: session?.id },
+        where: {
+            organizationId: session?.id,
+            AND: [
+                ...(status ? [{ status }] : []),
+                ...(search
+                    ? [
+                          {
+                              user: {
+                                  name: {
+                                      contains: search,
+                                      mode: "insensitive" as const,
+                                  },
+                              },
+                          },
+                      ]
+                    : []),
+            ],
+        },
         include: { user: true },
     });
 
@@ -19,7 +46,11 @@ async function InvitationList() {
             header="Invitation list"
             desc="Manage and track member invitation list "
         >
-            <ListInvitation listDb={invitationDb} />
+            <ListInvitation
+                listDb={invitationDb}
+                search={search}
+                status={status}
+            />
         </PageWrapper>
     );
 }
