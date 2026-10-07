@@ -1,36 +1,60 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Votify
 
-## Getting Started
+Votify is a management feedback app for your organization. You can make a post about feature, integration, and bug report. Discuss your post with everyone and get an Vote to push your Idea.
 
-First, run the development server:
+Join multiple organization or make your own. Each organization have total 3 Roles (Owner, Admin, and Member).
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+<div align="center">
+     <i style="color: white" style>Suggest and Vote idea what matter to you</i>
+</div>
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Tech Used
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Next JS
+- Tailwind
+- Prisma
+- Neon Database
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Dependency Used
 
-## Learn More
+- Lucide
+- date-fns
+- Tiptap Rich Text Editor
+- Motion
+- Dompurify
+- Shacnd/UI
+- Zustand
+- Yup
+- React Hook Form
 
-To learn more about Next.js, take a look at the following resources:
+## Feature
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Feed
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Explore your feed, see what other member discuss and join discussion
 
-## Deploy on Vercel
+![feed](./public/explore-feed.png)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Roadmap
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Monitor each any idea where they progress based on their status, you can directly vote in Roadmap!
+
+![roadmap](./public/Roadmap.png)
+
+### Audit Post
+
+Manage every submission, delete it or update its status.
+
+![audit](./public/audit-post.png)
+
+### Manage Post
+
+Manage your own post across all organization you join, and track their approval status
+
+![post](./public/manage-post.png)
+
+### Manage Member
+
+See organization member list and manage their role. You can invite someone by email, and remove someone else as admin and owner
+
+![member](./public/manage-post.png)
