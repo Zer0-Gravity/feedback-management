@@ -13,7 +13,7 @@ import {
     Users,
 } from "lucide-react";
 import Link from "next/link";
-import { ReactNode } from "react";
+import { ReactNode, Suspense } from "react";
 
 import TopBar from "./TopBar/TopBar";
 import { authClient } from "@/lib/auth-client";
@@ -45,7 +45,9 @@ function AppLayout({ children }: { children: ReactNode }) {
     if (isPending) {
         return (
             <div className="flex flex-col h-screen">
-                <TopBar />
+                <Suspense fallback={null}>
+                    <TopBar />
+                </Suspense>
                 <div className="w-full h-full flex flex-col items-center justify-center gap-2">
                     <Loader2
                         size={14}

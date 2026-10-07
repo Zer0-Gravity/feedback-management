@@ -19,6 +19,7 @@ import UpvoteButton from "@/components/component/UpvoteButton";
 import Link from "next/link";
 import { ContentPostInline } from "@/components/component/ContentPost";
 import FeedFilter from "@/components/component/FilterComponent/FeedFilter";
+import { Suspense } from "react";
 
 type PageProps = {
     searchParams: Promise<{
@@ -82,26 +83,30 @@ async function Feed({ searchParams }: PageProps) {
         >
             {/* Feed controller */}
             <div className="flex flex-col gap-2 lg:flex-row md:justify-between md:items-center mb-5">
-                <SearchControl defVal={query} />
+                <Suspense fallback={null}>
+                    <SearchControl defVal={query} />
+                </Suspense>
                 <div className="flex gap-2 justify-end">
-                    <FeedFilter
-                        filter={status}
-                        placeholder="Status"
-                        url="status"
-                        data={tabsStatus}
-                    />
-                    <FeedFilter
-                        filter={category}
-                        placeholder="Category"
-                        url="category"
-                        data={tabCategory}
-                    />
-                    <FeedFilter
-                        filter={sort}
-                        placeholder="Newest"
-                        url="sort"
-                        data={tabSort}
-                    />
+                    <Suspense fallback={null}>
+                        <FeedFilter
+                            filter={status}
+                            placeholder="Status"
+                            url="status"
+                            data={tabsStatus}
+                        />
+                        <FeedFilter
+                            filter={category}
+                            placeholder="Category"
+                            url="category"
+                            data={tabCategory}
+                        />
+                        <FeedFilter
+                            filter={sort}
+                            placeholder="Newest"
+                            url="sort"
+                            data={tabSort}
+                        />
+                    </Suspense>
                     <Link
                         href={"/post/new"}
                         className="flex gap-2 items-center text-accent-clr text-[12px] bg-accent-clr/10 border-accent-clr border  rounded-md p-2"

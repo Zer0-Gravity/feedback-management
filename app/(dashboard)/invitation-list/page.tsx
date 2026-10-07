@@ -3,6 +3,7 @@ import ListInvitation from "./ListInvitation";
 import prisma from "@/lib/prisma";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
+import { Suspense } from "react";
 
 interface InvitationProps {
     searchParams: Promise<{
@@ -39,16 +40,18 @@ async function InvitationList({ searchParams }: InvitationProps) {
     });
 
     return (
-        <PageWrapper
-            header="Invitation list"
-            desc="Manage and track member invitation list "
-        >
-            <ListInvitation
-                listDb={invitationDb}
-                search={search}
-                status={status}
-            />
-        </PageWrapper>
+        <Suspense fallback={null}>
+            <PageWrapper
+                header="Invitation list"
+                desc="Manage and track member invitation list "
+            >
+                <ListInvitation
+                    listDb={invitationDb}
+                    search={search}
+                    status={status}
+                />
+            </PageWrapper>
+        </Suspense>
     );
 }
 

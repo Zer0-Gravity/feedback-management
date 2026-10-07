@@ -5,6 +5,7 @@ import { auth } from "@/lib/auth";
 import prisma from "@/lib/prisma";
 import { headers } from "next/headers";
 import { getTotalCounts } from "./actions";
+import { Suspense } from "react";
 
 interface RoadmapPromise {
     searchParams: Promise<{
@@ -45,19 +46,21 @@ async function Roadmap({ searchParams }: RoadmapPromise) {
     const counts = await getTotalCounts();
 
     return (
-        <PageWrapper
-            header="Roadmap"
-            desc="See what we're working on, what's coming next, and vote on what
-                matters to you."
-        >
-            <RoadmapTab
-                database={postDb}
-                search={search}
-                status={status}
-                category={category}
-                counts={counts}
-            />
-        </PageWrapper>
+        <Suspense fallback={null}>
+            <PageWrapper
+                header="Roadmap"
+                desc="See what we're working on, what's coming next, and vote on what
+                    matters to you."
+            >
+                <RoadmapTab
+                    database={postDb}
+                    search={search}
+                    status={status}
+                    category={category}
+                    counts={counts}
+                />
+            </PageWrapper>
+        </Suspense>
     );
 }
 
