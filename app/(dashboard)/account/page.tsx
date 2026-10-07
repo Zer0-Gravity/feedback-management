@@ -3,6 +3,7 @@ import AccountPage from "./AccountPage";
 import prisma from "@/lib/prisma";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
+import { Suspense } from "react";
 
 async function Account() {
     const session = await auth.api.getSession({ headers: await headers() });
@@ -14,9 +15,11 @@ async function Account() {
     });
 
     return (
-        <PageWrapper header="Account" desc="Manage your account here">
-            <AccountPage account={accountDb} />
-        </PageWrapper>
+        <Suspense fallback={null}>
+            <PageWrapper header="Account" desc="Manage your account here">
+                <AccountPage account={accountDb} />
+            </PageWrapper>
+        </Suspense>
     );
 }
 
