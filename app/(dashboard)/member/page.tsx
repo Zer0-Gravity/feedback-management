@@ -6,7 +6,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { authClient } from "@/lib/auth-client";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { MailOpen, PackageOpen, Search } from "lucide-react";
+import { MailOpen, PackageOpen, Search, Ban } from "lucide-react";
 import { motion } from "motion/react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -256,14 +256,22 @@ function Member() {
                                 </div>
                                 {["admin", "owner"].includes(
                                     currentRole.data?.role ?? "",
-                                ) && (
-                                    <DropdownMember
-                                        memberId={member.id}
-                                        role={member.role}
-                                        name={member.user.name}
-                                        onMemberUpdate={fetchMembers}
-                                    />
-                                )}
+                                ) &&
+                                    (member.role !== "owner" ? (
+                                        <DropdownMember
+                                            memberId={member.id}
+                                            role={member.role}
+                                            name={member.user.name}
+                                            onMemberUpdate={fetchMembers}
+                                        />
+                                    ) : (
+                                        <div className="hover:bg-background-secondary h-8 w-8 grid place-content-center rounded-full transition-all">
+                                            <Ban
+                                                size={14}
+                                                className="text-red-500"
+                                            />
+                                        </div>
+                                    ))}
                             </div>
                         </div>
                     ))

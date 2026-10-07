@@ -113,7 +113,7 @@ function DropdownMember({
                         {confirmRemove ? (
                             <div className="space-y-3 bg-red-500/20 p-2 rounded-md">
                                 <p className="text-[12px] text-primary-text">
-                                    {`Remove ${name} from this organization`}
+                                    {`Remove ${name} from this organization?`}
                                 </p>
                                 <div className="w-full flex gap-3">
                                     <button
