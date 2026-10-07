@@ -3,7 +3,7 @@
 import { Invitation, User } from "@/app/generated/prisma/client";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { format } from "date-fns";
-import { Mail, RefreshCcw, Search, Send } from "lucide-react";
+import { Mail, Search } from "lucide-react";
 import { motion } from "motion/react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
@@ -42,7 +42,7 @@ function ListInvitation({ listDb, search, status }: ListProps) {
             param.delete("search");
         }
 
-        router.push(`${path}?${param.toString()}`);
+        router.replace(`${path}?${param.toString()}`);
     };
 
     const handleStatus = (value: string) => {

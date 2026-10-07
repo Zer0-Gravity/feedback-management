@@ -22,7 +22,7 @@ function TableData({
     columns: ColumnDef<UserPost, any>[];
     data: any;
 }) {
-    const [globalFilter, setGlobalFilter] = useState<any>([]);
+    const [globalFilter, setGlobalFilter] = useState<string>("");
     const [rowSelection, setRowSelection] = useState<RowSelectionState>({});
     const [sorting, setSorting] = useState<SortingState>([]);
     const table = useReactTable({
