@@ -254,9 +254,11 @@ function Member() {
                                             member.role.slice(1)}
                                     </p>
                                 </div>
+                                {/* Check role to access dropdown option */}
                                 {["admin", "owner"].includes(
                                     currentRole.data?.role ?? "",
                                 ) &&
+                                    // Check if the listed member is owner or not to avoid editing owner
                                     (member.role !== "owner" ? (
                                         <DropdownMember
                                             memberId={member.id}

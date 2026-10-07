@@ -3,7 +3,6 @@ import ListInvitation from "./ListInvitation";
 import prisma from "@/lib/prisma";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
-import { contains } from "@base-ui/react/internals/shadowDom";
 
 interface InvitationProps {
     searchParams: Promise<{
@@ -13,7 +12,7 @@ interface InvitationProps {
 }
 
 async function InvitationList({ searchParams }: InvitationProps) {
-    const { search = "", status = "" } = await searchParams;
+    const { search = "", status = "all" } = await searchParams;
 
     const session = await auth.api.getOrganization({
         headers: await headers(),
@@ -23,15 +22,13 @@ async function InvitationList({ searchParams }: InvitationProps) {
         where: {
             organizationId: session?.id,
             AND: [
-                ...(status ? [{ status }] : []),
+                ...(status !== "all" ? [{ status }] : []),
                 ...(search
                     ? [
                           {
-                              user: {
-                                  name: {
-                                      contains: search,
-                                      mode: "insensitive" as const,
-                                  },
+                              email: {
+                                  contains: search,
+                                  mode: "insensitive" as const,
                               },
                           },
                       ]

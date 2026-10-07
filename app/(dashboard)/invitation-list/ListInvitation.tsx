@@ -36,7 +36,11 @@ function ListInvitation({ listDb, search, status }: ListProps) {
     const handleSearch = (value: string) => {
         const param = new URLSearchParams(searchParams);
 
-        param.set("search", value);
+        if (value) {
+            param.set("search", value);
+        } else {
+            param.delete("search");
+        }
 
         router.push(`${path}?${param.toString()}`);
     };
@@ -75,21 +79,21 @@ function ListInvitation({ listDb, search, status }: ListProps) {
                     className="flex gap-2 md:w-fit w-full"
                 >
                     {["all", "pending", "rejected", "accepted"].map(
-                        (status, index) => (
+                        (statusTag, index) => (
                             <label
                                 key={index}
                                 className="group relative h-10 px-2 flex items-center justify-center text-secondary-text border border-border-clr rounded-md has-checked:text-white transition-colors"
                             >
                                 <RadioGroupItem
-                                    value={status}
+                                    value={statusTag}
                                     className="hidden"
                                 />
                                 <span className="text-[12px] z-10 group-checked:font-semibold">
-                                    {status.charAt(0).toUpperCase() +
-                                        status.slice(1)}
+                                    {statusTag.charAt(0).toUpperCase() +
+                                        statusTag.slice(1)}
                                 </span>
 
-                                {status === status && (
+                                {statusTag === status && (
                                     <motion.div
                                         layoutId="inv-status"
                                         transition={{
@@ -163,29 +167,14 @@ function ListInvitation({ listDb, search, status }: ListProps) {
                                         </p>
                                     </div>
                                 </div>
-
-                                {/* Action section */}
-                                <div className="flex justify-end">
-                                    {list.status === "pending" && (
-                                        <button className="bg-accent-clr text-white text-[12px] p-2 rounded-md flex gap-2 items-center">
-                                            <Send size={14} />
-                                            <span>Resend</span>
-                                        </button>
-                                    )}
-
-                                    {list.status === "rejected" && (
-                                        <button className="bg-accent-clr text-white text-[12px] p-2 rounded-md flex gap-2 items-center">
-                                            <RefreshCcw size={14} />
-                                            <span>Invite Again</span>
-                                        </button>
-                                    )}
-                                </div>
                             </div>
                         );
                     })
                 ) : (
-                    <div>
-                        <h2>No invitation sended yet</h2>
+                    <div className="w-full border border-border-clr rounded-md p-5 flex items-center justify-center">
+                        <h2 className="text-primary-text text-[12px]">
+                            No invitation
+                        </h2>
                     </div>
                 )}
             </div>
