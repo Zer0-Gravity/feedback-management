@@ -4,6 +4,8 @@ import { AuditPost, columns } from "./column";
 import prisma from "@/lib/prisma";
 import { format } from "date-fns";
 
+export const dynamic = "force-dynamic";
+
 async function Audit() {
     const postDb = await prisma.post.findMany({
         include: {

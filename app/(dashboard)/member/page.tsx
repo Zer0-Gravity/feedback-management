@@ -14,6 +14,8 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import * as yup from "yup";
 
+export const dynamic = "force-dynamic";
+
 interface MemberType {
     id: string;
     organizationId: string;
