@@ -6,6 +6,7 @@ import { formatDistanceToNow } from "date-fns";
 import { ArrowLeft, MessageCircle, Triangle } from "lucide-react";
 import { notFound } from "next/navigation";
 import { ContentPost } from "@/components/component/ContentPost";
+import BackButton from "./BackButton";
 
 interface PostDetail {
     params: Promise<{ id: string }>;
@@ -31,9 +32,7 @@ async function PostDetail({ params }: PostDetail) {
     return (
         <PageWrapper>
             <div className="flex-1 flex flex-col gap-3 min-h-0 overflow-y-auto hide-scrollbar">
-                <button className="flex gap-2 items-center text-primary-text">
-                    <ArrowLeft size={14} /> <span>Back</span>
-                </button>
+                <BackButton />
 
                 {/* | TItle and info | */}
                 <div>

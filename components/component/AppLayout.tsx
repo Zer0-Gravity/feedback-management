@@ -1,10 +1,8 @@
 "use client";
 
 import {
-    Building2,
     Loader2,
     Newspaper,
-    Plus,
     Send,
     Settings,
     SquareKanban,
