@@ -7,6 +7,5 @@ import {
 import { Auth } from "./auth";
 
 export const authClient = createAuthClient({
-    baseURL: "http://localhost:3000",
     plugins: [organizationClient({ schema: inferOrgAdditionalFields<Auth>() })],
 });
