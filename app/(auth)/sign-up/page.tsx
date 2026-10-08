@@ -10,6 +10,7 @@ import TextField from "@/components/component/TextField";
 import PasswordField from "@/components/component/PasswordField";
 import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 const schema = yup.object({
     name: yup.string().required("Name cant't be empty"),
@@ -100,8 +101,13 @@ function SignUp() {
                     </Link>
                 </p>
             </section>
-            <section className="bg-amber-300 w-112.5 h-175 p-2 rounded-r-lg hidden md:flex">
-                Image
+            <section className="w-112.5 h-175 p-2 rounded-r-lg hidden md:flex relative border border-l-0">
+                <Image
+                    src="/AuthImagePage.jpg"
+                    alt="auth-image"
+                    fill
+                    className="object-contain"
+                />
             </section>
         </div>
     );

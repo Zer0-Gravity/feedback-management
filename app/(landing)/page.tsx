@@ -2,7 +2,6 @@ import {
     KanbanSquare,
     Key,
     Mail,
-    Moon,
     Newspaper,
     Notebook,
     Scaling,
@@ -133,7 +132,7 @@ export default function Home() {
                             className="rounded-lg object-contain"
                         />
                     </div>
-                </section>  
+                </section>
 
                 <section className="space-y-3">
                     <div className="space-y-2">
@@ -233,7 +232,7 @@ export default function Home() {
                 </section>
 
                 <section className="w-full flex flex-col gap-3 justify-center items-center bg-card-clr py-10 px-5 rounded-lg">
-                    <h1 className="text-[50px] text-primary-text text-center font-bold">
+                    <h1 className="text-[30px] md:text-[50px] text-primary-text text-center font-bold">
                         Start capturing ideas today
                     </h1>
                     <p className="text-[14px] text-secondary-text text-center">
@@ -242,7 +241,7 @@ export default function Home() {
                     </p>
                     <Link
                         href={"/sign-in"}
-                        className="w-100 p-2 rounded-full bg-accent-clr text-white text-center"
+                        className="w-full max-w-100 p-2 rounded-full bg-accent-clr text-white text-center text-[14px]"
                     >
                         Start Now
                     </Link>

@@ -177,8 +177,13 @@ function SignIn() {
                     </Link>
                 </p>
             </section>
-            <section className="bg-amber-300 w-112.5 h-175 p-2 rounded-r-lg hidden md:flex relative">
-                <Image src="/AuthImagePage.jpg" alt="auth-image" fill />
+            <section className="w-112.5 h-175 p-2 rounded-r-lg hidden md:flex relative border border-l-0">
+                <Image
+                    src="/AuthImagePage.jpg"
+                    alt="auth-image"
+                    fill
+                    className="object-contain"
+                />
             </section>
         </div>
     );
