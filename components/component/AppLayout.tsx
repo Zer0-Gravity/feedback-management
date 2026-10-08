@@ -23,6 +23,7 @@ import Image from "next/image";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import Welcome from "./EmptyState/Welcome";
+import { useTheme } from "@/utils/store";
 
 function AppLayout({ children }: { children: ReactNode }) {
     const navList = [
@@ -32,6 +33,8 @@ function AppLayout({ children }: { children: ReactNode }) {
         { link: "member", name: "Member", icon: Users },
         { link: "audit-post", name: "Audit Post", icon: TableProperties },
     ];
+
+    const { isDark } = useTheme();
 
     const path = usePathname();
 
@@ -83,12 +86,21 @@ function AppLayout({ children }: { children: ReactNode }) {
             <aside className="w-65 p-5 hidden md:flex flex-col">
                 {/* Desktop Logo and Account */}
                 <div className="flex justify-between items-center mb-15">
-                    <Image
-                        src="/VotifyFull.svg"
-                        width={100}
-                        height={200}
-                        alt="desktop-logo"
-                    />
+                    {isDark ? (
+                        <Image
+                            src="/Logo_Full_Dark.svg"
+                            width={100}
+                            height={200}
+                            alt="desktop-logo"
+                        />
+                    ) : (
+                        <Image
+                            src="/Logo_Full_Light.svg"
+                            width={100}
+                            height={200}
+                            alt="desktop-logo"
+                        />
+                    )}
 
                     <Popover>
                         <PopoverTrigger>

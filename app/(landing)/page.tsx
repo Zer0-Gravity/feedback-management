@@ -81,7 +81,7 @@ export default function Home() {
         <main className="w-full h-full space-y-5 bg-background-secondary pb-26">
             <header className="flex justify-between border-b-3 border-b-border-clr p-3">
                 <Image
-                    src={"/VotifyFull.svg"}
+                    src={"/Logo_Full_Light.svg"}
                     alt="app-logo"
                     width={100}
                     height={100}
