@@ -6,7 +6,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { authClient } from "@/lib/auth-client";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { MailOpen, PackageOpen, Search, Ban } from "lucide-react";
+import { MailOpen, PackageOpen, Search, Ban, Loader2 } from "lucide-react";
 import { motion } from "motion/react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -44,6 +44,7 @@ function Member() {
     const [searchMember, setSearchMember] = useState<string>("");
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [prevFilter, setPrevFilter] = useState([searchMember, currentTag]);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const [memberDb, setMemberDb] = useState<MemberType[]>([]);
 
@@ -55,6 +56,8 @@ function Member() {
 
     //Fetching the member list
     const fetchMembers = async () => {
+        setIsLoading(true);
+
         const { data, error } = await authClient.organization.listMembers();
 
         if (error) {
@@ -64,6 +67,7 @@ function Member() {
         if (!data) return;
 
         setMemberDb(data?.members);
+        setIsLoading(false);
     };
 
     useEffect(() => {
@@ -223,7 +227,12 @@ function Member() {
             </div>
 
             <div className="flex gap-2 flex-col bg-card-clr rounded-lg p-3">
-                {paginatedData.length !== 0 ? (
+                {isLoading ? (
+                    <div className="text-primary-text flex items-center justify-center p-5 w-full border border-border-clr rounded-md gap-2">
+                        <Loader2 size={14} className="animate-spin" />
+                        <p className="text-[14px]">Loading member</p>
+                    </div>
+                ) : paginatedData.length !== 0 ? (
                     paginatedData.map((member) => (
                         <div
                             key={member.id}
