@@ -70,8 +70,8 @@ function ListInvitation({ listDb, search, status }: ListProps) {
     };
 
     return (
-        <div className="space-y-3">
-            <div className="flex md:justify-between item-center  flex-col md:flex-row  gap-2">
+        <div className="flex flex-col gap-3 h-full min-h-0">
+            <div className="flex md:justify-between items-center  flex-col md:flex-row  gap-2">
                 <div className="relative h-10  md:w-150 w-full bg-card-clr rounded-md">
                     <input
                         type="search"
@@ -124,7 +124,7 @@ function ListInvitation({ listDb, search, status }: ListProps) {
 
             {/* Card list */}
 
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-2 overflow-y-auto pb-40 min-h-0 flex-1">
                 {listDb.length !== 0 ? (
                     listDb.map((list) => {
                         const statusBadge = badgeColor[list.status];
@@ -139,7 +139,7 @@ function ListInvitation({ listDb, search, status }: ListProps) {
                                     <div className="flex gap-2 items-center">
                                         <Mail
                                             size={20}
-                                            className="text-primary-text"
+                                            className="text-primary-text hidden md:flex"
                                         />
                                         <div className="flex flex-col gap-2">
                                             <p className="text-[14px] font-semibold text-primary-text">
