@@ -3,10 +3,10 @@ import PageWrapper from "@/components/component/PageWrapper";
 import prisma from "@/lib/prisma";
 import { STATUS_CONFIG } from "@/utils/func";
 import { formatDistanceToNow } from "date-fns";
-import { ArrowLeft, MessageCircle, Triangle } from "lucide-react";
+import { MessageCircle } from "lucide-react";
 import { notFound } from "next/navigation";
 import { ContentPost } from "@/components/component/ContentPost";
-import BackButton from "./BackButton";
+import { BackButton, Upvote } from "./ButtonComponent";
 
 interface PostDetail {
     params: Promise<{ id: string }>;
@@ -64,10 +64,7 @@ async function PostDetail({ params }: PostDetail) {
                         <MessageCircle size={12} />
                         <p className="text-[12px]">{`${postDetailDb._count.comments} Comments`}</p>
                     </div>
-                    <div className="flex gap-2 items-center text-secondary-text">
-                        <Triangle size={12} />
-                        <p className="text-[12px]">{`${postDetailDb._count.upVotes} Votes`}</p>
-                    </div>
+                    <Upvote post_id={id} count={postDetailDb._count.upVotes} />
                 </div>
 
                 {/* | Comment Section | */}
