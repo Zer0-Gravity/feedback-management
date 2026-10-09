@@ -4,7 +4,7 @@ import "./globals.css";
 import { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
-const inter = Inter({subsets:['latin'],variable:'--font-sans'});
+const inter = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -19,13 +19,23 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
     title: "Votify",
     description: "Manage user feedback",
+    icons: {
+        icon: "/VotifyLogo.svg",
+    },
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
     return (
         <html
             lang="en"
-            className={cn("h-full", "antialiased", geistSans.variable, geistMono.variable, "font-sans", inter.variable)}
+            className={cn(
+                "h-full",
+                "antialiased",
+                geistSans.variable,
+                geistMono.variable,
+                "font-sans",
+                inter.variable,
+            )}
         >
             <body>{children}</body>
         </html>
