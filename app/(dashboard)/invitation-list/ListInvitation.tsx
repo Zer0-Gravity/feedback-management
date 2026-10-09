@@ -6,6 +6,7 @@ import { format } from "date-fns";
 import { Mail, Search } from "lucide-react";
 import { motion } from "motion/react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
 type ListInvitations = Invitation & { user: User }; //Combine both invitation type with User
 
@@ -27,23 +28,34 @@ function ListInvitation({ listDb, search, status }: ListProps) {
     const router = useRouter();
     const path = usePathname();
 
+    const [value, setValue] = useState<string>(search ?? "");
+
     const badgeColor: BadgeType = {
         accepted: { color: "#2AAF6D", label: "Accepted" },
         pending: { color: "#DC7E15", label: "Pending" },
         rejected: { color: "#ec1405ff", label: "Rejected" },
     };
 
-    const handleSearch = (value: string) => {
-        const param = new URLSearchParams(searchParams);
+    useEffect(() => {
+        // Skip url matches
+        if (value === (searchParams.get("search") ?? "")) return;
 
-        if (value) {
-            param.set("search", value);
-        } else {
-            param.delete("search");
-        }
+        const timeout = setTimeout(() => {
+            const param = new URLSearchParams(searchParams);
 
-        router.replace(`${path}?${param.toString()}`);
-    };
+            //Check the value
+            if (value) {
+                param.set("search", value);
+            } else {
+                param.delete("search");
+            }
+
+            router.replace(`${path}?${param.toString()}`);
+        }, 400);
+
+        return () => clearTimeout(timeout);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [value]);
 
     const handleStatus = (value: string) => {
         const param = new URLSearchParams(searchParams);
@@ -65,8 +77,8 @@ function ListInvitation({ listDb, search, status }: ListProps) {
                         type="search"
                         className="h-full w-full text-[12px] text-secondary-text py-2 pl-10"
                         placeholder="Search invitation"
-                        value={search}
-                        onChange={(e) => handleSearch(e.target.value)}
+                        value={value}
+                        onChange={(e) => setValue(e.target.value)}
                     />
                     <Search
                         size={14}
