@@ -137,7 +137,7 @@ export default function Home() {
                 <section className="space-y-3">
                     <div className="space-y-2">
                         <h1 className="text-[30px] font-bold max-w-125">
-                            One home for your team to progress{" "}
+                            One home for your team to progress
                         </h1>
                         <p className="text-[12px] text-secondary-text max-w-100">
                             Stop losing ideas in meetings and chat threads. Your
@@ -166,6 +166,27 @@ export default function Home() {
                     </div>
                 </section>
 
+                <section className="space-y-3">
+                    <div className="space-y-2">
+                        <h1 className="text-[30px] font-bold max-w-125">
+                            Discuss with everyone
+                        </h1>
+                        <p className="text-[12px] text-secondary-text max-w-100">
+                            Start discussing idea or suggestion and support them
+                            by vote to gain more traction
+                        </p>
+                    </div>
+
+                    <div className="w-full max-w-[600px] aspect-22/8 relative rounded-lg shadow-lg shadow-accent-clr">
+                        <Image
+                            src={"/Discussion.png"}
+                            alt="discuss"
+                            fill
+                            className="object-contain rounded-lg"
+                        />
+                    </div>
+                </section>
+
                 <section className="flex flex-col gap-2 justify-between">
                     <div className="space-y-2">
                         <div className="space-y-2">
@@ -173,9 +194,8 @@ export default function Home() {
                                 From idea to shipped feature in five progress
                             </h1>
                             <p className="text-[12px] text-secondary-text max-w-100">
-                                Stop losing ideas in meetings and chat threads.
-                                Your team can log each idea as a post that
-                                coworkers can discuss and vote on it
+                                Monitor your team progression on everyone idea
+                                or suggestion in Roadmap
                             </p>
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-5 gap-2">
